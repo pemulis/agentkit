@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## [0.0.6] - 2024-12-05
+
+### Added
+
+- Upgraded to `cdp-agentkit-core` v0.0.6.
+
 ## [0.0.5] - 2024-11-15
 
 ### Added
