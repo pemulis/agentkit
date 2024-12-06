@@ -6,7 +6,8 @@
 
 ### Added
 
-- Bump `cdp-sdk` dependency to `0.12.0`
+- Bump `cdp-sdk` dependency to `0.12.0`.
+- Improved prompts for all actions.
 
 ## [0.0.5] - 2024-11-15
 
