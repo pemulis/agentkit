@@ -15,12 +15,12 @@ This tool can only be used to buy a Zora Wow ERC20 memecoin with ETH. Do not use
 
 Inputs:
 - WOW token contract address
-- Address to receive the tokens  
+- Address to receive the tokens
 - Amount of ETH to spend (in wei)
 
 Important notes:
 - The amount is a string and cannot have any decimal points, since the unit of measurement is wei.
-- Make sure to use the exact amount provided, and if there's any doubt, check by getting more information before continuing with the action. 
+- Make sure to use the exact amount provided, and if there's any doubt, check by getting more information before continuing with the action.
 - 1 wei = 0.000000000000000001 ETH
 - Minimum purchase amount is 100000000000000 wei (0.0000001 ETH)
 - Only supported on the following networks:
@@ -71,7 +71,7 @@ def wow_buy_token(wallet: Wallet, contract_address: str, amount_eth_in_wei: str)
                 "recipient": wallet.default_address.address_id,
                 "refundRecipient": wallet.default_address.address_id,
                 "orderReferrer": "0x0000000000000000000000000000000000000000",
-                "expectedMarketType": has_graduated and "1" or "0",
+                "expectedMarketType": (has_graduated and "1") or "0",
                 "minOrderSize": min_tokens,
                 "sqrtPriceLimitX96": "0",
                 "comment": "",

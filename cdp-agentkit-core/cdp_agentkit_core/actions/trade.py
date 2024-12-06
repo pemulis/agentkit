@@ -10,7 +10,7 @@ This tool will trade a specified amount of a 'from asset' to a 'to asset' for th
 
 It takes the following inputs:
 - The amount of the 'from asset' to trade
-- The from asset ID to trade 
+- The from asset ID to trade
 - The asset ID to receive from the trade
 
 Important notes:

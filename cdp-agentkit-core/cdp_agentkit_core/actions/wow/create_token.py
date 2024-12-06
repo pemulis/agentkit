@@ -15,7 +15,7 @@ This tool can only be used to create a Zora Wow ERC20 memecoin using the WoW fac
 
 Inputs:
 - Token name (e.g. WowCoin)
-- Token symbol (e.g. WOW) 
+- Token symbol (e.g. WOW)
 - Token URI (optional) - Contains metadata about the token
 
 Important notes:
