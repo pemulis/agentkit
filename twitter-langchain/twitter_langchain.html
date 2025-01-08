@@ -5,11 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>twitter_langchain package &#8212; CDP Agentkit - Twitter LangChain 0.0.6 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <title>twitter_langchain package &#8212; CDP Agentkit - Twitter LangChain 0.0.7 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
-    <script src="_static/documentation_options.js?v=1fd71caa"></script>
+    <script src="_static/documentation_options.js?v=bbaf98b3"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -170,8 +170,8 @@ TWITTER_API_KEY
 TWITTER_API_SECRET
 TWITTER_BEARER_TOKEN</p>
 </dd>
-<dt>Instantiate:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">twitter_langchain</span> <span class="kn">import</span> <span class="n">TwitterToolkit</span>
-<span class="kn">from</span> <span class="nn">twitter_langchain</span> <span class="kn">import</span> <span class="n">TwitterAgentkitWrapper</span>
+<dt>Instantiate:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">twitter_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">TwitterToolkit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">twitter_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">TwitterAgentkitWrapper</span>
 
 <span class="n">twitter</span> <span class="o">=</span> <span class="n">TwitterAgentkitWrapper</span><span class="p">()</span>
 <span class="n">twitter_toolkit</span> <span class="o">=</span> <span class="n">TwitterToolkit</span><span class="o">.</span><span class="n">from_twitter_api_wrapper</span><span class="p">(</span><span class="n">twitter</span><span class="p">)</span>
@@ -190,8 +190,8 @@ post_tweet_reply
 </pre></div>
 </div>
 </dd>
-<dt>Use within an agent:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain_openai</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span>
-<span class="kn">from</span> <span class="nn">langgraph.prebuilt</span> <span class="kn">import</span> <span class="n">create_react_agent</span>
+<dt>Use within an agent:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langgraph.prebuilt</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_react_agent</span>
 
 <span class="c1"># Select example tool</span>
 <span class="n">tools</span> <span class="o">=</span> <span class="p">[</span><span class="n">tool</span> <span class="k">for</span> <span class="n">tool</span> <span class="ow">in</span> <span class="n">toolkit</span><span class="o">.</span><span class="n">get_tools</span><span class="p">()</span> <span class="k">if</span> <span class="n">tool</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;post_tweet&quot;</span><span class="p">]</span>
@@ -459,8 +459,8 @@ TWITTER_API_KEY
 TWITTER_API_SECRET
 TWITTER_BEARER_TOKEN</p>
 </dd>
-<dt>Instantiate:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">twitter_langchain</span> <span class="kn">import</span> <span class="n">TwitterToolkit</span>
-<span class="kn">from</span> <span class="nn">twitter_langchain</span> <span class="kn">import</span> <span class="n">TwitterAgentkitWrapper</span>
+<dt>Instantiate:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">twitter_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">TwitterToolkit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">twitter_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">TwitterAgentkitWrapper</span>
 
 <span class="n">twitter</span> <span class="o">=</span> <span class="n">TwitterAgentkitWrapper</span><span class="p">()</span>
 <span class="n">twitter_toolkit</span> <span class="o">=</span> <span class="n">TwitterToolkit</span><span class="o">.</span><span class="n">from_twitter_api_wrapper</span><span class="p">(</span><span class="n">twitter</span><span class="p">)</span>
@@ -479,8 +479,8 @@ post_tweet_reply
 </pre></div>
 </div>
 </dd>
-<dt>Use within an agent:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain_openai</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span>
-<span class="kn">from</span> <span class="nn">langgraph.prebuilt</span> <span class="kn">import</span> <span class="n">create_react_agent</span>
+<dt>Use within an agent:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langgraph.prebuilt</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_react_agent</span>
 
 <span class="c1"># Select example tool</span>
 <span class="n">tools</span> <span class="o">=</span> <span class="p">[</span><span class="n">tool</span> <span class="k">for</span> <span class="n">tool</span> <span class="ow">in</span> <span class="n">toolkit</span><span class="o">.</span><span class="n">get_tools</span><span class="p">()</span> <span class="k">if</span> <span class="n">tool</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;post_tweet&quot;</span><span class="p">]</span>
