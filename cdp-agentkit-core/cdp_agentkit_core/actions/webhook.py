@@ -1,16 +1,16 @@
 from enum import Enum
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
-from cdp import Wallet, Webhook
-from pydantic import BaseModel, Field, HttpUrl, model_validator, field_validator
+from cdp import Webhook
+from cdp.client.models.webhook import WebhookEventTypeFilter
+from cdp.client.models.webhook_smart_contract_event_filter import WebhookSmartContractEventFilter
+from cdp.client.models.webhook_wallet_activity_filter import WebhookWalletActivityFilter
+from pydantic import BaseModel, Field, HttpUrl, field_validator, model_validator
 
 from cdp_agentkit_core.actions import CdpAction
-from cdp.client.models.webhook import WebhookEventTypeFilter
-from cdp.client.models.webhook_wallet_activity_filter import WebhookWalletActivityFilter
-from cdp.client.models.webhook_smart_contract_event_filter import WebhookSmartContractEventFilter
 
 CREATE_WEBHOOK_PROMPT = """
-Create a new webhook to receive real-time updates for on-chain events. 
+Create a new webhook to receive real-time updates for on-chain events.
 Supports monitoring wallet activity or smart contract events by specifying:
 - Callback URL for receiving events
 - Event type (wallet_activity, smart_contract_event_activity, erc20_transfer or erc721_transfer)
@@ -24,6 +24,7 @@ Ensure event_type_filter is only sent when eventy_type is wallet_activity or sma
 
 class WebhookEventType(str, Enum):
     """Valid webhook event types."""
+
     WALLET_ACTIVITY = "wallet_activity"
     SMART_CONTRACT_EVENT_ACTIVITY = "smart_contract_event_activity"
     ERC20_TRANSFER = "erc20_transfer"
@@ -31,14 +32,16 @@ class WebhookEventType(str, Enum):
 
 class WebhookNetworks(str, Enum):
     """Networks available for creating webhooks."""
+
     BASE_MAINNET = "base-mainnet"
     BASE_SEPOLIA = "base-sepolia"
 
 class EventFilter(BaseModel):
     """Schema for event filters."""
-    from_address: Optional[str] = Field(None, description="Sender address for token transfers")
-    to_address: Optional[str] = Field(None, description="Recipient address for token transfers")
-    contract_address: Optional[str] = Field(None, description="Contract address for token transfers")
+
+    from_address: str | None = Field(None, description="Sender address for token transfers")
+    to_address: str | None = Field(None, description="Recipient address for token transfers")
+    contract_address: str | None = Field(None, description="Contract address for token transfers")
 
     @model_validator(mode='after')
     def validate_at_least_one_filter(self) -> 'EventFilter':
@@ -49,11 +52,12 @@ class EventFilter(BaseModel):
 
 class EventTypeFilter(BaseModel):
     """Schema for event type filter."""
-    addresses: Optional[List[str]] = Field(None, description="List of wallet or contract addresses to monitor")
+
+    addresses: list[str] | None = Field(None, description="List of wallet or contract addresses to monitor")
 
     @field_validator('addresses')
     @classmethod
-    def validate_addresses_not_empty(cls, v: Optional[List[str]]) -> Optional[List[str]]:
+    def validate_addresses_not_empty(cls, v: list[str] | None) -> list[str] | None:
         """Ensure addresses list is not empty when provided."""
         if v is not None and len(v) == 0:
             raise ValueError("addresses must contain at least one value when provided")
@@ -61,10 +65,11 @@ class EventTypeFilter(BaseModel):
 
 class WebhookInput(BaseModel):
     """Input schema for create webhook action."""
+
     notification_uri: HttpUrl = Field(..., description="The callback URL where webhook events will be sent")
     event_type: WebhookEventType
-    event_type_filter: Optional[EventTypeFilter] = None
-    event_filters: Optional[List[EventFilter]] = None
+    event_type_filter: EventTypeFilter | None = None
+    event_filters: list[EventFilter] | None = None
     network_id: WebhookNetworks
 
     @model_validator(mode='after')
@@ -95,13 +100,13 @@ class WebhookInput(BaseModel):
         return self
 
 def create_webhook(
-    notification_uri: Union[str, HttpUrl],
+    notification_uri: str | HttpUrl,
     event_type: str,
     network_id: str,
-    event_type_filter: Optional[Dict[str, Any]] = None,
-    event_filters: Optional[List[Dict[str, Any]]] = None,
+    event_type_filter: dict[str, Any] | None = None,
+    event_filters: list[dict[str, Any]] | None = None,
 ) -> str:
-    """Creates a new webhook for monitoring on-chain events.
+    """Create a new webhook for monitoring on-chain events.
 
     Args:
         notification_uri: The callback URL where webhook events will be sent
@@ -112,8 +117,8 @@ def create_webhook(
 
     Returns:
         str: Details of the created webhook
-    """
 
+    """
     print(f"notification_uri: {notification_uri}")
     print(f"event_type_filter: {event_type_filter}")
     print(f"event_filters: {event_filters}")
@@ -155,12 +160,13 @@ def create_webhook(
         print(f"webhook_options: {webhook_options}")
         webhook = Webhook.create(**webhook_options)
         return f"The webhook was successfully created: {webhook}\n\n"
-    
+
     except Exception as error:
-        return f"Error: {str(error)}"
+        return f"Error: {error!s}"
 
 class CreateWebhookAction(CdpAction):
     """Create webhook action."""
+
     name: str = "create_webhook"
     description: str = CREATE_WEBHOOK_PROMPT
     args_schema: type[BaseModel] = WebhookInput
