@@ -1,17 +1,17 @@
-name: Release Twitter LangChain to PyPI
+name: Release CDP LangChain to PyPI
 
 on:
   workflow_dispatch:
 
 jobs:
-  deploy-twitter-langchain:
+  deploy-pypi-cdp-langchain:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./twitter-langchain
+        working-directory: ./cdp-langchain/python
     environment:
       name: pypi
-      url: https://pypi.org/p/twitter-langchain
+      url: https://pypi.org/p/cdp-langchain
     permissions:
       contents: read
       id-token: write
@@ -41,4 +41,4 @@ jobs:
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         password: ${{ secrets.PYPI_API_TOKEN }}
-        packages-dir: twitter-langchain/dist/
+        packages-dir: cdp-langchain/python/dist/

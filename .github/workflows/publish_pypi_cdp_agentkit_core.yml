@@ -1,14 +1,14 @@
-name: Release AgentKit to PyPI
+name: Release CDP AgentKit Core to PyPI
 
 on:
   workflow_dispatch:
 
 jobs:
-  deploy-agentkit:
+  deploy-pypi-cdp-agentkit-core:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./cdp-agentkit-core
+        working-directory: ./cdp-agentkit-core/python
     environment:
       name: pypi
       url: https://pypi.org/p/cdp-agentkit-core
@@ -41,4 +41,4 @@ jobs:
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         password: ${{ secrets.PYPI_API_TOKEN }}
-        packages-dir: cdp-agentkit-core/dist/
+        packages-dir: cdp-agentkit-core/python/dist/
