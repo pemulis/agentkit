@@ -5,11 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>cdp_agentkit_core.actions package &#8212; CDP Agentkit - Core 0.0.7 documentation</title>
+    <title>cdp_agentkit_core.actions package &#8212; CDP Agentkit - Core 0.0.8 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
-    <script src="_static/documentation_options.js?v=bbaf98b3"></script>
+    <script src="_static/documentation_options.js?v=53b53b71"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -923,6 +923,80 @@
 </dd></dl>
 
 </section>
+<section id="module-cdp_agentkit_core.actions.wrap_eth">
+<span id="cdp-agentkit-core-actions-wrap-eth-module"></span><h2>cdp_agentkit_core.actions.wrap_eth module<a class="headerlink" href="#module-cdp_agentkit_core.actions.wrap_eth" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.wrap_eth.WrapEthAction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdp_agentkit_core.actions.wrap_eth.</span></span><span class="sig-name descname"><span class="pre">WrapEthAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdp_agentkit_core.actions.wrap_eth.WrapEthAction" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdp_agentkit_core.actions.cdp_action.CdpAction" title="cdp_agentkit_core.actions.cdp_action.CdpAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">CdpAction</span></code></a></p>
+<p>Wrap ETH to WETH action.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.wrap_eth.WrapEthAction.args_schema">
+<span class="sig-name descname"><span class="pre">args_schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code><span class="pre">]</span> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.wrap_eth.WrapEthAction.args_schema" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.wrap_eth.WrapEthAction.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.wrap_eth.WrapEthAction.description" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.wrap_eth.WrapEthAction.func">
+<span class="sig-name descname"><span class="pre">func</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#cdp_agentkit_core.actions.wrap_eth.WrapEthAction.func" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.wrap_eth.WrapEthAction.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#cdp_agentkit_core.actions.wrap_eth.WrapEthAction.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.wrap_eth.WrapEthAction.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.wrap_eth.WrapEthAction.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.wrap_eth.WrapEthInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdp_agentkit_core.actions.wrap_eth.</span></span><span class="sig-name descname"><span class="pre">WrapEthInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdp_agentkit_core.actions.wrap_eth.WrapEthInput" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Input argument schema for wrapping ETH to WETH.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.wrap_eth.WrapEthInput.amount_to_wrap">
+<span class="sig-name descname"><span class="pre">amount_to_wrap</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.wrap_eth.WrapEthInput.amount_to_wrap" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.wrap_eth.WrapEthInput.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#cdp_agentkit_core.actions.wrap_eth.WrapEthInput.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.wrap_eth.wrap_eth">
+<span class="sig-prename descclassname"><span class="pre">cdp_agentkit_core.actions.wrap_eth.</span></span><span class="sig-name descname"><span class="pre">wrap_eth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount_to_wrap</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdp_agentkit_core.actions.wrap_eth.wrap_eth" title="Link to this definition">¶</a></dt>
+<dd><p>Wrap ETH to WETH.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wallet</strong> (<em>Wallet</em>) – The wallet to wrap ETH from.</p></li>
+<li><p><strong>amount_to_wrap</strong> (<em>str</em>) – The amount of ETH to wrap in wei.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message containing the wrapped ETH details.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-cdp_agentkit_core.actions">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-cdp_agentkit_core.actions" title="Link to this heading">¶</a></h2>
 <dl class="py class">
@@ -1350,6 +1424,39 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cdp_agentkit_core.actions.WowSellTokenAction.name">
 <span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.WowSellTokenAction.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.WrapEthAction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdp_agentkit_core.actions.</span></span><span class="sig-name descname"><span class="pre">WrapEthAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdp_agentkit_core.actions.WrapEthAction" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdp_agentkit_core.actions.cdp_action.CdpAction" title="cdp_agentkit_core.actions.cdp_action.CdpAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">CdpAction</span></code></a></p>
+<p>Wrap ETH to WETH action.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.WrapEthAction.args_schema">
+<span class="sig-name descname"><span class="pre">args_schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code><span class="pre">]</span> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.WrapEthAction.args_schema" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.WrapEthAction.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.WrapEthAction.description" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.WrapEthAction.func">
+<span class="sig-name descname"><span class="pre">func</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code><span class="pre">[</span><code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#cdp_agentkit_core.actions.WrapEthAction.func" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.WrapEthAction.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#cdp_agentkit_core.actions.WrapEthAction.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.WrapEthAction.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.WrapEthAction.name" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

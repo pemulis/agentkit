@@ -93,6 +93,14 @@ cdp\_agentkit\_core.actions.transfer module
    :undoc-members:
    :show-inheritance:
 
+cdp\_agentkit\_core.actions.wrap\_eth module
+--------------------------------------------
+
+.. automodule:: cdp_agentkit_core.actions.wrap_eth
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
