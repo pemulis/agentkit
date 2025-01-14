@@ -4,11 +4,12 @@
 [![GitHub star chart](https://img.shields.io/github/stars/coinbase/cdp-agentkit?style=flat-square)](https://star-history.com/#coinbase/cdp-agentkit)
 [![Open Issues](https://img.shields.io/github/issues-raw/coinbase/cdp-agentkit?style=flat-square)](https://github.com/coinbase/cdp-agentkit/issues)
 
-The **Coinbase Developer Platform (CDP) Agentkit for Python** simplifies bringing your AI Agents onchain. Every AI Agent deserves a crypto wallet!
+The **Coinbase Developer Platform (CDP) AgentKit** simplifies bringing your AI Agents onchain. Every AI Agent deserves a crypto wallet!
 
 
 ## Key Features
 - **Framework-agnostic**: Common AI Agent primitives that can be used with any AI framework.
+- **Python and Node.js Support**
 - **LangChain integration**: Seamless integration with [LangChain](https://python.langchain.com/docs/introduction/) for easy agentic workflows. More frameworks coming soon!
 - **Twitter integration**: Seamless integration of Langchain with [Twitter](https://developer.twitter.com/en/docs/twitter-api) for easy agentic workflows.
 - **Support for various on-chain actions**:
@@ -27,10 +28,24 @@ The **Coinbase Developer Platform (CDP) Agentkit for Python** simplifies bringin
 
 ## Examples
 Check out [cdp-langchain/examples](./cdp-langchain/examples) for inspiration and help getting started!
-- [Chatbot](./cdp-langchain/examples/chatbot/README.md): Simple example of a Chatbot that can perform complex onchain interactions, using OpenAI.
+- [Chatbot Python](./cdp-langchain/examples/chatbot-python/README.md): Simple example of a Python Chatbot that can perform complex onchain interactions, using OpenAI.
+- [Chatbot Typescript](./cdp-langchain/examples/chatbot-typescript/README.md): Simple example of a Node.js Chatbot that can perform complex onchain interactions, using OpenAI.
 
 ## Repository Structure
 CDP Agentkit is organized as a [monorepo](https://en.wikipedia.org/wiki/Monorepo) that contains multiple packages.
+
+./
+├── cdp-agentkit-core/
+│   ├── python/
+│   └── typescript/
+├── cdp-langchain/
+│   ├── python/
+│   ├── typescript/
+│   └── examples/
+└── twitter-langchain/
+    ├── python/
+    ├── typescript/
+    └── examples/
 
 ### cdp-agentkit-core
 Core primitives and framework-agnostic tools that are meant to be composable and used via CDP Agentkit framework extensions (ie, `cdp-langchain`).
