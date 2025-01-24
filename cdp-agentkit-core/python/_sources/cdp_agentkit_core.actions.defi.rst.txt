@@ -1,0 +1,10 @@
+cdp\_agentkit\_core.actions.defi package
+========================================
+
+Module contents
+---------------
+
+.. automodule:: cdp_agentkit_core.actions.defi
+   :members:
+   :undoc-members:
+   :show-inheritance:
