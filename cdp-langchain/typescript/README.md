@@ -49,23 +49,27 @@ const tools = toolkit.getTools();
 
 The toolkit provides the following tools:
 
-1. **get_wallet_details** - Get details about the MPC Wallet
-2. **get_balance** - Get balance for specific assets
-3. **request_faucet_funds** - Request test tokens from faucet
-4. **transfer** - Transfer assets between addresses
-5. **trade** - Trade assets (Mainnet only)
-6. **deploy_token** - Deploy ERC-20 token contracts
-7. **mint_nft** - Mint NFTs from existing contracts
-8. **deploy_nft** - Deploy new NFT contracts
-9. **register_basename** - Register a basename for the wallet
-10. **wow_create_token** - Deploy a token using Zora's Wow Launcher (Bonding Curve)
-11. **wow_buy_token** - Buy Zora Wow ERC20 memecoin with ETH
-12. **wow_sell_token** - Sell Zora Wow ERC20 memecoin for ETH
-13. **wrap_eth** - Wrap ETH to WETH
-14. **pyth_fetch_price_feed_id** Fetch the price feed ID for a given token symbol from Pyth Network
-15. **pyth_fetch_price** Fetch the price of a given price feed from Pyth Network
-16. **get_balance_nft** Get balance for specific NFTs (ERC-721)
-17. **transfer_nft** Transfer an NFT (ERC-721)
+1.  **address_reputation**       - Retrieve the address's reputation on a given network
+2.  **deploy_contract**          - Deploy an arbitrary contract using the Solidity compiler
+3.  **deploy_nft**               - Deploy new NFT contracts
+4.  **deploy_token**             - Deploy ERC-20 token contracts
+5.  **get_balance**              - Get balance for specific assets
+6.  **get_balance_nft**          - Get balance for specific NFTs (ERC-721)
+7.  **get_wallet_details**       - Get details about the MPC Wallet
+8.  **mint_nft**                 - Mint NFTs from existing contracts
+9.  **morpho_deposit**           - Deposit into a morpho vault
+10. **morpho_withdraw**          - Withdraw from a morpho vault
+11. **pyth_fetch_price**         - Fetch the price of a given price feed from Pyth Network
+12. **pyth_fetch_price_feed_id** - Fetch the price feed ID for a given token symbol from Pyth Network
+13. **register_basename**        - Register a basename for the wallet
+14. **request_faucet_funds**     - Request test tokens from faucet
+15. **trade**                    - Trade assets (Mainnet only)
+16. **transfer**                 - Transfer assets between addresses
+17. **transfer_nft**             - Transfer an NFT (ERC-721)
+18. **wow_buy_token**            - Buy Zora Wow ERC20 memecoin with ETH
+19. **wow_create_token**         - Deploy a token using Zora's Wow Launcher (Bonding Curve)
+20. **wow_sell_token**           - Sell Zora Wow ERC20 memecoin for ETH
+21. **wrap_eth**                 - Wrap ETH to WETH
 
 ### Using with an Agent
 
