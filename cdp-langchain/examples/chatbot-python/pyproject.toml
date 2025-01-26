@@ -13,7 +13,3 @@ cdp-langchain = "^0.0.13"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.group.dev.dependencies]
-cdp-langchain = { path = "../../python", develop = true }
-cdp-agentkit-core = { path = "../../../cdp-agentkit-core/python", develop = true }
