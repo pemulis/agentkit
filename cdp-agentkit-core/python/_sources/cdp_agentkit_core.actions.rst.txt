@@ -41,6 +41,14 @@ cdp\_agentkit\_core.actions.constants module
    :undoc-members:
    :show-inheritance:
 
+cdp\_agentkit\_core.actions.deploy\_contract module
+---------------------------------------------------
+
+.. automodule:: cdp_agentkit_core.actions.deploy_contract
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 cdp\_agentkit\_core.actions.deploy\_nft module
 ----------------------------------------------
 

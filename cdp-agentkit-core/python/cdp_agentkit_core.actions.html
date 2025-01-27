@@ -5,11 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>cdp_agentkit_core.actions package &#8212; CDP Agentkit - Core 0.0.10 documentation</title>
+    <title>cdp_agentkit_core.actions package &#8212; CDP Agentkit - Core 0.0.11 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
-    <script src="_static/documentation_options.js?v=a83ce22a"></script>
+    <script src="_static/documentation_options.js?v=0c446633"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -429,6 +429,98 @@
 </section>
 <section id="module-cdp_agentkit_core.actions.constants">
 <span id="cdp-agentkit-core-actions-constants-module"></span><h2>cdp_agentkit_core.actions.constants module<a class="headerlink" href="#module-cdp_agentkit_core.actions.constants" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-cdp_agentkit_core.actions.deploy_contract">
+<span id="cdp-agentkit-core-actions-deploy-contract-module"></span><h2>cdp_agentkit_core.actions.deploy_contract module<a class="headerlink" href="#module-cdp_agentkit_core.actions.deploy_contract" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.deploy_contract.DeployContractAction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdp_agentkit_core.actions.deploy_contract.</span></span><span class="sig-name descname"><span class="pre">DeployContractAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdp_agentkit_core.actions.deploy_contract.DeployContractAction" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdp_agentkit_core.actions.cdp_action.CdpAction" title="cdp_agentkit_core.actions.cdp_action.CdpAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">CdpAction</span></code></a></p>
+<p>Deploy contract action.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.deploy_contract.DeployContractAction.args_schema">
+<span class="sig-name descname"><span class="pre">args_schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code><span class="pre">]</span></em><a class="headerlink" href="#cdp_agentkit_core.actions.deploy_contract.DeployContractAction.args_schema" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.deploy_contract.DeployContractAction.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.deploy_contract.DeployContractAction.description" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.deploy_contract.DeployContractAction.func">
+<span class="sig-name descname"><span class="pre">func</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.deploy_contract.DeployContractAction.func" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.deploy_contract.DeployContractAction.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#cdp_agentkit_core.actions.deploy_contract.DeployContractAction.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.deploy_contract.DeployContractAction.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.deploy_contract.DeployContractAction.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.deploy_contract.DeployContractInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdp_agentkit_core.actions.deploy_contract.</span></span><span class="sig-name descname"><span class="pre">DeployContractInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdp_agentkit_core.actions.deploy_contract.DeployContractInput" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Input argument schema for deploy contract action.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.deploy_contract.DeployContractInput.constructor_args">
+<span class="sig-name descname"><span class="pre">constructor_args</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.deploy_contract.DeployContractInput.constructor_args" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.deploy_contract.DeployContractInput.contract_name">
+<span class="sig-name descname"><span class="pre">contract_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.deploy_contract.DeployContractInput.contract_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.deploy_contract.DeployContractInput.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#cdp_agentkit_core.actions.deploy_contract.DeployContractInput.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.deploy_contract.DeployContractInput.solidity_input_json">
+<span class="sig-name descname"><span class="pre">solidity_input_json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.deploy_contract.DeployContractInput.solidity_input_json" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.deploy_contract.DeployContractInput.solidity_version">
+<span class="sig-name descname"><span class="pre">solidity_version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.deploy_contract.DeployContractInput.solidity_version" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.deploy_contract.deploy_contract">
+<span class="sig-prename descclassname"><span class="pre">cdp_agentkit_core.actions.deploy_contract.</span></span><span class="sig-name descname"><span class="pre">deploy_contract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solidity_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solidity_input_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contract_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constructor_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdp_agentkit_core.actions.deploy_contract.deploy_contract" title="Link to this definition">¶</a></dt>
+<dd><p>Deploy an arbitrary contract.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wallet</strong> (<em>Wallet</em>) – The wallet to deploy the contract from.</p></li>
+<li><p><strong>solidity_version</strong> (<em>str</em>) – The solidity compiler version.</p></li>
+<li><p><strong>solidity_input_json</strong> (<em>str</em>) – The input json for the solidity compiler.</p></li>
+<li><p><strong>contract_name</strong> (<em>str</em>) – The name of the contract class to be deployed.</p></li>
+<li><p><strong>constructor_args</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>] </em><em>| </em><em>None</em>) – The constructor arguments for the contract.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A message containing the deployed contract address and details.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-cdp_agentkit_core.actions.deploy_nft">
 <span id="cdp-agentkit-core-actions-deploy-nft-module"></span><h2>cdp_agentkit_core.actions.deploy_nft module<a class="headerlink" href="#module-cdp_agentkit_core.actions.deploy_nft" title="Link to this heading">¶</a></h2>
@@ -1510,6 +1602,39 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cdp_agentkit_core.actions.CdpAction.name">
 <span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.CdpAction.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.DeployContractAction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdp_agentkit_core.actions.</span></span><span class="sig-name descname"><span class="pre">DeployContractAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cdp_agentkit_core.actions.DeployContractAction" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cdp_agentkit_core.actions.cdp_action.CdpAction" title="cdp_agentkit_core.actions.cdp_action.CdpAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">CdpAction</span></code></a></p>
+<p>Deploy contract action.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.DeployContractAction.args_schema">
+<span class="sig-name descname"><span class="pre">args_schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code><span class="pre">]</span></em><a class="headerlink" href="#cdp_agentkit_core.actions.DeployContractAction.args_schema" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.DeployContractAction.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.DeployContractAction.description" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.DeployContractAction.func">
+<span class="sig-name descname"><span class="pre">func</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.DeployContractAction.func" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.DeployContractAction.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#cdp_agentkit_core.actions.DeployContractAction.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cdp_agentkit_core.actions.DeployContractAction.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#cdp_agentkit_core.actions.DeployContractAction.name" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
