@@ -36,9 +36,11 @@ export class OpenSeaActionProvider extends ActionProvider {
 
     config.apiKey ||= process.env.OPENSEA_API_KEY;
 
-    if (!config.apiKey) {
-      throw new Error("OPENSEA_API_KEY is not configured.");
-    }
+    /*
+     * if (!config.apiKey) {
+     *   throw new Error("OPENSEA_API_KEY is not configured.");
+     * }
+     */
 
     const walletClient = createWalletClient({
       account: privateKeyToAccount(config.walletPrivateKey as `0x${string}`),
@@ -49,9 +51,8 @@ export class OpenSeaActionProvider extends ActionProvider {
     this.walletProvider = new ViemWalletProvider(walletClient);
 
     //@ts-expect-error: OpenSeaSDK constructor expects a different type for walletProvider
-    this.client = new OpenSeaSDK(walletProvider, {
+    this.client = new OpenSeaSDK(this.walletProvider, {
       chain: Chain.Sepolia,
-      apiKey: config.apiKey,
     });
   }
 
@@ -85,8 +86,10 @@ A failure response will return a message with an error:
         startAmount: args.listingPrice,
         expirationTime,
       });
+
       return `Successfully listed NFT:\n${JSON.stringify(response)}`;
     } catch (error) {
+      console.log("response: ", error);
       return `Error listing NFT:\n${error}`;
     }
   }
