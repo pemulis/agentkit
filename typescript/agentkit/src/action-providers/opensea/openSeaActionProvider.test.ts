@@ -1,226 +1,91 @@
-import { TwitterApi, TwitterApiv2 } from "twitter-api-v2";
-import { TwitterActionProvider } from "./twitterActionProvider";
-import { TweetUserMentionTimelineV2Paginator } from "twitter-api-v2";
+import { OpenSeaActionProvider } from "./openSeaActionProvider";
+import { ViemWalletProvider } from "../../wallet-providers";
+import { OpenSeaSDK } from "opensea-js";
+import { createWalletClient, http } from "viem";
+import { sepolia } from "viem/chains";
+import { privateKeyToAccount } from "viem/accounts";
+import { jest } from "@jest/globals";
 
-const MOCK_CONFIG = {
-  apiKey: "test-api-key",
-  apiSecret: "test-api-secret",
-  accessToken: "test-access-token",
-  accessTokenSecret: "test-access-token-secret",
-};
+jest.mock("../../wallet-providers");
 
-const MOCK_ID = "1853889445319331840";
-const MOCK_NAME = "CDP Agentkit";
-const MOCK_USERNAME = "CDPAgentkit";
-const MOCK_TWEET = "Hello, world!";
-const MOCK_TWEET_ID = "0123456789012345678";
-const MOCK_TWEET_REPLY = "Hello again!";
+const mockWalletClient = createWalletClient({
+  account: privateKeyToAccount("0x123456789abcdef"),
+  chain: sepolia,
+  transport: http(),
+});
 
-describe("TwitterActionProvider", () => {
-  let mockClient: jest.Mocked<TwitterApiv2>;
-  let provider: TwitterActionProvider;
+// Mock OpenSeaSDK class constructor
+jest.mock("opensea-js", () => {
+  return {
+    OpenSeaSDK: jest.fn().mockImplementation(() => ({
+      createListing: jest.fn(),
+      api: { getNFTsByAccount: jest.fn() },
+    })),
+  };
+});
+
+describe("OpenSeaActionProvider", () => {
+  let actionProvider;
+  let mockOpenSeaClient;
+  let mockWalletProvider;
 
   beforeEach(() => {
-    mockClient = {
-      me: jest.fn(),
-      userMentionTimeline: jest.fn(),
-      tweet: jest.fn(),
-    } as unknown as jest.Mocked<TwitterApiv2>;
+    mockWalletProvider = new ViemWalletProvider(mockWalletClient);
+    mockWalletProvider.getAddress = jest.fn().mockReturnValue("0xTestWalletAddress");
 
-    jest.spyOn(TwitterApi.prototype, "v2", "get").mockReturnValue(mockClient);
+    // Initialize the mocked OpenSeaSDK instance
+    mockOpenSeaClient = new OpenSeaSDK(mockWalletProvider);
 
-    provider = new TwitterActionProvider(MOCK_CONFIG);
-  });
-
-  describe("Constructor", () => {
-    it("should initialize with config values", () => {
-      expect(() => new TwitterActionProvider(MOCK_CONFIG)).not.toThrow();
-    });
-
-    it("should initialize with environment variables", () => {
-      process.env.TWITTER_API_KEY = MOCK_CONFIG.apiKey;
-      process.env.TWITTER_API_SECRET = MOCK_CONFIG.apiSecret;
-      process.env.TWITTER_ACCESS_TOKEN = MOCK_CONFIG.accessToken;
-      process.env.TWITTER_ACCESS_TOKEN_SECRET = MOCK_CONFIG.accessTokenSecret;
-
-      expect(() => new TwitterActionProvider()).not.toThrow();
-    });
-
-    it("should throw error if no config or env vars", () => {
-      delete process.env.TWITTER_API_KEY;
-      delete process.env.TWITTER_API_SECRET;
-      delete process.env.TWITTER_ACCESS_TOKEN;
-      delete process.env.TWITTER_ACCESS_TOKEN_SECRET;
-
-      expect(() => new TwitterActionProvider()).toThrow("TWITTER_API_KEY is not configured.");
+    actionProvider = new OpenSeaActionProvider({
+      walletPrivateKey: "0x123456789abcdef",
     });
   });
 
-  describe("Account Details Action", () => {
-    const mockResponse = {
-      data: {
-        id: MOCK_ID,
-        name: MOCK_NAME,
-        username: MOCK_USERNAME,
-      },
-    };
+  test("listNFT should successfully list an NFT", async () => {
+    mockOpenSeaClient.createListing.mockResolvedValue({ listingId: "1234" });
 
-    beforeEach(() => {
-      mockClient.me.mockResolvedValue(mockResponse);
+    const response = await actionProvider.listNFT({
+      tokenId: "1",
+      tokenAddress: "0xTokenAddress",
+      listingPrice: 0.1,
     });
 
-    it("should successfully retrieve account details", async () => {
-      const response = await provider.accountDetails({});
-
-      expect(mockClient.me).toHaveBeenCalled();
-      expect(response).toContain("Successfully retrieved authenticated user account details");
-      expect(response).toContain(
-        JSON.stringify({
-          ...mockResponse,
-          data: { ...mockResponse.data, url: `https://x.com/${MOCK_USERNAME}` },
-        }),
-      );
+    expect(mockOpenSeaClient.createListing).toHaveBeenCalledWith({
+      asset: { tokenId: "1", tokenAddress: "0xTokenAddress" },
+      accountAddress: "0xTestWalletAddress",
+      startAmount: 0.1,
+      expirationTime: expect.any(Number),
     });
 
-    it("should handle errors when retrieving account details", async () => {
-      const error = new Error("An error has occurred");
-      mockClient.me.mockRejectedValue(error);
-
-      const response = await provider.accountDetails({});
-
-      expect(mockClient.me).toHaveBeenCalled();
-      expect(response).toContain("Error retrieving authenticated user account details");
-      expect(response).toContain(error.message);
-    });
+    expect(response).toContain("Successfully listed NFT");
   });
 
-  describe("Account Mentions Action", () => {
-    const mockResponse = {
-      _realData: {
-        data: [
-          {
-            id: MOCK_TWEET_ID,
-            text: "@CDPAgentkit please reply!",
-          },
-        ],
-      },
-      data: [
-        {
-          id: MOCK_TWEET_ID,
-          text: "@CDPAgentkit please reply!",
-        },
-      ],
-      meta: {},
-      _endpoint: {},
-      tweets: [],
-      getItemArray: () => [],
-      refreshInstanceFromResult: () => mockResponse,
-    } as unknown as TweetUserMentionTimelineV2Paginator;
+  test("listNFT should handle errors gracefully", async () => {
+    mockOpenSeaClient.createListing.mockRejectedValue(new Error("Insufficient funds"));
 
-    beforeEach(() => {
-      mockClient.userMentionTimeline.mockResolvedValue(mockResponse);
+    const response = await actionProvider.listNFT({
+      tokenId: "1",
+      tokenAddress: "0xTokenAddress",
+      listingPrice: 0.1,
     });
 
-    it("should successfully retrieve account mentions", async () => {
-      const response = await provider.accountMentions({ userId: MOCK_ID });
-
-      expect(mockClient.userMentionTimeline).toHaveBeenCalledWith(MOCK_ID);
-      expect(response).toContain("Successfully retrieved account mentions");
-      expect(response).toContain(JSON.stringify(mockResponse));
-    });
-
-    it("should handle errors when retrieving mentions", async () => {
-      const error = new Error("An error has occurred");
-      mockClient.userMentionTimeline.mockRejectedValue(error);
-
-      const response = await provider.accountMentions({ userId: MOCK_ID });
-
-      expect(mockClient.userMentionTimeline).toHaveBeenCalledWith(MOCK_ID);
-      expect(response).toContain("Error retrieving authenticated account mentions");
-      expect(response).toContain(error.message);
-    });
+    expect(response).toContain("Error listing NFT");
+    expect(response).toContain("Insufficient funds");
   });
 
-  describe("Post Tweet Action", () => {
-    const mockResponse = {
-      data: {
-        id: MOCK_TWEET_ID,
-        text: MOCK_TWEET,
-        edit_history_tweet_ids: [MOCK_TWEET_ID],
-      },
-    };
+  test("fetchNFTs should return NFT list successfully", async () => {
+    const mockNFTs = [{ id: "1", name: "Test NFT" }];
+    mockOpenSeaClient.api.getNFTsByAccount.mockResolvedValue(mockNFTs);
 
-    beforeEach(() => {
-      mockClient.tweet.mockResolvedValue(mockResponse);
-    });
-
-    it("should successfully post a tweet", async () => {
-      const response = await provider.postTweet({ tweet: MOCK_TWEET });
-
-      expect(mockClient.tweet).toHaveBeenCalledWith(MOCK_TWEET);
-      expect(response).toContain("Successfully posted to Twitter");
-      expect(response).toContain(JSON.stringify(mockResponse));
-    });
-
-    it("should handle errors when posting a tweet", async () => {
-      const error = new Error("An error has occurred");
-      mockClient.tweet.mockRejectedValue(error);
-
-      const response = await provider.postTweet({ tweet: MOCK_TWEET });
-
-      expect(mockClient.tweet).toHaveBeenCalledWith(MOCK_TWEET);
-      expect(response).toContain("Error posting to Twitter");
-      expect(response).toContain(error.message);
-    });
+    const response = await actionProvider.fetchNFTs({});
+    expect(JSON.parse(response)).toEqual({ success: true, nfts: mockNFTs });
   });
 
-  describe("Post Tweet Reply Action", () => {
-    const mockResponse = {
-      data: {
-        id: MOCK_TWEET_ID,
-        text: MOCK_TWEET_REPLY,
-        edit_history_tweet_ids: [MOCK_TWEET_ID],
-      },
-    };
+  test("fetchNFTs should handle errors gracefully", async () => {
+    mockOpenSeaClient.api.getNFTsByAccount.mockRejectedValue(new Error("API error"));
 
-    beforeEach(() => {
-      mockClient.tweet.mockResolvedValue(mockResponse);
-    });
-
-    it("should successfully post a tweet reply", async () => {
-      const response = await provider.postTweetReply({
-        tweetId: MOCK_TWEET_ID,
-        tweetReply: MOCK_TWEET_REPLY,
-      });
-
-      expect(mockClient.tweet).toHaveBeenCalledWith(MOCK_TWEET_REPLY, {
-        reply: { in_reply_to_tweet_id: MOCK_TWEET_ID },
-      });
-      expect(response).toContain("Successfully posted reply to Twitter");
-      expect(response).toContain(JSON.stringify(mockResponse));
-    });
-
-    it("should handle errors when posting a tweet reply", async () => {
-      const error = new Error("An error has occurred");
-      mockClient.tweet.mockRejectedValue(error);
-
-      const response = await provider.postTweetReply({
-        tweetId: MOCK_TWEET_ID,
-        tweetReply: MOCK_TWEET_REPLY,
-      });
-
-      expect(mockClient.tweet).toHaveBeenCalledWith(MOCK_TWEET_REPLY, {
-        reply: { in_reply_to_tweet_id: MOCK_TWEET_ID },
-      });
-      expect(response).toContain("Error posting reply to Twitter");
-      expect(response).toContain(error.message);
-    });
-  });
-
-  describe("Network Support", () => {
-    it("should always return true for network support", () => {
-      expect(provider.supportsNetwork({ protocolFamily: "evm", networkId: "1" })).toBe(true);
-      expect(provider.supportsNetwork({ protocolFamily: "solana", networkId: "2" })).toBe(true);
-    });
+    const response = await actionProvider.fetchNFTs({});
+    expect(response).toContain("Error fetching NFTs");
+    expect(response).toContain("API error");
   });
 });
