@@ -16,19 +16,3 @@ export const OpenSeaGetNftsByAccount = z
   .object({})
   .strip()
   .describe("Input schema for fetching NFTs by account");
-
-/**
- * Schema for validating the response from the OpenSea API when listing an NFT.
- */
-export const OpenSeaListNFTResponseSchema = z.object({
-  success: z.boolean(),
-  message: z.string().optional(),
-  data: z
-    .object({
-      id: z.string(),
-      tokenId: z.string(),
-      contractAddress: z.string(),
-      listingPrice: z.number(),
-    })
-    .optional(),
-});
