@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CDP Agentkit - Core Documentation &#8212; Coinbase Agentkit 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="coinbase_agentkit" href="modules.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cdp-agentkit-core-documentation">
+<h1>CDP Agentkit - Core Documentation<a class="headerlink" href="#cdp-agentkit-core-documentation" title="Link to this heading">¶</a></h1>
+<section id="agentkit">
+<h2>AgentKit<a class="headerlink" href="#agentkit" title="Link to this heading">¶</a></h2>
+<p>AgentKit is a framework for easily enabling AI agents to take actions onchain. It is designed to be framework-agnostic, so you can use it with any AI framework, and wallet-agnostic, so you can use it with any wallet.</p>
+<section id="table-of-contents">
+<h3>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="#getting-started"><span class="xref myst">Getting Started</span></a></p></li>
+<li><p><a class="reference internal" href="#installation"><span class="xref myst">Installation</span></a></p></li>
+<li><p><a class="reference internal" href="#usage"><span class="xref myst">Usage</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#create-an-agentkit-instance"><span class="xref myst">Create an AgentKit instance</span></a></p></li>
+<li><p><a class="reference internal" href="#create-an-agentkit-instance-with-a-specified-wallet-provider"><span class="xref myst">Create an AgentKit instance with a specified wallet provider</span></a></p></li>
+<li><p><a class="reference internal" href="#create-an-agentkit-instance-with-specified-action-providers"><span class="xref myst">Create an AgentKit instance with specified action providers</span></a></p></li>
+<li><p><a class="reference internal" href="#use-with-a-framework-extension"><span class="xref myst">Use with a framework extension (e.g., LangChain + OpenAI)</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#creating-an-action-provider"><span class="xref myst">Creating an Action Provider</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#adding-actions-to-your-action-provider"><span class="xref myst">Adding Actions to your Action Provider</span></a></p></li>
+<li><p><a class="reference internal" href="#adding-actions-that-use-a-wallet-provider"><span class="xref myst">Adding Actions that use a Wallet Provider</span></a></p></li>
+<li><p><a class="reference internal" href="#adding-an-action-provider-to-your-agentkit-instance"><span class="xref myst">Adding an Action Provider to your AgentKit instance</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#wallet-providers"><span class="xref myst">Wallet Providers</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#cdpwalletprovider"><span class="xref myst">CdpWalletProvider</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#network-configuration"><span class="xref myst">Network Configuration</span></a></p></li>
+<li><p><a class="reference internal" href="#configuring-from-an-existing-cdp-api-wallet"><span class="xref myst">Configuring from an existing CDP API Wallet</span></a></p></li>
+<li><p><a class="reference internal" href="#configuring-from-a-mnemonic-phrase"><span class="xref myst">Configuring from a mnemonic phrase</span></a></p></li>
+<li><p><a class="reference internal" href="#exporting-a-wallet"><span class="xref myst">Exporting a wallet</span></a></p></li>
+<li><p><a class="reference internal" href="#importing-a-wallet-from-walletdata-json-string"><span class="xref myst">Importing a wallet from WalletData JSON string</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#ethaccountwalletprovider"><span class="xref myst">EthAccountWalletProvider</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#contributing"><span class="xref myst">Contributing</span></a></p></li>
+</ul>
+</section>
+<section id="getting-started">
+<h3>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h3>
+<p><em>Prerequisites</em>:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.python.org/downloads/">Python 3.10+</a></p></li>
+<li><p><a class="reference external" href="https://docs.cdp.coinbase.com/get-started/docs/cdp-api-keys#creating-secret-api-keys">CDP Secret API Key</a></p></li>
+</ul>
+</section>
+<section id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>coinbase-agentkit
+</pre></div>
+</div>
+</section>
+<section id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h3>
+<section id="create-an-agentkit-instance">
+<h4>Create an AgentKit instance<a class="headerlink" href="#create-an-agentkit-instance" title="Link to this heading">¶</a></h4>
+<p>If no wallet or action providers are specified, the agent will use the <code class="docutils literal notranslate"><span class="pre">CdpWalletProvider</span></code> and <code class="docutils literal notranslate"><span class="pre">WalletActionProvider</span></code> action provider by default.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentKit</span><span class="p">,</span> <span class="n">AgentKitConfig</span>
+
+<span class="n">agent_kit</span> <span class="o">=</span> <span class="n">AgentKit</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="create-an-agentkit-instance-with-a-specified-wallet-provider">
+<h4>Create an AgentKit instance with a specified wallet provider<a class="headerlink" href="#create-an-agentkit-instance-with-a-specified-wallet-provider" title="Link to this heading">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AgentKit</span><span class="p">,</span>
+    <span class="n">AgentKitConfig</span><span class="p">,</span>
+    <span class="n">CdpWalletProvider</span><span class="p">,</span>
+    <span class="n">CdpWalletProviderConfig</span>
+<span class="p">)</span>
+
+<span class="n">wallet_provider</span> <span class="o">=</span> <span class="n">CdpWalletProvider</span><span class="p">(</span><span class="n">CdpWalletProviderConfig</span><span class="p">(</span>
+    <span class="n">api_key_name</span><span class="o">=</span><span class="s2">&quot;CDP API KEY NAME&quot;</span><span class="p">,</span>
+    <span class="n">api_key_private</span><span class="o">=</span><span class="s2">&quot;CDP API KEY PRIVATE KEY&quot;</span><span class="p">,</span>
+    <span class="n">network_id</span><span class="o">=</span><span class="s2">&quot;base-mainnet&quot;</span>
+<span class="p">))</span>
+
+<span class="n">agent_kit</span> <span class="o">=</span> <span class="n">AgentKit</span><span class="p">(</span><span class="n">AgentKitConfig</span><span class="p">(</span>
+    <span class="n">wallet_provider</span><span class="o">=</span><span class="n">wallet_provider</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="create-an-agentkit-instance-with-specified-action-providers">
+<h4>Create an AgentKit instance with specified action providers<a class="headerlink" href="#create-an-agentkit-instance-with-specified-action-providers" title="Link to this heading">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AgentKit</span><span class="p">,</span>
+    <span class="n">AgentKitConfig</span><span class="p">,</span>
+    <span class="n">cdp_api_action_provider</span><span class="p">,</span>
+    <span class="n">pyth_action_provider</span>
+<span class="p">)</span>
+
+<span class="n">agent_kit</span> <span class="o">=</span> <span class="n">AgentKit</span><span class="p">(</span><span class="n">AgentKitConfig</span><span class="p">(</span>
+    <span class="n">wallet_provider</span><span class="o">=</span><span class="n">wallet_provider</span><span class="p">,</span>
+    <span class="n">action_providers</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">cdp_api_action_provider</span><span class="p">(</span>
+            <span class="n">api_key_name</span><span class="o">=</span><span class="s2">&quot;CDP API KEY NAME&quot;</span><span class="p">,</span>
+            <span class="n">api_key_private</span><span class="o">=</span><span class="s2">&quot;CDP API KEY PRIVATE KEY&quot;</span>
+        <span class="p">),</span>
+        <span class="n">pyth_action_provider</span><span class="p">()</span>
+    <span class="p">]</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="use-with-a-framework-extension">
+<h4>Use with a framework extension<a class="headerlink" href="#use-with-a-framework-extension" title="Link to this heading">¶</a></h4>
+<p>Example using LangChain + OpenAI:</p>
+<p><em>Prerequisites</em>:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key">OpenAI API Key</a></p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">OPENAI_API_KEY</span></code> environment variable</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>add<span class="w"> </span>coinbase-agentkit-langchain<span class="w"> </span>langchain-openai<span class="w"> </span>langgraph
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_langchain_tools</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langgraph.prebuilt</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_react_agent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatOpenAI</span>
+
+<span class="n">tools</span> <span class="o">=</span> <span class="n">get_langchain_tools</span><span class="p">(</span><span class="n">agent_kit</span><span class="p">)</span>
+
+<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">)</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">create_react_agent</span><span class="p">(</span>
+    <span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span>
+    <span class="n">tools</span><span class="o">=</span><span class="n">tools</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="creating-an-action-provider">
+<h3>Creating an Action Provider<a class="headerlink" href="#creating-an-action-provider" title="Link to this heading">¶</a></h3>
+<p>Action providers define the actions that an agent can take. They are created by subclassing the <code class="docutils literal notranslate"><span class="pre">ActionProvider</span></code> abstract class.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActionProvider</span><span class="p">,</span> <span class="n">WalletProvider</span><span class="p">,</span> <span class="n">Network</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyActionProvider</span><span class="p">(</span><span class="n">ActionProvider</span><span class="p">[</span><span class="n">WalletProvider</span><span class="p">]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;my-action-provider&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="c1"># Define if the action provider supports the given network</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">supports_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">network</span><span class="p">:</span> <span class="n">Network</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<section id="adding-actions-to-your-action-provider">
+<h4>Adding Actions to your Action Provider<a class="headerlink" href="#adding-actions-to-your-action-provider" title="Link to this heading">¶</a></h4>
+<p>Actions are defined using the <code class="docutils literal notranslate"><span class="pre">&#64;create_action</span></code> decorator. They can optionally use a wallet provider and must return a string.</p>
+<ol class="arabic simple">
+<li><p>Define the action schema using Pydantic:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyActionSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">my_field</span><span class="p">:</span> <span class="nb">str</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Define the action:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActionProvider</span><span class="p">,</span> <span class="n">WalletProvider</span><span class="p">,</span> <span class="n">Network</span><span class="p">,</span> <span class="n">create_action</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyActionProvider</span><span class="p">(</span><span class="n">ActionProvider</span><span class="p">[</span><span class="n">WalletProvider</span><span class="p">]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;my-action-provider&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="nd">@create_action</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my-action&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;My action description&quot;</span><span class="p">,</span>
+        <span class="n">schema</span><span class="o">=</span><span class="n">MyActionSchema</span>
+    <span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">my_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;my_field&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">supports_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">network</span><span class="p">:</span> <span class="n">Network</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">my_action_provider</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">MyActionProvider</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="adding-actions-that-use-a-wallet-provider">
+<h4>Adding Actions that use a Wallet Provider<a class="headerlink" href="#adding-actions-that-use-a-wallet-provider" title="Link to this heading">¶</a></h4>
+<p>Actions that need access to a wallet provider can include it as their first parameter:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActionProvider</span><span class="p">,</span> <span class="n">WalletProvider</span><span class="p">,</span> <span class="n">create_action</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyActionProvider</span><span class="p">(</span><span class="n">ActionProvider</span><span class="p">[</span><span class="n">WalletProvider</span><span class="p">]):</span>
+    <span class="nd">@create_action</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my-action&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;My action description&quot;</span><span class="p">,</span>
+        <span class="n">schema</span><span class="o">=</span><span class="n">MyActionSchema</span>
+    <span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">my_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wallet_provider</span><span class="p">:</span> <span class="n">WalletProvider</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">wallet_provider</span><span class="o">.</span><span class="n">sign_message</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;my_field&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="adding-an-action-provider-to-your-agentkit-instance">
+<h4>Adding an Action Provider to your AgentKit instance<a class="headerlink" href="#adding-an-action-provider-to-your-agentkit-instance" title="Link to this heading">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">agent_kit</span> <span class="o">=</span> <span class="n">AgentKit</span><span class="p">(</span><span class="n">AgentKitConfig</span><span class="p">(</span>
+    <span class="n">cdp_api_key_name</span><span class="o">=</span><span class="s2">&quot;CDP API KEY NAME&quot;</span><span class="p">,</span>
+    <span class="n">cdp_api_key_private</span><span class="o">=</span><span class="s2">&quot;CDP API KEY PRIVATE KEY&quot;</span><span class="p">,</span>
+    <span class="n">action_providers</span><span class="o">=</span><span class="p">[</span><span class="n">my_action_provider</span><span class="p">()]</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="wallet-providers">
+<h3>Wallet Providers<a class="headerlink" href="#wallet-providers" title="Link to this heading">¶</a></h3>
+<p>AgentKit supports the following wallet providers:</p>
+<p>EVM:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/coinbase/agentkit/blob/master/python/coinbase_agentkit/wallet_providers/cdp_wallet_provider.py">CdpWalletProvider</a> - Uses the Coinbase Developer Platform (CDP) API Wallet</p></li>
+<li><p><a class="reference external" href="https://github.com/coinbase/agentkit/blob/master/python/coinbase_agentkit/wallet_providers/eth_account_wallet_provider.py">EthAccountWalletProvider</a> - Uses a local private key for any EVM-compatible chain</p></li>
+</ul>
+<section id="cdpwalletprovider">
+<h4>CdpWalletProvider<a class="headerlink" href="#cdpwalletprovider" title="Link to this heading">¶</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">CdpWalletProvider</span></code> is a wallet provider that uses the Coinbase Developer Platform (CDP) <a class="reference external" href="https://docs.cdp.coinbase.com/wallet-api/docs/welcome">API Wallet</a>.</p>
+<section id="network-configuration">
+<h5>Network Configuration<a class="headerlink" href="#network-configuration" title="Link to this heading">¶</a></h5>
+<p>The <code class="docutils literal notranslate"><span class="pre">CdpWalletProvider</span></code> can be configured to use a specific network by passing the <code class="docutils literal notranslate"><span class="pre">network_id</span></code> parameter to the <code class="docutils literal notranslate"><span class="pre">CdpWalletProviderConfig</span></code>. The <code class="docutils literal notranslate"><span class="pre">network_id</span></code> is the ID of the network you want to use. You can find a list of <a class="reference external" href="https://docs.cdp.coinbase.com/cdp-apis/docs/networks">supported networks on the CDP API docs</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">CdpWalletProvider</span><span class="p">,</span> <span class="n">CdpWalletProviderConfig</span>
+
+<span class="n">wallet_provider</span> <span class="o">=</span> <span class="n">CdpWalletProvider</span><span class="p">(</span><span class="n">CdpWalletProviderConfig</span><span class="p">(</span>
+    <span class="n">api_key_name</span><span class="o">=</span><span class="s2">&quot;CDP API KEY NAME&quot;</span><span class="p">,</span>
+    <span class="n">api_key_private</span><span class="o">=</span><span class="s2">&quot;CDP API KEY PRIVATE KEY&quot;</span><span class="p">,</span>
+    <span class="n">network_id</span><span class="o">=</span><span class="s2">&quot;base-mainnet&quot;</span><span class="p">,</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="configuring-from-an-existing-cdp-api-wallet">
+<h5>Configuring from an existing CDP API Wallet<a class="headerlink" href="#configuring-from-an-existing-cdp-api-wallet" title="Link to this heading">¶</a></h5>
+<p>If you already have a CDP API Wallet, you can configure the <code class="docutils literal notranslate"><span class="pre">CdpWalletProvider</span></code> by passing the <code class="docutils literal notranslate"><span class="pre">wallet</span></code> parameter to the <code class="docutils literal notranslate"><span class="pre">configureWithWallet</span></code> method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">CdpWalletProvider</span><span class="p">,</span> <span class="n">CdpWalletProviderConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cdp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Wallet</span>
+
+<span class="n">wallet_provider</span> <span class="o">=</span> <span class="n">CdpWalletProvider</span><span class="p">(</span><span class="n">CdpWalletProviderConfig</span><span class="p">(</span>
+    <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
+    <span class="n">api_key_name</span><span class="o">=</span><span class="s2">&quot;CDP API KEY NAME&quot;</span><span class="p">,</span>
+    <span class="n">api_key_private</span><span class="o">=</span><span class="s2">&quot;CDP API KEY PRIVATE KEY&quot;</span><span class="p">,</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="configuring-from-a-mnemonic-phrase">
+<h5>Configuring from a mnemonic phrase<a class="headerlink" href="#configuring-from-a-mnemonic-phrase" title="Link to this heading">¶</a></h5>
+<p>The <code class="docutils literal notranslate"><span class="pre">CdpWalletProvider</span></code> can be configured from a mnemonic phrase by passing the <code class="docutils literal notranslate"><span class="pre">mnemonic_phrase</span></code> parameter to the <code class="docutils literal notranslate"><span class="pre">CdpWalletProviderConfig</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">CdpWalletProvider</span><span class="p">,</span> <span class="n">CdpWalletProviderConfig</span>
+
+<span class="n">wallet_provider</span> <span class="o">=</span> <span class="n">CdpWalletProvider</span><span class="p">(</span><span class="n">CdpWalletProviderConfig</span><span class="p">(</span>
+    <span class="n">mnemonic_phrase</span><span class="o">=</span><span class="s2">&quot;MNEMONIC PHRASE&quot;</span><span class="p">,</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="exporting-a-wallet">
+<h5>Exporting a wallet<a class="headerlink" href="#exporting-a-wallet" title="Link to this heading">¶</a></h5>
+<p>The <code class="docutils literal notranslate"><span class="pre">CdpWalletProvider</span></code> can export a wallet by calling the <code class="docutils literal notranslate"><span class="pre">export_wallet</span></code> method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">CdpWalletProvider</span>
+
+<span class="n">wallet_provider</span> <span class="o">=</span> <span class="n">CdpWalletProvider</span><span class="p">(</span><span class="n">CdpWalletProviderConfig</span><span class="p">(</span>
+    <span class="n">mnemonic_phrase</span><span class="o">=</span><span class="s2">&quot;MNEMONIC PHRASE&quot;</span><span class="p">,</span>
+<span class="p">))</span>
+
+<span class="n">wallet_data</span> <span class="o">=</span> <span class="n">wallet_provider</span><span class="o">.</span><span class="n">export_wallet</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="importing-a-wallet-from-walletdata-json-string">
+<h5>Importing a wallet from <code class="docutils literal notranslate"><span class="pre">WalletData</span></code> JSON string<a class="headerlink" href="#importing-a-wallet-from-walletdata-json-string" title="Link to this heading">¶</a></h5>
+<p>The <code class="docutils literal notranslate"><span class="pre">CdpWalletProvider</span></code> can import a wallet from a <code class="docutils literal notranslate"><span class="pre">WalletData</span></code> JSON string by passing the <code class="docutils literal notranslate"><span class="pre">cdp_wallet_data</span></code> parameter to the <code class="docutils literal notranslate"><span class="pre">CdpWalletProviderConfig</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">CdpWalletProvider</span><span class="p">,</span> <span class="n">CdpWalletProviderConfig</span>
+
+<span class="n">wallet_provider</span> <span class="o">=</span> <span class="n">CdpWalletProvider</span><span class="p">(</span><span class="n">CdpWalletProviderConfig</span><span class="p">(</span>
+    <span class="n">wallet_data</span><span class="o">=</span><span class="s2">&quot;WALLET DATA JSON STRING&quot;</span><span class="p">,</span>
+    <span class="n">api_key_name</span><span class="o">=</span><span class="s2">&quot;CDP API KEY NAME&quot;</span><span class="p">,</span>
+    <span class="n">api_key_private</span><span class="o">=</span><span class="s2">&quot;CDP API KEY PRIVATE KEY&quot;</span><span class="p">,</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="ethaccountwalletprovider">
+<h4>EthAccountWalletProvider<a class="headerlink" href="#ethaccountwalletprovider" title="Link to this heading">¶</a></h4>
+<p>Example usage with a private key:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">eth_account</span><span class="w"> </span><span class="kn">import</span> <span class="n">Account</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AgentKit</span><span class="p">,</span>
+    <span class="n">AgentKitConfig</span><span class="p">,</span>
+    <span class="n">EthAccountWalletProvider</span><span class="p">,</span>
+    <span class="n">EthAccountWalletProviderConfig</span>
+<span class="p">)</span>
+
+<span class="c1"># See here for creating a private key:</span>
+<span class="c1"># https://web3py.readthedocs.io/en/stable/web3.eth.account.html#creating-a-private-key</span>
+<span class="n">private_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PRIVATE_KEY&quot;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">private_key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;You must set PRIVATE_KEY environment variable&quot;</span>
+<span class="k">assert</span> <span class="n">private_key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;0x&quot;</span><span class="p">),</span> <span class="s2">&quot;Private key must start with 0x hex prefix&quot;</span>
+
+<span class="n">account</span> <span class="o">=</span> <span class="n">Account</span><span class="o">.</span><span class="n">from_key</span><span class="p">(</span><span class="n">private_key</span><span class="p">)</span>
+
+<span class="n">wallet_provider</span> <span class="o">=</span> <span class="n">EthAccountWalletProvider</span><span class="p">(</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">EthAccountWalletProviderConfig</span><span class="p">(</span>
+        <span class="n">account</span><span class="o">=</span><span class="n">account</span><span class="p">,</span>
+        <span class="n">chain_id</span><span class="o">=</span><span class="mi">84532</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">agent_kit</span> <span class="o">=</span> <span class="n">AgentKit</span><span class="p">(</span><span class="n">AgentKitConfig</span><span class="p">(</span>
+    <span class="n">wallet_provider</span><span class="o">=</span><span class="n">wallet_provider</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="contributing">
+<h3>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">¶</a></h3>
+<p>See <a class="reference external" href="https://github.com/coinbase/agentkit/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a> for more information.</p>
+</section>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">Coinbase Agentkit</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">coinbase_agentkit</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="modules.html" title="next chapter">coinbase_agentkit</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
