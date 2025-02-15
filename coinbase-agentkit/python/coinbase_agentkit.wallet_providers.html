@@ -5,11 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>coinbase_agentkit.wallet_providers package &#8212; Coinbase Agentkit 0.1.0 documentation</title>
+    <title>coinbase_agentkit.wallet_providers package &#8212; Coinbase Agentkit 0.1.2 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
-    <script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/documentation_options.js?v=92734c54"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -412,6 +412,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.cdp_wallet_provider.CdpWalletProviderConfig.gas">
+<span class="sig-name descname"><span class="pre">gas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmGasConfig" title="coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmGasConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">EvmGasConfig</span></code></a> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.cdp_wallet_provider.CdpWalletProviderConfig.gas" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.cdp_wallet_provider.CdpWalletProviderConfig.mnemonic_phrase">
 <span class="sig-name descname"><span class="pre">mnemonic_phrase</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.cdp_wallet_provider.CdpWalletProviderConfig.mnemonic_phrase" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -445,17 +450,14 @@
 <p>A wallet provider that uses eth-account and web3.py for EVM chain interactions.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.eth_account_wallet_provider.EthAccountWalletProvider.estimate_fees">
-<span class="sig-name descname"><span class="pre">estimate_fees</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.eth_account_wallet_provider.EthAccountWalletProvider.estimate_fees" title="Link to this definition">¶</a></dt>
-<dd><p>Estimate gas fees for a transaction.</p>
+<span class="sig-name descname"><span class="pre">estimate_fees</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.eth_account_wallet_provider.EthAccountWalletProvider.estimate_fees" title="Link to this definition">¶</a></dt>
+<dd><p>Estimate gas fees for a transaction, applying the configured fee multipliers.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>multiplier</strong> (<em>float</em>) – Buffer multiplier for base fee, defaults to 1.2</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple of (max_priority_fee_per_gas, max_fee_per_gas) in wei</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Tuple of (max_priority_fee_per_gas, max_fee_per_gas) in wei</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple[int, int]</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[int, int]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -687,6 +689,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.eth_account_wallet_provider.EthAccountWalletProviderConfig.gas">
+<span class="sig-name descname"><span class="pre">gas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmGasConfig" title="coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmGasConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">EvmGasConfig</span></code></a> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.eth_account_wallet_provider.EthAccountWalletProviderConfig.gas" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.eth_account_wallet_provider.EthAccountWalletProviderConfig.model_config">
 <span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True}</span></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.eth_account_wallet_provider.EthAccountWalletProviderConfig.model_config" title="Link to this definition">¶</a></dt>
 <dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
@@ -698,6 +705,29 @@
 <section id="module-coinbase_agentkit.wallet_providers.evm_wallet_provider">
 <span id="coinbase-agentkit-wallet-providers-evm-wallet-provider-module"></span><h2>coinbase_agentkit.wallet_providers.evm_wallet_provider module<a class="headerlink" href="#module-coinbase_agentkit.wallet_providers.evm_wallet_provider" title="Link to this heading">¶</a></h2>
 <p>Base class for EVM-compatible wallet providers.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmGasConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">coinbase_agentkit.wallet_providers.evm_wallet_provider.</span></span><span class="sig-name descname"><span class="pre">EvmGasConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmGasConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Configuration for gas multipliers.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmGasConfig.fee_per_gas_multiplier">
+<span class="sig-name descname"><span class="pre">fee_per_gas_multiplier</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmGasConfig.fee_per_gas_multiplier" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmGasConfig.gas_limit_multiplier">
+<span class="sig-name descname"><span class="pre">gas_limit_multiplier</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmGasConfig.gas_limit_multiplier" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmGasConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmGasConfig.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmWalletProvider">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">coinbase_agentkit.wallet_providers.evm_wallet_provider.</span></span><span class="sig-name descname"><span class="pre">EvmWalletProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmWalletProvider" title="Link to this definition">¶</a></dt>
@@ -1242,6 +1272,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.CdpWalletProviderConfig.gas">
+<span class="sig-name descname"><span class="pre">gas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmGasConfig" title="coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmGasConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">EvmGasConfig</span></code></a> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.CdpWalletProviderConfig.gas" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.CdpWalletProviderConfig.mnemonic_phrase">
 <span class="sig-name descname"><span class="pre">mnemonic_phrase</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.CdpWalletProviderConfig.mnemonic_phrase" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1271,17 +1306,14 @@
 <p>A wallet provider that uses eth-account and web3.py for EVM chain interactions.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.EthAccountWalletProvider.estimate_fees">
-<span class="sig-name descname"><span class="pre">estimate_fees</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.EthAccountWalletProvider.estimate_fees" title="Link to this definition">¶</a></dt>
-<dd><p>Estimate gas fees for a transaction.</p>
+<span class="sig-name descname"><span class="pre">estimate_fees</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.EthAccountWalletProvider.estimate_fees" title="Link to this definition">¶</a></dt>
+<dd><p>Estimate gas fees for a transaction, applying the configured fee multipliers.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>multiplier</strong> (<em>float</em>) – Buffer multiplier for base fee, defaults to 1.2</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple of (max_priority_fee_per_gas, max_fee_per_gas) in wei</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Tuple of (max_priority_fee_per_gas, max_fee_per_gas) in wei</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple[int, int]</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[int, int]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1510,6 +1542,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.EthAccountWalletProviderConfig.chain_id">
 <span class="sig-name descname"><span class="pre">chain_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.EthAccountWalletProviderConfig.chain_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.EthAccountWalletProviderConfig.gas">
+<span class="sig-name descname"><span class="pre">gas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmGasConfig" title="coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmGasConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">EvmGasConfig</span></code></a> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.EthAccountWalletProviderConfig.gas" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

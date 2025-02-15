@@ -5,11 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Coinbase Agentkit Documentation &#8212; Coinbase Agentkit 0.1.0 documentation</title>
+    <title>Coinbase Agentkit Documentation &#8212; Coinbase Agentkit 0.1.2 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
-    <script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/documentation_options.js?v=92734c54"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -66,9 +66,14 @@
 <li><p><a class="reference internal" href="#configuring-from-a-mnemonic-phrase"><span class="xref myst">Configuring from a mnemonic phrase</span></a></p></li>
 <li><p><a class="reference internal" href="#exporting-a-wallet"><span class="xref myst">Exporting a wallet</span></a></p></li>
 <li><p><a class="reference internal" href="#importing-a-wallet-from-walletdata-json-string"><span class="xref myst">Importing a wallet from WalletData JSON string</span></a></p></li>
+<li><p><a class="reference internal" href="#configuring-cdpwalletprovider-gas-parameters"><span class="xref myst">Configuring gas parameters</span></a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#ethaccountwalletprovider"><span class="xref myst">EthAccountWalletProvider</span></a></p></li>
+<li><p><a class="reference internal" href="#ethaccountwalletprovider"><span class="xref myst">EthAccountWalletProvider</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#configuring-ethaccountwalletprovider-gas-parameters"><span class="xref myst">Configuring gas parameters</span></a></p></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#contributing"><span class="xref myst">Contributing</span></a></p></li>
@@ -322,11 +327,30 @@
 </pre></div>
 </div>
 </section>
+<section id="configuring-cdpwalletprovider-gas-parameters">
+<h5>Configuring <code class="docutils literal notranslate"><span class="pre">CdpWalletProvider</span></code> gas parameters<a class="headerlink" href="#configuring-cdpwalletprovider-gas-parameters" title="Link to this heading">¶</a></h5>
+<p>The <code class="docutils literal notranslate"><span class="pre">CdpWalletProvider</span></code> also exposes parameters for effecting the gas calculations.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">CdpWalletProvider</span><span class="p">,</span> <span class="n">CdpWalletProviderConfig</span>
+
+<span class="n">wallet_provider</span> <span class="o">=</span> <span class="n">CdpWalletProvider</span><span class="p">(</span><span class="n">CdpWalletProviderConfig</span><span class="p">(</span>
+    <span class="n">wallet_data</span><span class="o">=</span><span class="s2">&quot;WALLET DATA JSON STRING&quot;</span><span class="p">,</span>
+    <span class="n">api_key_name</span><span class="o">=</span><span class="s2">&quot;CDP API KEY NAME&quot;</span><span class="p">,</span>
+    <span class="n">api_key_private</span><span class="o">=</span><span class="s2">&quot;CDP API KEY PRIVATE KEY&quot;</span><span class="p">,</span>
+    <span class="n">gas</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;gas_limit_multiplier&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>   <span class="c1"># Adjusts gas limit estimation</span>
+        <span class="s2">&quot;fee_per_gas_multiplier&quot;</span><span class="p">:</span> <span class="mf">2.0</span>  <span class="c1"># Adjusts max fee per gas</span>
+    <span class="p">}</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>Note</strong>: Gas parameters only impact the <code class="docutils literal notranslate"><span class="pre">wallet_provider.send_transaction</span></code> behavior. Actions that do not rely on direct transaction calls, such as <code class="docutils literal notranslate"><span class="pre">deploy_token</span></code>, <code class="docutils literal notranslate"><span class="pre">deploy_contract</span></code>, and <code class="docutils literal notranslate"><span class="pre">native_transfer</span></code>, remain unaffected.</p>
+</section>
 </section>
 <section id="ethaccountwalletprovider">
 <h4>EthAccountWalletProvider<a class="headerlink" href="#ethaccountwalletprovider" title="Link to this heading">¶</a></h4>
 <p>Example usage with a private key:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">eth_account</span><span class="w"> </span><span class="kn">import</span> <span class="n">Account</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">eth_account</span><span class="w"> </span><span class="kn">import</span> <span class="n">Account</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">AgentKit</span><span class="p">,</span>
@@ -346,7 +370,7 @@
 <span class="n">wallet_provider</span> <span class="o">=</span> <span class="n">EthAccountWalletProvider</span><span class="p">(</span>
     <span class="n">config</span><span class="o">=</span><span class="n">EthAccountWalletProviderConfig</span><span class="p">(</span>
         <span class="n">account</span><span class="o">=</span><span class="n">account</span><span class="p">,</span>
-        <span class="n">chain_id</span><span class="o">=</span><span class="mi">84532</span><span class="p">,</span>
+        <span class="n">chain_id</span><span class="o">=</span><span class="s2">&quot;84532&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 <span class="p">)</span>
 
@@ -355,6 +379,42 @@
 <span class="p">))</span>
 </pre></div>
 </div>
+<section id="configuring-ethaccountwalletprovider-gas-parameters">
+<h5>Configuring <code class="docutils literal notranslate"><span class="pre">EthAccountWalletProvider</span></code> gas parameters<a class="headerlink" href="#configuring-ethaccountwalletprovider-gas-parameters" title="Link to this heading">¶</a></h5>
+<p>The <code class="docutils literal notranslate"><span class="pre">EthAccountWalletProvider</span></code> also exposes parameters for effecting the gas calculations.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">eth_account</span><span class="w"> </span><span class="kn">import</span> <span class="n">Account</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AgentKit</span><span class="p">,</span>
+    <span class="n">AgentKitConfig</span><span class="p">,</span>
+    <span class="n">EthAccountWalletProvider</span><span class="p">,</span>
+    <span class="n">EthAccountWalletProviderConfig</span>
+<span class="p">)</span>
+
+<span class="n">private_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PRIVATE_KEY&quot;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">private_key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;You must set PRIVATE_KEY environment variable&quot;</span>
+<span class="k">assert</span> <span class="n">private_key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;0x&quot;</span><span class="p">),</span> <span class="s2">&quot;Private key must start with 0x hex prefix&quot;</span>
+
+<span class="n">account</span> <span class="o">=</span> <span class="n">Account</span><span class="o">.</span><span class="n">from_key</span><span class="p">(</span><span class="n">private_key</span><span class="p">)</span>
+
+<span class="n">wallet_provider</span> <span class="o">=</span> <span class="n">EthAccountWalletProvider</span><span class="p">(</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">EthAccountWalletProviderConfig</span><span class="p">(</span>
+        <span class="n">account</span><span class="o">=</span><span class="n">account</span><span class="p">,</span>
+        <span class="n">chain_id</span><span class="o">=</span><span class="s2">&quot;84532&quot;</span><span class="p">,</span>
+        <span class="n">gas</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;gas_limit_multiplier&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s2">&quot;fee_per_gas_multiplier&quot;</span><span class="p">:</span> <span class="mi">2</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">agent_kit</span> <span class="o">=</span> <span class="n">AgentKit</span><span class="p">(</span><span class="n">AgentKitConfig</span><span class="p">(</span>
+    <span class="n">wallet_provider</span><span class="o">=</span><span class="n">wallet_provider</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 <section id="contributing">
