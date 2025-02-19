@@ -22,6 +22,7 @@ import fs from "fs";
 dotenv.config();
 
 const WALLET_DATA_FILE = "wallet_data.txt";
+const DEFAULT_CHAIN_ID = "84532"; // base-sepolia
 
 /**
  * Validates that required environment variables are set
@@ -50,15 +51,26 @@ function validateEnvironment(): void {
   }
 
   // Warn about optional CHAIN_ID
-  if (!process.env.CHAIN_ID) {
-    const networkId = process.env.NETWORK_ID;
-    const chainId = networkId && networkId.includes("solana") ? "solana-devnet" : "base-sepolia";
-    console.warn("Warning: CHAIN_ID not set, defaulting to %s", chainId);
-  }
 }
 
 // Add this right after imports and before any other code
 validateEnvironment();
+
+/**
+ * Load saved wallet data from file if it exists
+ * 
+ * @returns Saved wallet data or null if no data exists
+ */
+function loadSavedWalletData() {
+  try {
+    if (fs.existsSync(WALLET_DATA_FILE)) {
+      return JSON.parse(fs.readFileSync(WALLET_DATA_FILE, "utf8"));
+    }
+  } catch {
+    // Fail silently
+  }
+  return null;
+}
 
 /**
  * Initialize the agent with Privy Agentkit
@@ -87,25 +99,32 @@ async function initializeAgent() {
         networkId,
       });
     } else {
+      const savedWallet = loadSavedWalletData();
+      
+      if (!process.env.CHAIN_ID && !savedWallet?.chainId) {
+        console.warn("Warning: CHAIN_ID not set, defaulting to 'base-sepolia'");
+      }
+
+      const chainType = "ethereum";
+
+      const chainId = savedWallet?.chainId || process.env.CHAIN_ID || DEFAULT_CHAIN_ID;
+      const walletId = savedWallet?.walletId || process.env.PRIVY_WALLET_ID as string;
+      const authorizationPrivateKey = savedWallet?.authorizationPrivateKey || process.env.PRIVY_WALLET_AUTHORIZATION_PRIVATE_KEY;
+
       const config: PrivyWalletConfig = {
         appId: process.env.PRIVY_APP_ID as string,
         appSecret: process.env.PRIVY_APP_SECRET as string,
-        chainId: process.env.CHAIN_ID || "84532",
-        walletId: process.env.PRIVY_WALLET_ID as string,
-        authorizationPrivateKey: process.env.PRIVY_WALLET_AUTHORIZATION_PRIVATE_KEY,
         authorizationKeyId: process.env.PRIVY_WALLET_AUTHORIZATION_KEY_ID,
-        chainType: "ethereum",
+        authorizationPrivateKey,
+        chainId,
+        chainType,
+        walletId,
       };
 
-      // Try to load saved wallet data
-      if (fs.existsSync(WALLET_DATA_FILE)) {
-        const savedWallet = JSON.parse(fs.readFileSync(WALLET_DATA_FILE, "utf8"));
-        config.walletId = savedWallet.walletId;
-        config.authorizationPrivateKey = savedWallet.authorizationPrivateKey;
-        config.chainId = savedWallet.chainId;
-      }
-
       walletProvider = await PrivyWalletProvider.configureWithWallet(config);
+
+      const exportedWallet = walletProvider.exportWallet();
+      fs.writeFileSync(WALLET_DATA_FILE, JSON.stringify(exportedWallet));
     }
 
     // Initialize AgentKit
@@ -146,10 +165,6 @@ async function initializeAgent() {
         restating your tools' descriptions unless it is explicitly requested.
         `,
     });
-
-    // Save wallet data
-    const exportedWallet = walletProvider.exportWallet();
-    fs.writeFileSync(WALLET_DATA_FILE, JSON.stringify(exportedWallet));
 
     return { agent, config: agentConfig };
   } catch (error) {
