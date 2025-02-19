@@ -51,7 +51,9 @@ function validateEnvironment(): void {
 
   // Warn about optional CHAIN_ID
   if (!process.env.CHAIN_ID) {
-    console.warn("Warning: CHAIN_ID not set, defaulting to solana-devnet");
+    const networkId = process.env.NETWORK_ID;
+    const chainId = networkId && networkId.includes("solana") ? "solana-devnet" : "base-sepolia";
+    console.warn("Warning: CHAIN_ID not set, defaulting to %s", chainId);
   }
 }
 
