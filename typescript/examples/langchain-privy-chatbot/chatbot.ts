@@ -23,6 +23,7 @@ import fs from "fs";
 dotenv.config();
 
 const WALLET_DATA_FILE = "wallet_data.txt";
+const DEFAULT_CHAIN_ID = "84532"; // base-sepolia
 
 /**
  * Validates that required environment variables are set
@@ -55,6 +56,22 @@ function validateEnvironment(): void {
 validateEnvironment();
 
 /**
+ * Load saved wallet data from file if it exists
+ *
+ * @returns Saved wallet data or null if no data exists
+ */
+function loadSavedWalletData() {
+  try {
+    if (fs.existsSync(WALLET_DATA_FILE)) {
+      return JSON.parse(fs.readFileSync(WALLET_DATA_FILE, "utf8"));
+    }
+  } catch {
+    // Fail silently
+  }
+  return null;
+}
+
+/**
  * Initialize the agent with Privy Agentkit
  *
  * @returns Agent executor and config
@@ -69,12 +86,16 @@ async function initializeAgent() {
     let walletProvider: PrivyEvmWalletProvider | PrivySvmWalletProvider;
 
     const networkId = process.env.NETWORK_ID;
+    const savedWallet = loadSavedWalletData();
+
+    const walletId = savedWallet?.walletId || (process.env.PRIVY_WALLET_ID as string);
+    const chainId = savedWallet?.chainId || process.env.CHAIN_ID || DEFAULT_CHAIN_ID;
 
     if (networkId?.includes("solana")) {
       const config: PrivyWalletConfig = {
         appId: process.env.PRIVY_APP_ID as string,
         appSecret: process.env.PRIVY_APP_SECRET as string,
-        walletId: process.env.PRIVY_WALLET_ID as string,
+        walletId,
         authorizationPrivateKey: process.env.PRIVY_WALLET_AUTHORIZATION_PRIVATE_KEY,
         authorizationKeyId: process.env.PRIVY_WALLET_AUTHORIZATION_KEY_ID,
         chainType: "solana",
@@ -92,32 +113,19 @@ async function initializeAgent() {
       walletProvider = await PrivyWalletProvider.configureWithWallet(config);
       walletProvider = await PrivyWalletProvider.configureWithWallet(config);
     } else {
+      if (!process.env.CHAIN_ID && !savedWallet?.chainId) {
+        console.warn("Warning: CHAIN_ID not set, defaulting to 'base-sepolia'");
+      }
+
       const config: PrivyWalletConfig = {
         appId: process.env.PRIVY_APP_ID as string,
         appSecret: process.env.PRIVY_APP_SECRET as string,
-        chainId: process.env.CHAIN_ID,
-        walletId: process.env.PRIVY_WALLET_ID as string,
-        authorizationPrivateKey: process.env.PRIVY_WALLET_AUTHORIZATION_PRIVATE_KEY,
         authorizationKeyId: process.env.PRIVY_WALLET_AUTHORIZATION_KEY_ID,
+        authorizationPrivateKey: process.env.PRIVY_WALLET_AUTHORIZATION_PRIVATE_KEY,
+        chainId,
         chainType: "ethereum",
+        walletId,
       };
-
-      // Try to load saved wallet data
-      if (fs.existsSync(WALLET_DATA_FILE)) {
-        const savedWallet = JSON.parse(fs.readFileSync(WALLET_DATA_FILE, "utf8"));
-        config.walletId = savedWallet.walletId;
-        config.authorizationPrivateKey = savedWallet.authorizationPrivateKey;
-
-        if (savedWallet.chainId) {
-          console.log("Found chainId in wallet_data.txt:", savedWallet.chainId);
-          config.chainId = savedWallet.chainId;
-        }
-      }
-
-      if (!config.chainId) {
-        console.log("Warning: CHAIN_ID not set, defaulting to 84532 (base-sepolia)");
-        config.chainId = "84532";
-      }
 
       walletProvider = await PrivyWalletProvider.configureWithWallet(config);
     }
@@ -152,7 +160,7 @@ async function initializeAgent() {
       messageModifier: `
         You are a helpful agent with a Privy server wallet that can interact onchain using the Coinbase Developer
         Platform AgentKit. You are empowered to interact onchain using your tools. If you ever need funds, you can
-        request them from the faucet if you are on network ID 'base-sepolia'. If not, you can provide your wallet
+        request them from the faucet if you are on network ID 'base-sepolia' or 'solana-devnet'. If not, you can provide your wallet
         details and request funds from the user. Before executing your first action, get the wallet details to see
         what network you're on. If there is a 5XX (internal) HTTP error code, ask the user to try again later. If
         someone asks you to do something you can't do with your currently available tools, you must say so, and
