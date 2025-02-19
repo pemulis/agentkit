@@ -49,8 +49,6 @@ function validateEnvironment(): void {
     });
     process.exit(1);
   }
-
-  // Warn about optional CHAIN_ID
 }
 
 // Add this right after imports and before any other code
@@ -58,7 +56,7 @@ validateEnvironment();
 
 /**
  * Load saved wallet data from file if it exists
- * 
+ *
  * @returns Saved wallet data or null if no data exists
  */
 function loadSavedWalletData() {
@@ -100,7 +98,7 @@ async function initializeAgent() {
       });
     } else {
       const savedWallet = loadSavedWalletData();
-      
+
       if (!process.env.CHAIN_ID && !savedWallet?.chainId) {
         console.warn("Warning: CHAIN_ID not set, defaulting to 'base-sepolia'");
       }
@@ -108,8 +106,9 @@ async function initializeAgent() {
       const chainType = "ethereum";
 
       const chainId = savedWallet?.chainId || process.env.CHAIN_ID || DEFAULT_CHAIN_ID;
-      const walletId = savedWallet?.walletId || process.env.PRIVY_WALLET_ID as string;
-      const authorizationPrivateKey = savedWallet?.authorizationPrivateKey || process.env.PRIVY_WALLET_AUTHORIZATION_PRIVATE_KEY;
+      const walletId = savedWallet?.walletId || (process.env.PRIVY_WALLET_ID as string);
+      const authorizationPrivateKey =
+        savedWallet?.authorizationPrivateKey || process.env.PRIVY_WALLET_AUTHORIZATION_PRIVATE_KEY;
 
       const config: PrivyWalletConfig = {
         appId: process.env.PRIVY_APP_ID as string,
