@@ -107,6 +107,7 @@ async function initializeAgent() {
 
       const chainId = savedWallet?.chainId || process.env.CHAIN_ID || DEFAULT_CHAIN_ID;
       const walletId = savedWallet?.walletId || (process.env.PRIVY_WALLET_ID as string);
+
       const authorizationPrivateKey =
         savedWallet?.authorizationPrivateKey || process.env.PRIVY_WALLET_AUTHORIZATION_PRIVATE_KEY;
 
