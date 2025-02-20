@@ -1,13 +1,13 @@
 /**
  * Validates that required environment variables are set
  *
+ * @param requiredVars - Array of environment variable names that must be set
  * @throws {Error} - If required environment variables are missing
  * @returns {void}
  */
-export function validateEnvironment(): void {
+export function validateEnvironment(requiredVars: readonly string[]): void {
   const missingVars: string[] = [];
 
-  const requiredVars = ["OPENAI_API_KEY", "PRIVY_APP_ID", "PRIVY_APP_SECRET"];
   requiredVars.forEach(varName => {
     if (!process.env[varName]) {
       missingVars.push(varName);
@@ -19,6 +19,6 @@ export function validateEnvironment(): void {
     missingVars.forEach(varName => {
       console.error(`${varName}=your_${varName.toLowerCase()}_here`);
     });
-    process.exit(1);
+    throw new Error("Missing required environment variables");
   }
 } 

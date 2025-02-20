@@ -1,91 +1,191 @@
-import {
-  AgentKit,
-  PrivyWalletProvider,
-  wethActionProvider,
-  walletActionProvider,
-  erc20ActionProvider,
-  pythActionProvider,
-  PrivyEvmWalletProvider,
-  PrivySvmWalletProvider,
-  cdpApiActionProvider,
-} from "@coinbase/agentkit";
+import * as dotenv from "dotenv";
+import * as readline from "readline";
+import { HumanMessage, BaseMessage } from "@langchain/core/messages";
+import { RunnableConfig } from "@langchain/core/runnables";
+import { IterableReadableStream } from "@langchain/core/utils/stream";
+import { ActionProvider, WalletProvider } from "@coinbase/agentkit";
+import { ChatOpenAI } from "@langchain/openai";
+import { AgentKit } from "@coinbase/agentkit";
 import { getLangChainTools } from "@coinbase/agentkit-langchain";
 import { MemorySaver } from "@langchain/langgraph";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
-import { ChatOpenAI } from "@langchain/openai";
-import { loadSavedWalletData, createEthereumConfig, createSolanaConfig, saveWalletData } from "./config";
 
-export async function initializeWalletProvider(): Promise<PrivyEvmWalletProvider | PrivySvmWalletProvider> {
-  let walletProvider: PrivyEvmWalletProvider | PrivySvmWalletProvider;
-  const networkId = process.env.NETWORK_ID;
-  const savedWallet = loadSavedWalletData();
+dotenv.config();
 
-  const config = networkId?.includes("solana") ?
-    createSolanaConfig(networkId, savedWallet) :
-    createEthereumConfig(savedWallet);
-
-  walletProvider = await PrivyWalletProvider.configureWithWallet(config);
-  const exportedWallet = walletProvider.exportWallet();
-
-  if (savedWallet && savedWallet.walletId !== exportedWallet.walletId) {
-    throw new Error(`Wallet ID mismatch. Expected ${savedWallet.walletId} but got ${exportedWallet.walletId}`);
-  }
-
-  if (!savedWallet) {
-    saveWalletData(exportedWallet);
-  }
-
-  return walletProvider;
+interface AgentConfig {
+  threadId: string;
+  model?: string;
+  messageModifier?: string;
 }
 
-export async function createAgent() {
+interface Agent {
+  stream: (
+    input: { messages: BaseMessage[] },
+    options?: Partial<RunnableConfig<Record<string, any>>>
+  ) => Promise<IterableReadableStream<StreamOutput>>;
+}
+
+type StreamOutput = {
+  agent?: { messages: BaseMessage[] };
+  tools?: { messages: BaseMessage[] };
+};
+
+type Mode = "chat" | "auto";
+
+async function createChatAgent(
+  walletProvider: WalletProvider,
+  actionProviders: ActionProvider[],
+  config: AgentConfig
+): Promise<[Agent, Partial<RunnableConfig<Record<string, any>>>]> {
+  const agentkit = await AgentKit.from({
+    walletProvider,
+    actionProviders,
+  });
+
+  const tools = await getLangChainTools(agentkit);
+  const memory = new MemorySaver();
+
+  const llm = new ChatOpenAI({
+    model: config.model || "gpt-4o-mini",
+  });
+
+  const agent = createReactAgent({
+    llm,
+    tools,
+    checkpointSaver: memory,
+    messageModifier: config.messageModifier,
+  });
+
+  const runnableConfig = {
+    configurable: { thread_id: config.threadId }
+  };
+
+  return [agent, runnableConfig];
+}
+
+async function chooseMode(): Promise<Mode> {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  while (true) {
+    console.log("\nAvailable modes:");
+    console.log("1. chat - Interactive chat mode");
+    console.log("2. auto - Autonomous action mode");
+
+    const answer = await new Promise<string>(resolve => 
+      rl.question("\nChoose a mode (enter number or name): ", resolve)
+    );
+
+    rl.close();
+
+    const choice = answer.toLowerCase().trim();
+    if (choice === "1" || choice === "chat") return "chat";
+    if (choice === "2" || choice === "auto") return "auto";
+
+    console.log("Invalid choice. Please enter '1'/'chat' or '2'/'auto'");
+  }
+}
+
+async function runAutonomousMode(
+  agent: Agent,
+  config: Partial<RunnableConfig<Record<string, any>>>
+): Promise<void> {
+  console.log("Starting autonomous mode...");
+
+  while (true) {
+    try {
+      const thought =
+        "Be creative and do something interesting on the blockchain. " +
+        "Choose an action or set of actions and execute it that highlights your abilities.";
+
+      const stream = await agent.stream(
+        { messages: [new HumanMessage(thought)] },
+        config
+      );
+
+      for await (const chunk of stream) {
+        if (chunk.agent) {
+          console.log(chunk.agent.messages[0].content);
+        } else if (chunk.tools) {
+          console.log(chunk.tools.messages[0].content);
+        }
+        console.log("-------------------");
+      }
+
+      await new Promise(resolve => setTimeout(resolve, 10000));
+    } catch (error) {
+      console.error("Error in autonomous mode:", error);
+      throw error;
+    }
+  }
+}
+
+async function runChatMode(
+  agent: Agent,
+  config: Partial<RunnableConfig<Record<string, any>>>
+): Promise<void> {
+  console.log("Starting chat mode... Type 'exit' to end.");
+
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  const question = (prompt: string): Promise<string> =>
+    new Promise(resolve => rl.question(prompt, resolve));
+
   try {
-    // Initialize LLM
-    const llm = new ChatOpenAI({
-      model: "gpt-4o-mini",
-    });
+    while (true) {
+      const userInput = await question("\nPrompt: ");
 
-    const walletProvider = await initializeWalletProvider();
+      if (userInput.toLowerCase() === "exit") {
+        break;
+      }
 
-    // Initialize AgentKit
-    const agentkit = await AgentKit.from({
-      walletProvider,
-      actionProviders: [
-        wethActionProvider(),
-        pythActionProvider(),
-        walletActionProvider(),
-        erc20ActionProvider(),
-        cdpApiActionProvider({
-          apiKeyName: process.env.CDP_API_KEY_NAME as string,
-          apiKeyPrivateKey: process.env.CDP_API_KEY_PRIVATE_KEY as string,
-        }),
-      ],
-    });
+      const stream = await agent.stream(
+        { messages: [new HumanMessage(userInput)] },
+        config
+      );
 
-    const tools = await getLangChainTools(agentkit);
-    const memory = new MemorySaver();
-    const agentConfig = { configurable: { thread_id: "Privy AgentKit Chatbot Example!" } };
-
-    const agent = createReactAgent({
-      llm,
-      tools,
-      checkpointSaver: memory,
-      messageModifier: `
-        You are a helpful agent with a Privy server wallet that can interact onchain using the Coinbase Developer
-        Platform AgentKit. You are empowered to interact onchain using your tools. If you ever need funds, you can
-        request them from the faucet if you are on network ID 'base-sepolia' or 'solana-devnet'. If not, you can provide your wallet
-        details and request funds from the user. Before executing your first action, get the wallet details to see
-        what network you're on. If there is a 5XX (internal) HTTP error code, ask the user to try again later. If
-        someone asks you to do something you can't do with your currently available tools, you must say so, and
-        encourage them to implement it themselves using the CDP SDK + Agentkit, recommend they go to
-        docs.cdp.coinbase.com for more information. Be concise and helpful with your responses. Refrain from
-        restating your tools' descriptions unless it is explicitly requested.
-      `,
-    });
-
-    return { agent, agentConfig };
+      for await (const chunk of stream) {
+        if (chunk.agent) {
+          console.log(chunk.agent.messages[0].content);
+        } else if (chunk.tools) {
+          console.log(chunk.tools.messages[0].content);
+        }
+        console.log("-------------------");
+      }
+    }
   } catch (error) {
-    console.error("Failed to initialize agent:", error);
+    if (error instanceof Error) {
+      console.error("Error:", error.message);
+    }
+    throw error;
+  } finally {
+    rl.close();
+  }
+}
+
+export async function startAgent(
+  walletProvider: WalletProvider,
+  actionProviders: ActionProvider[],
+  config: AgentConfig
+): Promise<void> {
+  try {
+    const [agent, runnableConfig] = await createChatAgent(walletProvider, actionProviders, config);
+    const mode = await chooseMode();
+
+    if (mode === "chat") {
+      await runChatMode(agent, runnableConfig);
+    } else {
+      await runAutonomousMode(agent, runnableConfig);
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error:", error.message);
+    }
     throw error;
   }
 } 

@@ -1,31 +1,53 @@
-import { PrivyWalletConfig } from "@coinbase/agentkit";
+import { PrivyWalletConfig, PrivyWalletProvider, PrivyEvmWalletProvider, PrivySvmWalletProvider, PrivyWalletExport } from "@coinbase/agentkit";
 import fs from "fs";
 
-export const WALLET_DATA_FILE = "wallet_data.txt";
-export const DEFAULT_CHAIN_ID = "84532"; // base-sepolia
-
-export interface SavedWalletData {
-  walletId: string;
-  chainId: string;
-  networkId?: string;
+interface WalletProviderConfig {
+  walletDataFilePath: string;
+  walletDefaultChainId: string;
 }
 
-export function loadSavedWalletData(): SavedWalletData | null {
+/**
+ * Loads saved wallet data from the filesystem
+ * 
+ * @param walletDataFilePath - Path to the wallet data file
+ * @returns The saved wallet data, or null if no data exists or there was an error reading the file
+ */
+export function loadSavedWalletData(walletDataFilePath: string): PrivyWalletExport | null {
   try {
-    if (fs.existsSync(WALLET_DATA_FILE)) {
-      return JSON.parse(fs.readFileSync(WALLET_DATA_FILE, "utf8"));
+    if (fs.existsSync(walletDataFilePath)) {
+      return JSON.parse(fs.readFileSync(walletDataFilePath, "utf8"));
     }
   } catch {
-    // Fail silently
+    // fail silently for reads since this is expected when no wallet exists
   }
   return null;
 }
 
-export function saveWalletData(walletData: any): void {
-  fs.writeFileSync(WALLET_DATA_FILE, JSON.stringify(walletData));
+/**
+ * Saves wallet data to the filesystem
+ * 
+ * @param walletDataFilePath - Path to the wallet data file
+ * @param walletData - The wallet data to save
+ * @throws {Error} If there was an error writing the file
+ */
+export function saveWalletData(walletDataFilePath: string, walletData: PrivyWalletExport): void {
+  const jsonData = JSON.stringify(walletData, null, 2);
+  try {
+    fs.writeFileSync(walletDataFilePath, jsonData);
+  } catch (error) {
+    // do not fail silently, dump the error to the console with the wallet's json data
+    console.error("Failed to save wallet data:", jsonData);
+    throw new Error(`Failed to save wallet data (${jsonData}): ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
 }
 
-function getBaseConfig(savedWallet: SavedWalletData | null) {
+/**
+ * Creates the base configuration for a Privy wallet
+ * 
+ * @param savedWallet - Previously saved wallet data, if any
+ * @returns Base configuration for a Privy wallet
+ */
+function getBaseConfig(savedWallet: PrivyWalletExport | null) {
   const walletId = savedWallet?.walletId || process.env.PRIVY_WALLET_ID as string;
 
   return {
@@ -37,8 +59,15 @@ function getBaseConfig(savedWallet: SavedWalletData | null) {
   };
 }
 
-export function createEthereumConfig(savedWallet: SavedWalletData | null): PrivyWalletConfig {
-  const chainId = savedWallet?.chainId || process.env.CHAIN_ID || DEFAULT_CHAIN_ID;
+/**
+ * Creates configuration for an Ethereum wallet
+ * 
+ * @param savedWallet - Previously saved wallet data, if any
+ * @param defaultChainId - Default chain ID to use if none is specified
+ * @returns Configuration for an Ethereum wallet
+ */
+export function createEthereumConfig(savedWallet: PrivyWalletExport | null, defaultChainId: string): PrivyWalletConfig {
+  const chainId = savedWallet?.chainId || process.env.CHAIN_ID || defaultChainId;
 
   if (!process.env.CHAIN_ID && !savedWallet?.chainId) {
     console.warn("Warning: CHAIN_ID not set, defaulting to 'base-sepolia'");
@@ -51,11 +80,47 @@ export function createEthereumConfig(savedWallet: SavedWalletData | null): Privy
   };
 }
 
-export function createSolanaConfig(networkId: string, savedWallet: SavedWalletData | null): PrivyWalletConfig {
+/**
+ * Creates configuration for a Solana wallet
+ * 
+ * @param networkId - The Solana network ID to use
+ * @param savedWallet - Previously saved wallet data, if any
+ * @returns Configuration for a Solana wallet
+ */
+export function createSolanaConfig(networkId: string, savedWallet: PrivyWalletExport | null): PrivyWalletConfig {
   return {
     ...getBaseConfig(savedWallet),
     chainType: "solana",
     networkId: savedWallet?.networkId || networkId,
     chainId: savedWallet?.chainId,
   };
+}
+
+/**
+ * Initializes a wallet provider using saved wallet data if available
+ * 
+ * @param config - Configuration for the wallet provider
+ * @returns A configured wallet provider
+ * @throws {Error} If there is a wallet ID mismatch between saved and exported data
+ */
+export async function initializeWalletProvider(config: WalletProviderConfig): Promise<PrivyEvmWalletProvider | PrivySvmWalletProvider> {
+  const networkId = process.env.NETWORK_ID;
+  const savedWallet = loadSavedWalletData(config.walletDataFilePath);
+
+  const walletConfig = networkId?.includes("solana") ?
+    createSolanaConfig(networkId, savedWallet) :
+    createEthereumConfig(savedWallet, config.walletDefaultChainId);
+
+  const walletProvider = await PrivyWalletProvider.configureWithWallet(walletConfig);
+  const exportedWallet = walletProvider.exportWallet();
+
+  if (savedWallet && savedWallet.walletId !== exportedWallet.walletId) {
+    throw new Error(`Wallet ID mismatch. Expected ${savedWallet.walletId} but got ${exportedWallet.walletId}`);
+  }
+
+  if (!savedWallet) {
+    saveWalletData(config.walletDataFilePath, exportedWallet);
+  }
+
+  return walletProvider;
 } 
