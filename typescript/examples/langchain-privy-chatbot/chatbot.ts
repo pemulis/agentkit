@@ -118,7 +118,6 @@ async function initializeAgent() {
       }
 
       walletProvider = await PrivyWalletProvider.configureWithWallet(config);
-      walletProvider = await PrivyWalletProvider.configureWithWallet(config);
     } else {
       const config: PrivyWalletConfig = {
         appId: process.env.PRIVY_APP_ID as string,
