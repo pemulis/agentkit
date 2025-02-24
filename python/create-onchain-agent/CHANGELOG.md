@@ -1,5 +1,11 @@
 # Coinbase AgentKit Changelog
 
+## [0.1.3] - 2025-02-24
+
+## Fixed
+
+- Fixed the built project's missing dependencies
+
 ## [0.1.2] - 2025-02-24
 
 ## Fixed
