@@ -5,11 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Coinbase Agentkit Documentation &#8212; Coinbase Agentkit 0.1.2 documentation</title>
+    <title>Coinbase Agentkit Documentation &#8212; Coinbase Agentkit 0.1.4 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
-    <script src="_static/documentation_options.js?v=92734c54"></script>
+    <script src="_static/documentation_options.js?v=fd825880"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -74,6 +74,7 @@
 <li><p><a class="reference internal" href="#configuring-ethaccountwalletprovider-gas-parameters"><span class="xref myst">Configuring gas parameters</span></a></p></li>
 </ul>
 </li>
+<li><p><a class="reference internal" href="#smartwalletprovider"><span class="xref myst">SmartWalletProvider</span></a></p></li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#contributing"><span class="xref myst">Contributing</span></a></p></li>
@@ -177,7 +178,8 @@
 <section id="creating-an-action-provider">
 <h3>Creating an Action Provider<a class="headerlink" href="#creating-an-action-provider" title="Link to this heading">¶</a></h3>
 <p>Action providers define the actions that an agent can take. They are created by subclassing the <code class="docutils literal notranslate"><span class="pre">ActionProvider</span></code> abstract class.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActionProvider</span><span class="p">,</span> <span class="n">WalletProvider</span><span class="p">,</span> <span class="n">Network</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActionProvider</span><span class="p">,</span> <span class="n">WalletProvider</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit.network</span><span class="w"> </span><span class="kn">import</span> <span class="n">Network</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">MyActionProvider</span><span class="p">(</span><span class="n">ActionProvider</span><span class="p">[</span><span class="n">WalletProvider</span><span class="p">]):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -203,7 +205,8 @@
 <ol class="arabic simple" start="2">
 <li><p>Define the action:</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActionProvider</span><span class="p">,</span> <span class="n">WalletProvider</span><span class="p">,</span> <span class="n">Network</span><span class="p">,</span> <span class="n">create_action</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActionProvider</span><span class="p">,</span> <span class="n">WalletProvider</span><span class="p">,</span> <span class="n">create_action</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit.network</span><span class="w"> </span><span class="kn">import</span> <span class="n">Network</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">MyActionProvider</span><span class="p">(</span><span class="n">ActionProvider</span><span class="p">[</span><span class="n">WalletProvider</span><span class="p">]):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -292,11 +295,12 @@
 </section>
 <section id="configuring-from-a-mnemonic-phrase">
 <h5>Configuring from a mnemonic phrase<a class="headerlink" href="#configuring-from-a-mnemonic-phrase" title="Link to this heading">¶</a></h5>
-<p>The <code class="docutils literal notranslate"><span class="pre">CdpWalletProvider</span></code> can be configured from a mnemonic phrase by passing the <code class="docutils literal notranslate"><span class="pre">mnemonic_phrase</span></code> parameter to the <code class="docutils literal notranslate"><span class="pre">CdpWalletProviderConfig</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">CdpWalletProvider</span></code> can be configured from a mnemonic phrase by passing the <code class="docutils literal notranslate"><span class="pre">mnemonic_phrase</span></code> and <code class="docutils literal notranslate"><span class="pre">network_id</span></code> parameters to the <code class="docutils literal notranslate"><span class="pre">CdpWalletProviderConfig</span></code>. If <code class="docutils literal notranslate"><span class="pre">network_id</span></code> is not defined, the <code class="docutils literal notranslate"><span class="pre">CdpWalletProvider</span></code> will fall back to the env var <code class="docutils literal notranslate"><span class="pre">NETWORK_ID</span></code>, and if that is not defined, it will default to <code class="docutils literal notranslate"><span class="pre">base-sepolia</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">CdpWalletProvider</span><span class="p">,</span> <span class="n">CdpWalletProviderConfig</span>
 
 <span class="n">wallet_provider</span> <span class="o">=</span> <span class="n">CdpWalletProvider</span><span class="p">(</span><span class="n">CdpWalletProviderConfig</span><span class="p">(</span>
     <span class="n">mnemonic_phrase</span><span class="o">=</span><span class="s2">&quot;MNEMONIC PHRASE&quot;</span><span class="p">,</span>
+    <span class="n">network_id</span><span class="o">=</span><span class="s2">&quot;base-sepolia&quot;</span><span class="p">,</span>
 <span class="p">))</span>
 </pre></div>
 </div>
@@ -308,6 +312,7 @@
 
 <span class="n">wallet_provider</span> <span class="o">=</span> <span class="n">CdpWalletProvider</span><span class="p">(</span><span class="n">CdpWalletProviderConfig</span><span class="p">(</span>
     <span class="n">mnemonic_phrase</span><span class="o">=</span><span class="s2">&quot;MNEMONIC PHRASE&quot;</span><span class="p">,</span>
+    <span class="n">network_id</span><span class="o">=</span><span class="s2">&quot;base-sepolia&quot;</span><span class="p">,</span>
 <span class="p">))</span>
 
 <span class="n">wallet_data</span> <span class="o">=</span> <span class="n">wallet_provider</span><span class="o">.</span><span class="n">export_wallet</span><span class="p">()</span>
@@ -415,6 +420,74 @@
 </pre></div>
 </div>
 </section>
+<section id="configuring-ethaccountwalletprovider-rpc-url">
+<h5>Configuring <code class="docutils literal notranslate"><span class="pre">EthAccountWalletProvider</span></code> rpc url<a class="headerlink" href="#configuring-ethaccountwalletprovider-rpc-url" title="Link to this heading">¶</a></h5>
+<p>The <code class="docutils literal notranslate"><span class="pre">EthAccountWalletProvider</span></code> also exposes parameters for defining the rpc url manually.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">eth_account</span><span class="w"> </span><span class="kn">import</span> <span class="n">Account</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AgentKit</span><span class="p">,</span>
+    <span class="n">AgentKitConfig</span><span class="p">,</span>
+    <span class="n">EthAccountWalletProvider</span><span class="p">,</span>
+    <span class="n">EthAccountWalletProviderConfig</span>
+<span class="p">)</span>
+
+<span class="n">private_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PRIVATE_KEY&quot;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">private_key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;You must set PRIVATE_KEY environment variable&quot;</span>
+<span class="k">assert</span> <span class="n">private_key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;0x&quot;</span><span class="p">),</span> <span class="s2">&quot;Private key must start with 0x hex prefix&quot;</span>
+
+<span class="n">account</span> <span class="o">=</span> <span class="n">Account</span><span class="o">.</span><span class="n">from_key</span><span class="p">(</span><span class="n">private_key</span><span class="p">)</span>
+
+<span class="n">wallet_provider</span> <span class="o">=</span> <span class="n">EthAccountWalletProvider</span><span class="p">(</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">EthAccountWalletProviderConfig</span><span class="p">(</span>
+        <span class="n">account</span><span class="o">=</span><span class="n">account</span><span class="p">,</span>
+        <span class="n">rpc_url</span><span class="o">=</span><span class="s2">&quot;https://sepolia.base.org&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">agent_kit</span> <span class="o">=</span> <span class="n">AgentKit</span><span class="p">(</span><span class="n">AgentKitConfig</span><span class="p">(</span>
+    <span class="n">wallet_provider</span><span class="o">=</span><span class="n">wallet_provider</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="smartwalletprovider">
+<h4>SmartWalletProvider<a class="headerlink" href="#smartwalletprovider" title="Link to this heading">¶</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">SmartWalletProvider</span></code> is a wallet provider that uses <a class="reference external" href="https://docs.cdp.coinbase.com/wallet-api/docs/smart-wallets">CDP Smart Wallets</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">eth_account</span><span class="w"> </span><span class="kn">import</span> <span class="n">Account</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_agentkit</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AgentKit</span><span class="p">,</span>
+    <span class="n">AgentKitConfig</span><span class="p">,</span>
+    <span class="n">SmartWalletProvider</span><span class="p">,</span>
+    <span class="n">SmartWalletProviderConfig</span>
+<span class="p">)</span>
+
+<span class="c1"># See here for creating a private key:</span>
+<span class="c1"># https://web3py.readthedocs.io/en/stable/web3.eth.account.html#creating-a-private-key</span>
+<span class="n">private_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PRIVATE_KEY&quot;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">private_key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;You must set PRIVATE_KEY environment variable&quot;</span>
+<span class="k">assert</span> <span class="n">private_key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;0x&quot;</span><span class="p">),</span> <span class="s2">&quot;Private key must start with 0x hex prefix&quot;</span>
+
+<span class="n">signer</span> <span class="o">=</span> <span class="n">Account</span><span class="o">.</span><span class="n">from_key</span><span class="p">(</span><span class="n">private_key</span><span class="p">)</span>
+
+<span class="n">network_id</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;NETWORK_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;base-sepolia&quot;</span><span class="p">)</span>
+
+<span class="n">wallet_provider</span> <span class="o">=</span> <span class="n">SmartWalletProvider</span><span class="p">(</span><span class="n">SmartWalletProviderConfig</span><span class="p">(</span>
+    <span class="n">network_id</span><span class="o">=</span><span class="n">network_id</span><span class="p">,</span>
+    <span class="n">signer</span><span class="o">=</span><span class="n">signer</span><span class="p">,</span>
+    <span class="n">smart_wallet_address</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="c1"># If not provided, a new smart wallet will be created</span>
+    <span class="n">paymaster_url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="c1"># Sponsor transactions: https://docs.cdp.coinbase.com/paymaster/docs/welcome</span>
+<span class="p">))</span>
+
+<span class="n">agent_kit</span> <span class="o">=</span> <span class="n">AgentKit</span><span class="p">(</span><span class="n">AgentKitConfig</span><span class="p">(</span>
+    <span class="n">wallet_provider</span><span class="o">=</span><span class="n">wallet_provider</span>
+<span class="p">))</span>
+</pre></div>
+</div>
 </section>
 </section>
 <section id="contributing">

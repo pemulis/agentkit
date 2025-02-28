@@ -28,6 +28,14 @@ coinbase\_agentkit.wallet\_providers.evm\_wallet\_provider module
    :undoc-members:
    :show-inheritance:
 
+coinbase\_agentkit.wallet\_providers.smart\_wallet\_provider module
+-------------------------------------------------------------------
+
+.. automodule:: coinbase_agentkit.wallet_providers.smart_wallet_provider
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 coinbase\_agentkit.wallet\_providers.wallet\_provider module
 ------------------------------------------------------------
 

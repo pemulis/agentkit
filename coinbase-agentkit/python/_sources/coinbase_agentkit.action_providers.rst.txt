@@ -9,6 +9,7 @@ Subpackages
 
    coinbase_agentkit.action_providers.basename
    coinbase_agentkit.action_providers.cdp
+   coinbase_agentkit.action_providers.compound
    coinbase_agentkit.action_providers.erc20
    coinbase_agentkit.action_providers.erc721
    coinbase_agentkit.action_providers.morpho

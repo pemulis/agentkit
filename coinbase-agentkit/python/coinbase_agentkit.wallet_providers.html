@@ -5,11 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>coinbase_agentkit.wallet_providers package &#8212; Coinbase Agentkit 0.1.2 documentation</title>
+    <title>coinbase_agentkit.wallet_providers package &#8212; Coinbase Agentkit 0.1.4 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
-    <script src="_static/documentation_options.js?v=92734c54"></script>
+    <script src="_static/documentation_options.js?v=fd825880"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -699,6 +699,11 @@
 <dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.eth_account_wallet_provider.EthAccountWalletProviderConfig.rpc_url">
+<span class="sig-name descname"><span class="pre">rpc_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.eth_account_wallet_provider.EthAccountWalletProviderConfig.rpc_url" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>
@@ -798,6 +803,219 @@
 </dd>
 </dl>
 </dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-coinbase_agentkit.wallet_providers.smart_wallet_provider">
+<span id="coinbase-agentkit-wallet-providers-smart-wallet-provider-module"></span><h2>coinbase_agentkit.wallet_providers.smart_wallet_provider module<a class="headerlink" href="#module-coinbase_agentkit.wallet_providers.smart_wallet_provider" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">coinbase_agentkit.wallet_providers.smart_wallet_provider.</span></span><span class="sig-name descname"><span class="pre">SmartWalletProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmWalletProvider" title="coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmWalletProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">EvmWalletProvider</span></code></a></p>
+<p>A wallet provider that uses the Coinbase Smart Wallet SDK.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.get_address">
+<span class="sig-name descname"><span class="pre">get_address</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.get_address" title="Link to this definition">¶</a></dt>
+<dd><p>Get the smart wallet address.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.get_balance">
+<span class="sig-name descname"><span class="pre">get_balance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.get_balance" title="Link to this definition">¶</a></dt>
+<dd><p>Get the balance of the smart wallet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Decimal</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.get_name" title="Link to this definition">¶</a></dt>
+<dd><p>Get the name of the wallet provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.get_network">
+<span class="sig-name descname"><span class="pre">get_network</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.get_network" title="Link to this definition">¶</a></dt>
+<dd><p>Get the network information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="coinbase_agentkit.network.html#coinbase_agentkit.network.network.Network" title="coinbase_agentkit.network.network.Network"><code class="xref py py-class docutils literal notranslate"><span class="pre">Network</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.native_transfer">
+<span class="sig-name descname"><span class="pre">native_transfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.native_transfer" title="Link to this definition">¶</a></dt>
+<dd><p>Transfer native assets using the smart wallet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">NewType</span></code>(<code class="docutils literal notranslate"><span class="pre">HexStr</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.read_contract">
+<span class="sig-name descname"><span class="pre">read_contract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contract_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'latest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.read_contract" title="Link to this definition">¶</a></dt>
+<dd><p>Read data from a smart contract.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.send_transaction">
+<span class="sig-name descname"><span class="pre">send_transaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transaction</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.send_transaction" title="Link to this definition">¶</a></dt>
+<dd><p>Send a transaction using the smart wallet.</p>
+<p>Unlike traditional Ethereum transactions, this method submits a User Operation
+instead of directly broadcasting a transaction. The smart wallet handles execution,
+but a standard transaction hash is still returned upon completion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">NewType</span></code>(<code class="docutils literal notranslate"><span class="pre">HexStr</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.send_user_operation">
+<span class="sig-name descname"><span class="pre">send_user_operation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">calls</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.send_user_operation" title="Link to this definition">¶</a></dt>
+<dd><p>Send a user operation directly.</p>
+<p>This method directly exposes the sendUserOperation functionality, allowing
+SmartWallet-aware tools to fully leverage its capabilities, including batching multiple calls.
+Unlike send_transaction, which wraps calls in a single operation, this method allows
+direct execution of arbitrary operations within a User Operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">NewType</span></code>(<code class="docutils literal notranslate"><span class="pre">HexStr</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.sign_message">
+<span class="sig-name descname"><span class="pre">sign_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.sign_message" title="Link to this definition">¶</a></dt>
+<dd><p>Smart wallets cannot sign raw messages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – Always, since smart wallets do not support signing raw messages.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">NewType</span></code>(<code class="docutils literal notranslate"><span class="pre">HexStr</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.sign_transaction">
+<span class="sig-name descname"><span class="pre">sign_transaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transaction</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.sign_transaction" title="Link to this definition">¶</a></dt>
+<dd><p>Smart wallets cannot sign transactions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – Always, since smart wallets do not support signing transactions.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">SignedTransaction</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.sign_typed_data">
+<span class="sig-name descname"><span class="pre">sign_typed_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">typed_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.sign_typed_data" title="Link to this definition">¶</a></dt>
+<dd><p>Smart wallets cannot sign typed data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – Always, since smart wallets do not support signing typed data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">NewType</span></code>(<code class="docutils literal notranslate"><span class="pre">HexStr</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.wait_for_transaction_receipt">
+<span class="sig-name descname"><span class="pre">wait_for_transaction_receipt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tx_hash</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poll_latency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProvider.wait_for_transaction_receipt" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a transaction receipt.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">coinbase_agentkit.wallet_providers.smart_wallet_provider.</span></span><span class="sig-name descname"><span class="pre">SmartWalletProviderConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Configuration for SmartWalletProvider.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.Config" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Configuration for SmartWalletProvider.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.Config.arbitrary_types_allowed">
+<span class="sig-name descname"><span class="pre">arbitrary_types_allowed</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.Config.arbitrary_types_allowed" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.cdp_api_key_name">
+<span class="sig-name descname"><span class="pre">cdp_api_key_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.cdp_api_key_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.cdp_api_key_private_key">
+<span class="sig-name descname"><span class="pre">cdp_api_key_private_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.cdp_api_key_private_key" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True}</span></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.network_id">
+<span class="sig-name descname"><span class="pre">network_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.network_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.paymaster_url">
+<span class="sig-name descname"><span class="pre">paymaster_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.paymaster_url" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.signer">
+<span class="sig-name descname"><span class="pre">signer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalAccount</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.signer" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.smart_wallet_address">
+<span class="sig-name descname"><span class="pre">smart_wallet_address</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.smart_wallet_provider.SmartWalletProviderConfig.smart_wallet_address" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1555,6 +1773,11 @@
 <dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.EthAccountWalletProviderConfig.rpc_url">
+<span class="sig-name descname"><span class="pre">rpc_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.EthAccountWalletProviderConfig.rpc_url" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1627,6 +1850,216 @@
 </dd>
 </dl>
 </dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProvider">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">coinbase_agentkit.wallet_providers.</span></span><span class="sig-name descname"><span class="pre">SmartWalletProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProvider" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmWalletProvider" title="coinbase_agentkit.wallet_providers.evm_wallet_provider.EvmWalletProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">EvmWalletProvider</span></code></a></p>
+<p>A wallet provider that uses the Coinbase Smart Wallet SDK.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProvider.get_address">
+<span class="sig-name descname"><span class="pre">get_address</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProvider.get_address" title="Link to this definition">¶</a></dt>
+<dd><p>Get the smart wallet address.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProvider.get_balance">
+<span class="sig-name descname"><span class="pre">get_balance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProvider.get_balance" title="Link to this definition">¶</a></dt>
+<dd><p>Get the balance of the smart wallet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Decimal</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProvider.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProvider.get_name" title="Link to this definition">¶</a></dt>
+<dd><p>Get the name of the wallet provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProvider.get_network">
+<span class="sig-name descname"><span class="pre">get_network</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProvider.get_network" title="Link to this definition">¶</a></dt>
+<dd><p>Get the network information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="coinbase_agentkit.network.html#coinbase_agentkit.network.network.Network" title="coinbase_agentkit.network.network.Network"><code class="xref py py-class docutils literal notranslate"><span class="pre">Network</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProvider.native_transfer">
+<span class="sig-name descname"><span class="pre">native_transfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProvider.native_transfer" title="Link to this definition">¶</a></dt>
+<dd><p>Transfer native assets using the smart wallet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">NewType</span></code>(<code class="docutils literal notranslate"><span class="pre">HexStr</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProvider.read_contract">
+<span class="sig-name descname"><span class="pre">read_contract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contract_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'latest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProvider.read_contract" title="Link to this definition">¶</a></dt>
+<dd><p>Read data from a smart contract.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProvider.send_transaction">
+<span class="sig-name descname"><span class="pre">send_transaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transaction</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProvider.send_transaction" title="Link to this definition">¶</a></dt>
+<dd><p>Send a transaction using the smart wallet.</p>
+<p>Unlike traditional Ethereum transactions, this method submits a User Operation
+instead of directly broadcasting a transaction. The smart wallet handles execution,
+but a standard transaction hash is still returned upon completion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">NewType</span></code>(<code class="docutils literal notranslate"><span class="pre">HexStr</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProvider.send_user_operation">
+<span class="sig-name descname"><span class="pre">send_user_operation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">calls</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProvider.send_user_operation" title="Link to this definition">¶</a></dt>
+<dd><p>Send a user operation directly.</p>
+<p>This method directly exposes the sendUserOperation functionality, allowing
+SmartWallet-aware tools to fully leverage its capabilities, including batching multiple calls.
+Unlike send_transaction, which wraps calls in a single operation, this method allows
+direct execution of arbitrary operations within a User Operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">NewType</span></code>(<code class="docutils literal notranslate"><span class="pre">HexStr</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProvider.sign_message">
+<span class="sig-name descname"><span class="pre">sign_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProvider.sign_message" title="Link to this definition">¶</a></dt>
+<dd><p>Smart wallets cannot sign raw messages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – Always, since smart wallets do not support signing raw messages.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">NewType</span></code>(<code class="docutils literal notranslate"><span class="pre">HexStr</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProvider.sign_transaction">
+<span class="sig-name descname"><span class="pre">sign_transaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transaction</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProvider.sign_transaction" title="Link to this definition">¶</a></dt>
+<dd><p>Smart wallets cannot sign transactions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – Always, since smart wallets do not support signing transactions.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">SignedTransaction</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProvider.sign_typed_data">
+<span class="sig-name descname"><span class="pre">sign_typed_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">typed_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProvider.sign_typed_data" title="Link to this definition">¶</a></dt>
+<dd><p>Smart wallets cannot sign typed data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – Always, since smart wallets do not support signing typed data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">NewType</span></code>(<code class="docutils literal notranslate"><span class="pre">HexStr</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProvider.wait_for_transaction_receipt">
+<span class="sig-name descname"><span class="pre">wait_for_transaction_receipt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tx_hash</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poll_latency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProvider.wait_for_transaction_receipt" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a transaction receipt.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProviderConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">coinbase_agentkit.wallet_providers.</span></span><span class="sig-name descname"><span class="pre">SmartWalletProviderConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProviderConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Configuration for SmartWalletProvider.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.Config" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Configuration for SmartWalletProvider.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.Config.arbitrary_types_allowed">
+<span class="sig-name descname"><span class="pre">arbitrary_types_allowed</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.Config.arbitrary_types_allowed" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.cdp_api_key_name">
+<span class="sig-name descname"><span class="pre">cdp_api_key_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.cdp_api_key_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.cdp_api_key_private_key">
+<span class="sig-name descname"><span class="pre">cdp_api_key_private_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.cdp_api_key_private_key" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True}</span></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.network_id">
+<span class="sig-name descname"><span class="pre">network_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.network_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.paymaster_url">
+<span class="sig-name descname"><span class="pre">paymaster_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.paymaster_url" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.signer">
+<span class="sig-name descname"><span class="pre">signer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalAccount</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.signer" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.smart_wallet_address">
+<span class="sig-name descname"><span class="pre">smart_wallet_address</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#coinbase_agentkit.wallet_providers.SmartWalletProviderConfig.smart_wallet_address" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
