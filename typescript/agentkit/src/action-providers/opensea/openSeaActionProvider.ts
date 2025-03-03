@@ -1,20 +1,16 @@
+import { OpenSeaSDK } from "opensea-js";
 import { z } from "zod";
-import { ActionProvider } from "../actionProvider";
-import { CreateAction } from "../actionDecorator";
-import { OpenSeaSDK, Chain } from "opensea-js"; // Assuming an OpenSea SDK is available
 import { Network } from "../../network";
-import { OpenSeaGetNftsByAccount, OpenSeaListNFTSchema } from "./schemas";
 import { ViemWalletProvider } from "../../wallet-providers";
-import { privateKeyToAccount } from "viem/accounts";
-import { createWalletClient, http } from "viem";
-import { sepolia } from "viem/chains";
+import { CreateAction } from "../actionDecorator";
+import { ActionProvider } from "../actionProvider";
+import { OpenSeaGetNftsByAccount, OpenSeaListNFTSchema } from "./schemas";
 
 /**
  * Configuration options for the OpenSeaActionProvider.
  */
 export interface OpenSeaActionProviderConfig {
   apiKey?: string;
-  walletPrivateKey: string;
 }
 
 /**
@@ -22,9 +18,8 @@ export interface OpenSeaActionProviderConfig {
  *
  * @augments ActionProvider
  */
-export class OpenSeaActionProvider extends ActionProvider {
-  private readonly client: OpenSeaSDK;
-  private readonly walletProvider: ViemWalletProvider;
+export class OpenSeaActionProvider extends ActionProvider<ViemWalletProvider> {
+  #openseaApiKey?: string;
 
   /**
    * Constructor for the OpenSeaActionProvider class.
@@ -33,27 +28,7 @@ export class OpenSeaActionProvider extends ActionProvider {
    */
   constructor(config: OpenSeaActionProviderConfig) {
     super("opensea", []);
-
-    config.apiKey ||= process.env.OPENSEA_API_KEY;
-
-    /*
-     * if (!config.apiKey) {
-     *   throw new Error("OPENSEA_API_KEY is not configured.");
-     * }
-     */
-
-    const walletClient = createWalletClient({
-      account: privateKeyToAccount(config.walletPrivateKey as `0x${string}`),
-      chain: sepolia,
-      transport: http(),
-    });
-
-    this.walletProvider = new ViemWalletProvider(walletClient);
-
-    //@ts-expect-error: OpenSeaSDK constructor expects a different type for walletProvider
-    this.client = new OpenSeaSDK(this.walletProvider, {
-      chain: Chain.Sepolia,
-    });
+    this.#openseaApiKey = config.apiKey || process.env.OPENSEA_API_KEY;
   }
 
   /**
@@ -74,24 +49,19 @@ A failure response will return a message with an error:
     Error listing NFT: Insufficient funds.`,
     schema: OpenSeaListNFTSchema,
   })
-  async listNFT(args: z.infer<typeof OpenSeaListNFTSchema>): Promise<string> {
-    try {
-      const expirationTime = Math.round(Date.now() / 1000 + 60 * 60 * 24);
-      const response = await this.client.createListing({
-        asset: {
-          tokenId: args.tokenId,
-          tokenAddress: args.tokenAddress,
-        },
-        accountAddress: this.walletProvider.getAddress(),
-        startAmount: args.listingPrice,
-        expirationTime,
-      });
+  async listNFT(walletProvider: ViemWalletProvider, args: z.infer<typeof OpenSeaListNFTSchema>): Promise<string> {
+    const expirationTime = Math.round(Date.now() / 1000 + 60 * 60 * 24 * args.expiresInDays);
+    const response = await this.getClient(walletProvider).createListing({
+      asset: {
+        tokenId: args.tokenId,
+        tokenAddress: args.tokenAddress,
+      },
+      accountAddress: walletProvider.getAddress(),
+      startAmount: args.listingPrice,
+      expirationTime,
+    });
 
-      return `Successfully listed NFT:\n${JSON.stringify(response)}`;
-    } catch (error) {
-      console.log("response: ", error);
-      return `Error listing NFT:\n${error}`;
-    }
+    return JSON.stringify(response);
   }
 
   /**
@@ -111,13 +81,9 @@ A failure response will return a message with an error:
       Error fetching NFTs: <error_message>`,
     schema: OpenSeaGetNftsByAccount,
   })
-  async fetchNFTs(_: z.infer<typeof OpenSeaGetNftsByAccount>): Promise<string> {
-    try {
-      const nfts = await this.client.api.getNFTsByAccount(this.walletProvider.getAddress());
-      return JSON.stringify({ success: true, nfts });
-    } catch (error) {
-      return `Error fetching NFTs: ${error}`;
-    }
+  async fetchNFTs(walletProvider: ViemWalletProvider, _: z.infer<typeof OpenSeaGetNftsByAccount>): Promise<string> {
+    const { nfts } = await this.getClient(walletProvider).api.getNFTsByAccount(walletProvider.getAddress());
+    return JSON.stringify(nfts);
   }
 
   /**
@@ -128,6 +94,13 @@ A failure response will return a message with an error:
    */
   supportsNetwork(_: Network): boolean {
     return true;
+  }
+
+  getClient(walletProvider: ViemWalletProvider): OpenSeaSDK {
+    //@ts-expect-error: OpenSeaSDK constructor expects a different type for walletProvider
+    return new OpenSeaSDK(walletProvider, {
+      apiKey: this.#openseaApiKey,
+    });
   }
 }
 

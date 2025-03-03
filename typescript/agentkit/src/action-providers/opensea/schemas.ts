@@ -4,9 +4,10 @@ import { z } from "zod";
  * Schema for listing an NFT on OpenSea.
  */
 export const OpenSeaListNFTSchema = z.object({
-  tokenId: z.string().nonempty("Token ID is required."),
-  tokenAddress: z.string().nonempty("Token address is required."),
-  listingPrice: z.number().positive("Listing price must be a positive number."),
+  tokenId: z.string().nonempty().describe("Token ID is required."),
+  tokenAddress: z.string().nonempty().describe("Token address is required."),
+  listingPrice: z.number().positive().describe("Listing price must be a positive number."),
+  expiresInDays: z.number().positive().describe("The number of days the listing will be active for."),
 });
 
 /**

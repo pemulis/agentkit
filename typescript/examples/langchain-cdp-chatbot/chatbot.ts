@@ -31,10 +31,9 @@ function validateEnvironment(): void {
 
   // Check required variables
   const requiredVars = [
-    "OPENAI_API_KEY",
+    // "OPENAI_API_KEY",
     "CDP_API_KEY_NAME",
     "CDP_API_KEY_PRIVATE_KEY",
-    "WALLET_PRIVATE_KEY",
   ];
   requiredVars.forEach(varName => {
     if (!process.env[varName]) {
@@ -92,7 +91,7 @@ async function initializeAgent() {
       apiKeyName: process.env.CDP_API_KEY_NAME,
       apiKeyPrivateKey: process.env.CDP_API_KEY_PRIVATE_KEY,
       cdpWalletData: walletDataStr || undefined,
-      networkId: process.env.NETWORK_ID || "ethereum-sepolia",
+      networkId: process.env.NETWORK_ID || "base-sepolia",
     };
 
     const walletProvider = await CdpWalletProvider.configureWithWallet(config);
@@ -105,9 +104,9 @@ async function initializeAgent() {
         pythActionProvider(),
         walletActionProvider(),
         erc20ActionProvider(),
-        openSeaActionProvider({
-          walletPrivateKey: process.env.WALLET_PRIVATE_KEY!,
-        }),
+        // openSeaActionProvider({
+        //   apiKey: process.env.OPENSEA_API_KEY,
+        // }),
         cdpApiActionProvider({
           apiKeyName: process.env.CDP_API_KEY_NAME,
           apiKeyPrivateKey: process.env.CDP_API_KEY_PRIVATE_KEY,

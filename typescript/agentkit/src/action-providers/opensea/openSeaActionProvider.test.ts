@@ -36,9 +36,7 @@ describe("OpenSeaActionProvider", () => {
     // Initialize the mocked OpenSeaSDK instance
     mockOpenSeaClient = new OpenSeaSDK(mockWalletProvider);
 
-    actionProvider = new OpenSeaActionProvider({
-      walletPrivateKey: "0x123456789abcdef",
-    });
+    actionProvider = new OpenSeaActionProvider({});
   });
 
   test("listNFT should successfully list an NFT", async () => {
