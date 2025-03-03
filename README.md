@@ -26,13 +26,13 @@
 ## Table of Contents
 
 - [📖 Overview](#-overview)
-- [🚀 Agent Launchpads](#-agent-launchpads)
 - [⚡ Quickstart](#-quickstart)
   - [Node.js](#nodejs)
   - [Python](#python)
 - [🗂 Repository Structure](#-repository-structure)
 - [🤝 Contributing](#-contributing)
 - [📜 Documentation](#-documentation)
+- [🚀 Agent Launchpads](#-agent-launchpads)
 - [🌙 Nightly Builds](#-nightly-builds)
 - [🚨 Security and bug reports](#-security-and-bug-reports)
 - [📧 Contact](#-contact)
@@ -49,16 +49,6 @@ AgentKit is [Coinbase Developer Platform's](https://docs.cdp.coinbase.com) frame
     <img src="https://img.youtube.com/vi/-R_mKpdepRE/maxresdefault.jpg" alt="Video Title" style="max-width: 600px;">
   </a>
 </div>
-
-## 🚀 Agent Launchpads
-
-Deploy AI Agents with ease using any of the following agent launchpads:
-
-### [Autonome by AltLayer](https://docs.altlayer.io/altlayer-documentation/autonome/deploy-ai-agent)
-No-code platform for deploying and managing AI agents on AltLayer's infrastructure, offering seamless integration with blockchain networks and automated task execution.
-
-### [NEAR AI](https://docs.near.ai)
-Development platform for building and deploying AI agents on the NEAR Protocol, with built-in tools for smart contract integration and decentralized AI applications.
 
 ## ⚡ Quickstart
 
@@ -184,6 +174,16 @@ agentkit/
 - Node.js API References
   - [AgentKit](https://coinbase.github.io/agentkit/agentkit/typescript/index.html)
   - [AgentKit Langchain Extension](https://coinbase.github.io/agentkit/agentkit-langchain/typescript/index.html)
+
+## 🚀 Agent Launchpads
+
+Deploy AI Agents with ease using any of the following agent launchpads:
+
+### [Autonome by AltLayer](https://docs.altlayer.io/altlayer-documentation/autonome/deploy-ai-agent)
+No-code platform for deploying and managing AI agents on AltLayer's infrastructure, offering seamless integration with blockchain networks and automated task execution.
+
+### [NEAR AI](https://docs.near.ai)
+Development platform for building and deploying AI agents on the NEAR Protocol, with built-in tools for smart contract integration and decentralized AI applications.
 
 ## 🌙 Nightly Builds
 
