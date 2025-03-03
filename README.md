@@ -26,7 +26,8 @@
 ## Table of Contents
 
 - [📖 Overview](#-overview)
-- [🚀 Quickstart](#-quickstart)
+- [🚀 Agent Launchpads](#-agent-launchpads)
+- [⚡ Quickstart](#-quickstart)
   - [Node.js](#nodejs)
   - [Python](#python)
 - [🗂 Repository Structure](#-repository-structure)
@@ -49,7 +50,17 @@ AgentKit is [Coinbase Developer Platform's](https://docs.cdp.coinbase.com) frame
   </a>
 </div>
 
-## 🚀 Quickstart
+## 🚀 Agent Launchpads
+
+Deploy AI Agents with ease using any of the following agent launchpads:
+
+### [Autonome by AltLayer](https://docs.altlayer.io/altlayer-documentation/autonome/deploy-ai-agent)
+No-code platform for deploying and managing AI agents on AltLayer's infrastructure, offering seamless integration with blockchain networks and automated task execution.
+
+### [NEAR AI](https://docs.near.ai)
+Development platform for building and deploying AI agents on the NEAR Protocol, with built-in tools for smart contract integration and decentralized AI applications.
+
+## ⚡ Quickstart
 
 ### Node.js
 
