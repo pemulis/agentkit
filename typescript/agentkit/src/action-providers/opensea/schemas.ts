@@ -14,6 +14,8 @@ export const OpenSeaListNFTSchema = z.object({
  * Schema for getting NFTs from a specific wallet address.
  */
 export const OpenSeaGetNftsByAccount = z
-  .object({})
+  .object({
+    accountAddress: z.string().nonempty().describe("Account address is required."),
+  })
   .strip()
   .describe("Input schema for fetching NFTs by account");

@@ -31,7 +31,7 @@ function validateEnvironment(): void {
 
   // Check required variables
   const requiredVars = [
-    // "OPENAI_API_KEY",
+    "OPENAI_API_KEY",
     "CDP_API_KEY_NAME",
     "CDP_API_KEY_PRIVATE_KEY",
   ];
@@ -93,6 +93,7 @@ async function initializeAgent() {
       cdpWalletData: walletDataStr || undefined,
       networkId: process.env.NETWORK_ID || "base-sepolia",
     };
+    console.info("test",config.networkId)
 
     const walletProvider = await CdpWalletProvider.configureWithWallet(config);
 
@@ -104,9 +105,9 @@ async function initializeAgent() {
         pythActionProvider(),
         walletActionProvider(),
         erc20ActionProvider(),
-        // openSeaActionProvider({
-        //   apiKey: process.env.OPENSEA_API_KEY,
-        // }),
+        openSeaActionProvider({
+          apiKey: process.env.OPENSEA_API_KEY,
+        }),
         cdpApiActionProvider({
           apiKeyName: process.env.CDP_API_KEY_NAME,
           apiKeyPrivateKey: process.env.CDP_API_KEY_PRIVATE_KEY,

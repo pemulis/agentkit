@@ -1,10 +1,24 @@
-import { OpenSeaSDK } from "opensea-js";
+import { Chain, OpenSeaSDK } from "opensea-js";
 import { z } from "zod";
 import { Network } from "../../network";
 import { ViemWalletProvider } from "../../wallet-providers";
 import { CreateAction } from "../actionDecorator";
 import { ActionProvider } from "../actionProvider";
 import { OpenSeaGetNftsByAccount, OpenSeaListNFTSchema } from "./schemas";
+import { ethers, Wallet } from "ethers";
+
+const CHAIN_ID_TO_OPENSEA_CHAIN = {
+  1: Chain.Mainnet,
+  11155111: Chain.Sepolia,
+  137: Chain.Polygon,
+  // No Mumbai support for OpenSea
+  8453: Chain.Base,
+  84532: Chain.BaseSepolia,
+  42161: Chain.Arbitrum,
+  421614: Chain.ArbitrumSepolia,
+  10: Chain.Optimism,
+  11155420: Chain.OptimismSepolia,
+}
 
 /**
  * Configuration options for the OpenSeaActionProvider.
@@ -81,8 +95,8 @@ A failure response will return a message with an error:
       Error fetching NFTs: <error_message>`,
     schema: OpenSeaGetNftsByAccount,
   })
-  async fetchNFTs(walletProvider: ViemWalletProvider, _: z.infer<typeof OpenSeaGetNftsByAccount>): Promise<string> {
-    const { nfts } = await this.getClient(walletProvider).api.getNFTsByAccount(walletProvider.getAddress());
+  async fetchNFTs(walletProvider: ViemWalletProvider, args: z.infer<typeof OpenSeaGetNftsByAccount>): Promise<string> {
+    const { nfts } = await this.getClient(walletProvider).api.getNFTsByAccount(args.accountAddress);
     return JSON.stringify(nfts);
   }
 
@@ -92,14 +106,24 @@ A failure response will return a message with an error:
    * @param _ - The network to check (not used)
    * @returns Always returns true as OpenSea actions are network-independent
    */
-  supportsNetwork(_: Network): boolean {
-    return true;
+  supportsNetwork(network: Network): boolean {
+    const keys = new Set(Object.keys(CHAIN_ID_TO_OPENSEA_CHAIN));
+    return network.chainId != null && keys.has(network.chainId);
   }
 
   getClient(walletProvider: ViemWalletProvider): OpenSeaSDK {
-    //@ts-expect-error: OpenSeaSDK constructor expects a different type for walletProvider
+    // const walletClient = walletProvider.getClient();
+    // const signerAndProvider = {...walletClient, ...walletProvider}
+
+    console.info({
+      chainId: walletProvider.getNetwork().chainId,
+      openseaChain: CHAIN_ID_TO_OPENSEA_CHAIN[walletProvider.getNetwork().chainId!],
+    })
+    
+    // @ts-expect-error: OpenSeaSDK constructor expects a different type for walletProvider
     return new OpenSeaSDK(walletProvider, {
       apiKey: this.#openseaApiKey,
+      chain: CHAIN_ID_TO_OPENSEA_CHAIN[walletProvider.getNetwork().chainId!],
     });
   }
 }
