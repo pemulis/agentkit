@@ -1,5 +1,5 @@
 import { WalletProvider, CdpWalletProvider } from "./wallet-providers";
-import { Action, ActionProvider, walletActionProvider } from "./action-providers";
+import { Action, ActionProvider, walletActionProvider, AddressReputationSchema } from "./action-providers";
 
 /**
  * Configuration options for AgentKit
@@ -15,7 +15,7 @@ export type AgentKitOptions = {
  * AgentKit
  */
 export class AgentKit {
-  private walletProvider: WalletProvider;
+  private walletProvider: WalletProvider
   private actionProviders: ActionProvider[];
 
   /**
