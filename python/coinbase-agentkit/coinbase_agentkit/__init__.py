@@ -10,6 +10,7 @@ from .action_providers import (
     cdp_api_action_provider,
     cdp_wallet_action_provider,
     compound_action_provider,
+    create_action,
     erc20_action_provider,
     hyperbolic_action_provider,
     morpho_action_provider,
