@@ -18,13 +18,16 @@ agentkit/
 │   ├── agentkit/
 │   ├── create-onchain-agent/
 │   ├── framework-extensions/
-│   |   └── langchain/
+│   │   ├── langchain/
+│   │   ├── vercel-ai-sdk/
+│   │   └── model-context-protocol/
 │   └── examples/
 │       ├── langchain-cdp-chatbot/
 │       ├── langchain-farcaster-chatbot/
-│       └── langchain-privy-chatbot/
-│       └── langchain-solana-chatbot/
-│       └── langchain-twitter-chatbot/
+│       ├── langchain-privy-chatbot/
+│       ├── langchain-solana-chatbot/
+│       ├── langchain-twitter-chatbot/
+│       └── vercel-ai-sdk-cdp-chatbot/
 ├── python/
 │   ├── coinbase-agentkit/
 │   ├── create-onchain-agent/
