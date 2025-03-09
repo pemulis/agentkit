@@ -1,3 +1,9 @@
+ifneq (,$(wildcard ./.env))
+	include .env
+endif
+
+export
+
 .PHONY: install
 install:
 	poetry install
@@ -33,6 +39,10 @@ test:
 .PHONY: test-integration
 test-integration:
 	poetry run pytest -m integration
+
+.PHONY: test-e2e
+test-e2e:
+	poetry run pytest -m e2e
 
 .PHONY: generate-action-provider
 generate-action-provider:
