@@ -15,6 +15,7 @@ from .action_providers import (
     hyperbolic_action_provider,
     morpho_action_provider,
     pyth_action_provider,
+    ssh_action_provider,
     superfluid_action_provider,
     twitter_action_provider,
     wallet_action_provider,
@@ -62,4 +63,5 @@ __all__ = [
     "weth_action_provider",
     "wow_action_provider",
     "__version__",
+    "ssh_action_provider",
 ]
