@@ -22,7 +22,7 @@ lint:
 
 .PHONY: lint-fix
 lint-fix:
-	poetry run ruff check . --fix --unsafe-fixes
+	poetry run ruff check . --fix
 
 .PHONY: docs
 docs:
@@ -34,15 +34,15 @@ local-docs: docs
 
 .PHONY: test
 test:
-	poetry run pytest -m "not integration"
-
-.PHONY: test-integration
-test-integration:
-	poetry run pytest -m integration
+	poetry run pytest -m "not (e2e or integration)"
 
 .PHONY: test-e2e
 test-e2e:
 	poetry run pytest -m e2e
+
+.PHONY: test-integration
+test-integration:
+	poetry run pytest -m integration
 
 .PHONY: generate-action-provider
 generate-action-provider:
