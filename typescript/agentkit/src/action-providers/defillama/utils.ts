@@ -1,13 +1,21 @@
 import { ProtocolResponse, PrunedProtocolResponse } from "./types";
 
 /**
+ * Represents a data point in a time-series array with a date property
+ */
+interface TimeSeriesDataPoint {
+  [key: string]: unknown;
+  date: number;
+}
+
+/**
  * Processes a time-series array by sorting by date (newest first) and limiting to maxEntries
  *
  * @param array - The time-series array to process
  * @param maxEntries - Maximum number of entries to keep
  * @returns The processed array (sorted and limited)
  */
-const processTimeSeriesArray = (array: any[], maxEntries: number): any[] => {
+const processTimeSeriesArray = (array: unknown[], maxEntries: number): unknown[] => {
   if (array.length <= maxEntries) {
     return array;
   }
@@ -22,10 +30,10 @@ const processTimeSeriesArray = (array: any[], maxEntries: number): any[] => {
         typeof b === "object" &&
         "date" in a &&
         "date" in b &&
-        typeof a.date === "number" &&
-        typeof b.date === "number"
+        typeof (a as TimeSeriesDataPoint).date === "number" &&
+        typeof (b as TimeSeriesDataPoint).date === "number"
       ) {
-        return b.date - a.date;
+        return (b as TimeSeriesDataPoint).date - (a as TimeSeriesDataPoint).date;
       }
       return 0;
     });
