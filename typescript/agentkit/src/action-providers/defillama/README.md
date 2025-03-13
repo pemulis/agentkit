@@ -208,22 +208,7 @@ Prompt: please use get_protocol for jito
           "date": 1741842011,
           "totalLiquidityUSD": 2050645658.69502
         },
-        {
-          "date": 1741737600,
-          "totalLiquidityUSD": 2073190249.57305
-        },
-        {
-          "date": 1741651200,
-          "totalLiquidityUSD": 1878593066.31107
-        },
-        {
-          "date": 1741564800,
-          "totalLiquidityUSD": 2060444245.39602
-        },
-        {
-          "date": 1741478400,
-          "totalLiquidityUSD": 2266226563.52507
-        }
+        ...
       ],
       "tokensInUsd": [
         {
@@ -232,30 +217,7 @@ Prompt: please use get_protocol for jito
             "SOL": 2050645658.69502
           }
         },
-        {
-          "date": 1741737600,
-          "tokens": {
-            "SOL": 2073190249.57305
-          }
-        },
-        {
-          "date": 1741651200,
-          "tokens": {
-            "SOL": 1878593066.31107
-          }
-        },
-        {
-          "date": 1741564800,
-          "tokens": {
-            "SOL": 2060444245.39602
-          }
-        },
-        {
-          "date": 1741478400,
-          "tokens": {
-            "SOL": 2266226563.52507
-          }
-        }
+        ...
       ],
       "tokens": [
         {
@@ -264,30 +226,7 @@ Prompt: please use get_protocol for jito
             "SOL": 16533464.95763
           }
         },
-        {
-          "date": 1741737600,
-          "tokens": {
-            "SOL": 16582868.73759
-          }
-        },
-        {
-          "date": 1741651200,
-          "tokens": {
-            "SOL": 16441388.64267
-          }
-        },
-        {
-          "date": 1741564800,
-          "tokens": {
-            "SOL": 16502036.24376
-          }
-        },
-        {
-          "date": 1741478400,
-          "tokens": {
-            "SOL": 16556301.60378
-          }
-        }
+        ...
       ]
     }
   },
@@ -296,22 +235,7 @@ Prompt: please use get_protocol for jito
       "date": 1741842011,
       "totalLiquidityUSD": 2050645658.69502
     },
-    {
-      "date": 1741737600,
-      "totalLiquidityUSD": 2073190249.57305
-    },
-    {
-      "date": 1741651200,
-      "totalLiquidityUSD": 1878593066.31107
-    },
-    {
-      "date": 1741564800,
-      "totalLiquidityUSD": 2060444245.39602
-    },
-    {
-      "date": 1741478400,
-      "totalLiquidityUSD": 2266226563.52507
-    }
+    ...
   ],
   "tokensInUsd": [
     {
@@ -320,30 +244,7 @@ Prompt: please use get_protocol for jito
         "SOL": 2050645658.69502
       }
     },
-    {
-      "date": 1741737600,
-      "tokens": {
-        "SOL": 2073190249.57305
-      }
-    },
-    {
-      "date": 1741651200,
-      "tokens": {
-        "SOL": 1878593066.31107
-      }
-    },
-    {
-      "date": 1741564800,
-      "tokens": {
-        "SOL": 2060444245.39602
-      }
-    },
-    {
-      "date": 1741478400,
-      "tokens": {
-        "SOL": 2266226563.52507
-      }
-    }
+    ...
   ],
   "tokens": [
     {
@@ -352,30 +253,7 @@ Prompt: please use get_protocol for jito
         "SOL": 16533464.95763
       }
     },
-    {
-      "date": 1741737600,
-      "tokens": {
-        "SOL": 16582868.73759
-      }
-    },
-    {
-      "date": 1741651200,
-      "tokens": {
-        "SOL": 16441388.64267
-      }
-    },
-    {
-      "date": 1741564800,
-      "tokens": {
-        "SOL": 16502036.24376
-      }
-    },
-    {
-      "date": 1741478400,
-      "tokens": {
-        "SOL": 16556301.60378
-      }
-    }
+    ...
   ],
   "currentChainTvls": {
     "Solana": 2050645658.69502
