@@ -4,7 +4,6 @@ from .__version__ import __version__
 from .action_providers import (
     Action,
     ActionProvider,
-    create_action,
     allora_action_provider,
     basename_action_provider,
     cdp_api_action_provider,

@@ -17,10 +17,8 @@ from pydantic import ValidationError
 from ...network import Network
 from ..action_decorator import create_action
 from ..action_provider import ActionProvider
-
 from .connection import SSHConnectionError, SSHKeyError, UnknownHostKeyError
 from .connection_pool import SSHConnectionPool
-
 from .schemas import (
     AddHostKeySchema,
     ConnectionStatusSchema,

@@ -7,7 +7,6 @@ from coinbase_agentkit.action_providers.hyperboliclabs.marketplace.action_provid
 )
 from coinbase_agentkit.action_providers.hyperboliclabs.marketplace.service import MarketplaceService
 
-
 TEST_CLUSTER = "test-cluster"
 TEST_NODE = "test-node"
 TEST_GPU_COUNT = 2
