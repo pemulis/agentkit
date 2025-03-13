@@ -192,7 +192,7 @@ const agent = createReactAgent({
 </table>
 </details>
 <details>
-<summary><strong>DeFiLlama</strong></summary>
+<summary><strong>DefiLlama</strong></summary>
 <table width="100%">
 <tr>
     <td width="200"><code>find_protocol</code></td>
