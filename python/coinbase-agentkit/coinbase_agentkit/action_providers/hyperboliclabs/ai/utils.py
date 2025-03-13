@@ -4,6 +4,7 @@ This module provides utility functions for handling AI service operations
 such as saving generated data.
 """
 
+import base64
 import os
 
 
@@ -23,27 +24,20 @@ def save_base64_data(base64_data: str, output_path: str) -> str:
 
     """
     try:
-        import base64
-
-        # Remove potential base64 header if present
         if "," in base64_data:
             base64_data = base64_data.split(",")[1]
 
-        # Decode the base64 string
         decoded_data = base64.b64decode(base64_data)
-
-        # Ensure the directory exists
         os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
 
-        # Write the data
         with open(output_path, "wb") as f:
             f.write(decoded_data)
 
         return os.path.abspath(output_path)
     except base64.binascii.Error as e:
-        raise ValueError(f"Invalid base64 data: {e}") from e
+        raise ValueError(f"Invalid base64 data: {e!s}") from e
     except OSError as e:
-        raise OSError(f"Error saving file: {e}") from e
+        raise OSError(f"Error saving file: {e!s}") from e
 
 
 def save_text(text: str, output_path: str) -> str:
@@ -61,16 +55,13 @@ def save_text(text: str, output_path: str) -> str:
 
     """
     try:
-        # Ensure the directory exists
         os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
-
-        # Write the text
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(text)
 
         return os.path.abspath(output_path)
     except OSError as e:
-        raise OSError(f"Error saving text file: {e}") from e
+        raise OSError(f"Error saving text file: {e!s}") from e
 
 
 __all__ = [

@@ -95,15 +95,8 @@ class MarketplaceService(Base):
             TerminateInstanceResponse: The termination response data.
 
         """
-        # Make the API request
         response = self.make_request(
             endpoint=MARKETPLACE_ENDPOINTS["TERMINATE_INSTANCE"], data=request.model_dump()
         )
 
-        # Parse the response
-        data = response.json()
-
-        # TODO: handle errors...
-
-        # Create the response object
-        return TerminateInstanceResponse(**data)
+        return TerminateInstanceResponse(**response.json())

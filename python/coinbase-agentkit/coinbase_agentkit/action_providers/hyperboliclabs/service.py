@@ -42,6 +42,11 @@ class Base:
         Returns:
             requests.Response: The raw HTTP response object.
 
+        Raises:
+            requests.HTTPError: If the API returns an error response (4xx, 5xx),
+                                with the error message and code extracted from the response when available.
+            requests.RequestException: For other request-related errors.
+
         """
         if not headers:
             headers = {}
@@ -50,9 +55,30 @@ class Base:
         )
 
         url = f"{self.base_url}{endpoint}"
-
         response = requests.request(
             method=method, url=url, headers=headers, json=data, params=params
         )
+
+        try:
+            response.raise_for_status()
+        except requests.HTTPError as e:
+            try:
+                error_json = response.json()
+                error_message = error_json.get("message", "")
+                error_code = error_json.get("error_code")
+
+                if error_message or error_code:
+                    enhanced_message = str(e)
+                    if error_message:
+                        enhanced_message += f": {error_message}"
+                    if error_code:
+                        enhanced_message += f" (code: {error_code})"
+
+                    enriched_error = requests.HTTPError(enhanced_message, response=response)
+                    raise enriched_error from e
+            except ValueError:
+                pass
+
+            raise
 
         return response

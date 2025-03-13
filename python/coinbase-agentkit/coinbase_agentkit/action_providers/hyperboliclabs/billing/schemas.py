@@ -7,27 +7,18 @@ from pydantic import BaseModel
 
 
 class GetCurrentBalanceSchema(BaseModel):
-    """Schema for get_current_balance action.
-
-    This action doesn't require any inputs.
-    """
+    """Schema for get_current_balance action."""
 
     pass
 
 
 class GetPurchaseHistorySchema(BaseModel):
-    """Schema for get_purchase_history action.
-
-    This action doesn't require any inputs.
-    """
+    """Schema for get_purchase_history action."""
 
     pass
 
 
 class GetSpendHistorySchema(BaseModel):
-    """Schema for get_spend_history action.
-
-    This action doesn't require any inputs.
-    """
+    """Schema for get_spend_history action."""
 
     pass

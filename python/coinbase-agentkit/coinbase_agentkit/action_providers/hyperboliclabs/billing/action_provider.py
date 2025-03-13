@@ -57,10 +57,7 @@ This tool retrieves your current Hyperbolic platform credit balance.
 It does not take any inputs.
 
 Example successful response:
-    Your current Hyperbolic platform balance is $150.00.
-    Purchase History:
-    - $100.00 on January 15, 2024
-    - $50.00 on December 30, 2023
+    Your current Hyperbolic platform balance is $3.61.
 
 Example error response:
     Error: API request failed
@@ -69,7 +66,7 @@ Example error response:
 Important notes:
 - This shows platform credits only, NOT cryptocurrency wallet balances
 - All amounts are shown in USD
-- Purchase history is ordered from most recent to oldest
+- Balance is displayed with 2 decimal precision
 """,
         schema=GetCurrentBalanceSchema,
     )
@@ -87,12 +84,9 @@ Important notes:
             GetCurrentBalanceSchema(**args)
 
             response = self.billing.get_balance()
-
             balance_usd = float(response.credits) / 100
-            output = [f"Your current Hyperbolic platform balance is ${balance_usd:.2f}."]
 
-            return "\n".join(output)
-
+            return f"Your current Hyperbolic platform balance is ${balance_usd:.2f}.\n"
         except Exception as e:
             return f"Error: Balance retrieval: {e!s}"
 
@@ -106,19 +100,28 @@ It does not take any inputs.
 Example successful response:
     === GPU Rental Spending Analysis ===
 
-    Instance Rentals:
-    - instance-123:
-      GPU: NVIDIA A100 (Count: 2)
-      Duration: 3600 seconds
-      Cost: $25.00
+    Instance Rentals (showing 5 most recent):
+    - antique-peach-rhinoceros:
+      GPU: NVIDIA-GeForce-RTX-4090 (Count: 1)
+      Duration: 225 seconds
+      Cost: $0.03
+    - clearcut-chrysanthemum-ape:
+      GPU: NVIDIA-GeForce-RTX-4090 (Count: 1)
+      Duration: 90 seconds
+      Cost: $0.01
 
-    GPU Type Statistics:
-    NVIDIA A100:
-      Total Rentals: 2
-      Total Time: 3600 seconds
-      Total Cost: $25.00
+    GPU Type Statistics (showing 2 most recent):
+    NVIDIA-GeForce-RTX-4090:
+      Total Rentals: 10.0
+      Total Time: 363954 seconds
+      Total Cost: $6.80
 
-    Total Spending: $25.00
+    NVIDIA-H100-80GB-HBM3:
+      Total Rentals: 14.0
+      Total Time: 3084 seconds
+      Total Cost: $0.16
+
+    Total Spending: $6.96
 
 Example error response:
     Error: API request failed
@@ -126,7 +129,7 @@ Example error response:
 Important notes:
 - All costs are in USD
 - Duration is in seconds
-- History includes all past rentals
+- History includes instance names with animal-based identifiers
 """,
         schema=GetSpendHistorySchema,
     )
@@ -144,7 +147,6 @@ Important notes:
             GetSpendHistorySchema(**args)
 
             response = self.marketplace.get_instance_history()
-
             if not response:
                 return "Could not retrieve instance history. Please try again later."
 
@@ -152,7 +154,6 @@ Important notes:
                 return "No rental history found."
 
             return format_spend_history(response)
-
         except Exception as e:
             return f"Error: Spend history retrieval: {e!s}"
 
@@ -165,9 +166,8 @@ It does not take any inputs.
 
 Example successful response:
     Purchase History (showing 5 most recent):
-    - $100.00 on January 15, 2024
-    - $50.00 on December 30, 2023
-    - $75.00 on November 20, 2023
+    - $1.00 on March 06, 2025
+    - $10.00 on March 06, 2025
 
 Example error response:
     Error: API request failed
@@ -193,10 +193,9 @@ Important notes:
         """
         try:
             GetPurchaseHistorySchema(**args)
-
             history_response = self.billing.get_purchase_history()
-            return format_purchase_history(history_response)
 
+            return format_purchase_history(history_response)
         except Exception as e:
             return f"Error: Purchase history retrieval: {e!s}"
 

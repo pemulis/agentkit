@@ -177,13 +177,11 @@ Important notes:
             if not connection.is_connected():
                 return f"Error: Connection state: Connection '{connection_id}' is not currently active. Use ssh_connect to establish the connection."
 
-            try:
-                result = connection.execute(command, timeout=timeout, ignore_stderr=ignore_stderr)
-                return f"Output from connection '{connection_id}':\n\n{result}"
+            result = connection.execute(command, timeout=timeout, ignore_stderr=ignore_stderr)
+            return f"Output from connection '{connection_id}':\n\n{result}"
 
-            except SSHConnectionError as e:
-                return f"Error: Connection: {e!s}. Please reconnect using ssh_connect."
-
+        except SSHConnectionError as e:
+            return f"Error: Connection: {e!s}. Please reconnect using ssh_connect."
         except ValidationError as e:
             return f"Error: Invalid parameters: {e!s}"
         except Exception as e:
@@ -224,20 +222,18 @@ Important notes:
             validated_args = DisconnectSchema(**args)
             connection_id = validated_args.connection_id
 
-            try:
-                connection = self.connection_pool.close_connection(connection_id)
+            connection = self.connection_pool.close_connection(connection_id)
 
-                result = (
-                    f"Connection ID: {connection_id}\nDisconnected from {connection.params.host}"
-                    if connection
-                    else f"Connection ID: {connection_id}\nNo active connection to disconnect"
-                )
+            result = (
+                f"Connection ID: {connection_id}\nDisconnected from {connection.params.host}"
+                if connection
+                else f"Connection ID: {connection_id}\nNo active connection to disconnect"
+            )
 
-                return result
+            return result
 
-            except SSHConnectionError as e:
-                return f"Error: Connection: {e!s}"
-
+        except SSHConnectionError as e:
+            return f"Error: Connection: {e!s}"
         except ValidationError as e:
             return f"Error: Invalid parameters: {e!s}"
         except Exception as e:

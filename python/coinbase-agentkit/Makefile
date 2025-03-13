@@ -44,6 +44,10 @@ test-e2e:
 test-integration:
 	poetry run pytest -m integration
 
+.PHONY: check-description-length
+check-description-length:
+	poetry run check-description-length
+
 .PHONY: generate-action-provider
 generate-action-provider:
 	poetry run generate-action-provider

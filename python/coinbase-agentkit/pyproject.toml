@@ -21,6 +21,7 @@ allora-sdk = "^0.2.0"
 paramiko = "^3.5.1"
 
 [tool.poetry.scripts]
+check-description-length = "scripts.check_description_length:main"
 generate-action-provider = "scripts.generate_action_provider.main:main"
 
 [tool.poetry.group.dev.dependencies]

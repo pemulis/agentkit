@@ -111,9 +111,10 @@ It does not take any inputs.
 
 Example successful response:
     Available GPU Types:
-    - NVIDIA A100
-    - NVIDIA RTX 4090
-    - NVIDIA H100
+    - NVIDIA-GeForce-RTX-3070
+    - NVIDIA-GeForce-RTX-3080
+    - NVIDIA-GeForce-RTX-4090
+    - NVIDIA-H100-80GB-HBM3
 
 Example error response:
     Error: API request failed
@@ -121,7 +122,7 @@ Example error response:
 Important notes:
 - Only models with available GPUs are listed
 - GPU availability is real-time and may change between queries
-- The GPU model name must be exact
+- The GPU model names include manufacturer and specific model details
 """,
         schema=GetAvailableGpusTypesSchema,
     )
@@ -157,31 +158,30 @@ Required inputs:
 - gpu_model: The GPU model to filter by (e.g., "NVIDIA-GeForce-RTX-4090")
 
 Example successful response:
-    Available NVIDIA A100 GPU Options:
+    Available NVIDIA-GeForce-RTX-4090 GPU Options:
 
-    Cluster: us-east-1
-    Node ID: node-123
-    GPU Model: NVIDIA A100
-    Available GPUs: 4/8
-    Price: $2.50/hour per GPU
+    Cluster: growing-rosemary-dragonfly
+    Node ID: antalpha-super-server-100194
+    GPU Model: NVIDIA-GeForce-RTX-4090
+    Available GPUs: 1/8
+    Price: $0.35/hour per GPU
     ----------------------------------------
 
-    Cluster: us-west-1
-    Node ID: node-456
-    GPU Model: NVIDIA A100
-    Available GPUs: 2/2
-    Price: $2.75/hour per GPU
+    Cluster: webbed-peperomia-magpie
+    Node ID: las1-prd-acl-msi-07.fen.intra
+    GPU Model: NVIDIA-GeForce-RTX-4090
+    Available GPUs: 1/4
+    Price: $0.30/hour per GPU
     ----------------------------------------
 
 Example error response:
     Error: API request failed
-    Error: No available GPU instances with the model 'NVIDIA A100' found
+    Error: No available GPU instances with the model 'NVIDIA-GeForce-RTX-4090' found
 
 Important notes:
-- GPU model name must be exact
-- Only non-reserved and available instances are shown
+- GPU model name must be exact (including hyphens)
+- Only available instances are shown
 - Availability is real-time and may change
-- The GPU model name must be exact
 """,
         schema=GetAvailableGpusByTypeSchema,
     )
@@ -217,19 +217,27 @@ This tool retrieves the status and SSH commands for your currently rented GPUs o
 It does not take any inputs.
 
 Example successful response:
-    Instance ID: i-123456
-    Status: running
-    GPU Model: NVIDIA A100
-    SSH Command: ssh user@host -i key.pem
+    Your Rented GPU Instances:
+    Instance ID: mortified-morningglory-wombat
+    Status: running (Ready to use)
+    GPU Model: NVIDIA-GeForce-RTX-4090
+    GPU Count: 1
+    GPU Memory: 24.0 GB
+    SSH Command: ssh ubuntu@mortified-morningglory-wombat.1.cricket.hyperbolic.xyz -p 31065
     ----------------------------------------
+
+    SSH Connection Instructions:
+    1. Wait until instance status is 'running'
+    2. Use the ssh_connect action with the provided host and username
+    3. Once connected, use remote_shell to execute commands
 
 Example error response:
     Error: API request failed
+    No rented GPU instances found.
 
 Important notes:
 - If status is "starting", the GPU is not ready yet - check again in a few seconds
 - Once status is "running", you can use the SSH command to access the instance
-- If no SSH command is shown, the instance is still being provisioned
 """,
         schema=GetGpuStatusSchema,
     )
@@ -266,8 +274,7 @@ Important notes:
                 ]
             )
 
-            final_output = "\n".join(output)
-            return final_output
+            return "\n".join(output)
 
         except Exception as e:
             return f"Error: GPU status retrieval: {e!s}"
@@ -283,12 +290,17 @@ Required inputs:
 - gpu_count: How many GPUs to rent
 
 Example successful response:
-    GPU rental successful:
-    Instance ID: i-123456
-    Cluster: us-east-1
-    Node: node-789
-    GPU Count: 2
-    Status: starting
+    {
+      "status": "success",
+      "instance_name": "mortified-morningglory-wombat"
+    }
+
+    Next Steps:
+    1. Your GPU instance is being provisioned
+    2. Use get_gpu_status to check when it's ready
+    3. Once status is 'running', you can:
+       - Connect via SSH
+       - Run remote commands
 
 Example error response:
     Error: Invalid cluster name
@@ -296,13 +308,9 @@ Example error response:
     Error: API request failed
 
 Important notes:
-- If the user does not provide the required inputs, but does provide a gpu type, you can use get_available_gpus_types and get_available_gpus_by_type to get valid inputs
-- Use get_available_gpus first to get valid cluster and node names
+- Use get_available_gpus_by_type to find available GPUs of a specific model
+- Use get_available_gpus for valid cluster and node names
 - Do not ask for a duration, it is not needed
-- After renting, you can:
-  - Check status with get_gpu_status
-  - Connect via SSH with ssh_connect
-  - Run commands with remote_shell
 """,
         schema=RentComputeSchema,
     )
@@ -332,11 +340,20 @@ Important notes:
 This tool terminates a GPU instance on the Hyperbolic platform.
 
 Required inputs:
-- id: The ID of the instance to terminate (e.g., "respectful-rose-pelican")
+- id: The ID of the instance to terminate (e.g., "mortified-morningglory-wombat")
 
 Example successful response:
-    Instance terminated successfully.
-    Instance ID: respectful-rose-pelican
+    {
+      "status": "success",
+      "message": null,
+      "error_code": null
+    }
+
+    Next Steps:
+    1. Your GPU instance has been terminated
+    2. Any active SSH connections have been closed
+    3. You can check your spend history with get_spend_history
+    4. To rent a new instance, use get_available_gpus and rent_compute
 
 Example error response:
     Error: Instance not found
@@ -347,7 +364,8 @@ Important notes:
 - The instance ID must be valid and active
 - After termination, the instance will no longer be accessible
 - You can get instance IDs using get_gpu_status
-- Any active SSH connections will be closed
+- You can immediately terminate an instance
+- Terminated instances will still appear in your spend history
 """,
         schema=TerminateComputeSchema,
     )

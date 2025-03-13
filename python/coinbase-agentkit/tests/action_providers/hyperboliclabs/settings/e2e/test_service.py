@@ -5,6 +5,7 @@ They require a valid API key in the HYPERBOLIC_API_KEY environment variable.
 """
 
 import pytest
+import requests
 
 from coinbase_agentkit.action_providers.hyperboliclabs.settings.types import (
     WalletLinkRequest,
@@ -34,12 +35,11 @@ def test_settings_link_wallet_already_assigned(settings):
     print(f"\nTesting with known assigned address: {ALREADY_ASSIGNED_ETH_ADDRESS}")
 
     request = WalletLinkRequest(address=ALREADY_ASSIGNED_ETH_ADDRESS)
-    response = settings.link_wallet(request)
 
-    assert isinstance(response, WalletLinkResponse)
+    with pytest.raises(requests.exceptions.HTTPError) as excinfo:
+        settings.link_wallet(request)
 
-    assert response.status != "success", "Expected address to be already assigned"
-    assert response.error_code is not None, "Expected an error code"
+    assert "403" in str(excinfo.value), "Expected a 403 Forbidden error"
     assert (
-        "already assigned" in response.message.lower()
-    ), f"Expected 'already assigned' error but got: {response.message}"
+        "already assigned" in str(excinfo.value).lower()
+    ), f"Expected 'already assigned' error but got: {excinfo.value!s}"

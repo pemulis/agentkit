@@ -49,11 +49,16 @@ Required inputs:
 - address: The wallet address to link to your Hyperbolic account
 
 Example successful response:
-    Wallet address linked successfully.
+    {
+      "success": true,
+      "error_code": null,
+      "message": null
+    }
+    wallet_address: 0x5E83884F5d399131bbDe98f60854E43c7A12Cf7A
 
     Next Steps:
-    1. Your wallet has been successfully linked
-    2. To add funds, send any of these tokens on Base network:
+    1. Your wallet has been successfully linked to your Hyperbolic account
+    2. To add funds, send any of these tokens on Base Mainnet:
        - USDC
        - USDT
        - DAI
@@ -65,8 +70,7 @@ Example error response:
 
 Important notes:
 - The wallet address must be a valid 0x formatted Ethereum address
-- If the user does not provide an address, you can run the wallet details action to get the address if available
-- After linking, you can send USDC, USDT, or DAI on Base network
+- If no address is provided, you can get the user's wallet address
 """,
         schema=LinkWalletAddressSchema,
     )
