@@ -95,7 +95,6 @@ class SSHConnectionParams(BaseModel):
                 "At least one authentication method must be provided (password, private_key, or private_key_path)"
             )
 
-        # Ensure host and username are not None
         if not cls.host:
             raise ValueError("Host must be provided")
         if not cls.username:
@@ -182,7 +181,6 @@ class SSHConnection:
         self.disconnect()
 
         try:
-            # Connect using the appropriate method based on available credentials
             if params.password:
                 self.connect_with_password(
                     params.host, params.username, params.password, params.port
@@ -208,7 +206,6 @@ class SSHConnection:
                     password=params.password,
                 )
 
-            # Verify connection is working
             _, stdout, stderr = self.ssh_client.exec_command(
                 'echo "Connection successful"', timeout=5
             )
@@ -223,7 +220,6 @@ class SSHConnection:
             self.connection_time = datetime.now()
 
         except UnknownHostKeyError:
-            # Pass through UnknownHostKeyError with detailed information
             self.reset_connection()
             raise
 
@@ -246,53 +242,41 @@ class SSHConnection:
         """
         key_file = io.StringIO(key_string)
 
-        # Define key classes to try in order
         key_classes = [
-            paramiko.RSAKey,  # Try RSA first for test compatibility
+            paramiko.RSAKey,
             paramiko.DSSKey,
             paramiko.ECDSAKey,
             paramiko.Ed25519Key,
         ]
 
-        # Password required errors should be surfaced specifically
         password_required = False
         last_error = None
 
         for key_class in key_classes:
-            # Reset file pointer for each attempt
             key_file.seek(0)
             try:
                 return key_class.from_private_key(key_file, password=password)
             except paramiko.ssh_exception.PasswordRequiredException:
-                # Remember that we need a password and continue trying other formats
                 password_required = True
             except paramiko.ssh_exception.SSHException as e:
-                # Save the error and try the next format
                 last_error = e
                 continue
             except Exception as e:
-                # For other errors, raise immediately
                 raise SSHKeyError(f"Failed to load key from string: {e!s}") from e
 
-        # If we needed a password, raise that specific error
         if password_required:
             raise SSHKeyError("Password-protected key provided but no password was given")
 
-        # Otherwise raise with the last error we got
         if last_error:
             raise SSHKeyError(f"Failed to load key from string: {last_error!s}")
 
-        # If we somehow get here, no supported key format was found
         raise SSHKeyError("Key format not supported or invalid key data")
 
     def _init_ssh_client(self):
         """Initialize the SSH client with appropriate host key settings."""
         self.ssh_client = paramiko.SSHClient()
-
-        # Load system host keys
         self.ssh_client.load_system_host_keys()
 
-        # If known_hosts_file is provided, load those keys too
         if self.known_hosts_file:
             try:
                 known_hosts_path = os.path.expanduser(self.known_hosts_file)
@@ -301,7 +285,6 @@ class SSHConnection:
             except Exception as e:
                 print(f"Warning: Failed to load known_hosts file: {e!s}")
 
-        # Set policy for unknown host keys
         self.ssh_client.set_missing_host_key_policy(CapturingRejectPolicy())
 
     def connect_with_key(
@@ -326,11 +309,8 @@ class SSHConnection:
         """
         try:
             self.disconnect()
-
-            # Initialize the SSH client
             self._init_ssh_client()
 
-            # If private_key is a string, load it into a key object
             if isinstance(private_key, str):
                 key_obj = self._load_key_from_string(private_key, password=password)
             else:
@@ -340,10 +320,8 @@ class SSHConnection:
                 hostname=host, username=username, pkey=key_obj, port=port, timeout=timeout
             )
         except SSHKeyError:
-            # Pass through key errors
             raise
         except UnknownHostKeyError:
-            # Pass through UnknownHostKeyError with detailed information
             raise
         except Exception as e:
             raise SSHConnectionError(f"Failed to connect with key: {e!s}") from e
@@ -373,16 +351,11 @@ class SSHConnection:
             raise SSHKeyError(f"Key file not found at {private_key_path}")
 
         try:
-            # Load the key file
             key_obj = self._load_key_from_file(private_key_path, password=password)
-
-            # Connect using the loaded key
             self.connect_with_key(host, username, key_obj, port, timeout)
         except SSHKeyError:
-            # Pass through key errors
             raise
         except UnknownHostKeyError:
-            # Pass through UnknownHostKeyError with detailed information
             raise
         except Exception as e:
             raise SSHConnectionError(f"Failed to connect with key file: {e!s}") from e
@@ -404,15 +377,13 @@ class SSHConnection:
             SSHKeyError: If there's an issue with the key file
 
         """
-        # Define key classes to try in order
         key_classes = [
-            paramiko.RSAKey,  # Try RSA first for test compatibility
+            paramiko.RSAKey,
             paramiko.DSSKey,
             paramiko.ECDSAKey,
             paramiko.Ed25519Key,
         ]
 
-        # Password required errors should be surfaced specifically
         password_required = False
         last_error = None
 
@@ -420,28 +391,21 @@ class SSHConnection:
             try:
                 return key_class.from_private_key_file(key_path, password=password)
             except paramiko.ssh_exception.PasswordRequiredException:
-                # Remember that we need a password and continue trying other formats
                 password_required = True
             except paramiko.ssh_exception.SSHException as e:
-                # Save the error and try the next format
                 last_error = e
                 continue
             except FileNotFoundError as e:
-                # Simply report file not found errors
                 raise SSHKeyError(f"Failed to load key file {key_path}: {e!s}") from e
             except Exception as e:
-                # For other errors, raise immediately
                 raise SSHKeyError(f"Failed to load key file {key_path}: {e!s}") from e
 
-        # If we needed a password, raise that specific error
         if password_required:
             raise SSHKeyError("Password-protected key file requires a password")
 
-        # Otherwise raise with the last error we got
         if last_error:
             raise SSHKeyError(f"Invalid key format in {key_path}: {last_error!s}")
 
-        # If we somehow get here, no supported key format was found
         raise SSHKeyError(f"Key format not supported or invalid key file {key_path}")
 
     def connect_with_password(
@@ -464,15 +428,11 @@ class SSHConnection:
         """
         try:
             self.disconnect()
-
-            # Initialize the SSH client
             self._init_ssh_client()
-
             self.ssh_client.connect(
                 hostname=host, username=username, password=password, port=port, timeout=timeout
             )
         except UnknownHostKeyError:
-            # Pass through UnknownHostKeyError with detailed information
             raise
         except Exception as e:
             raise SSHConnectionError(f"Failed to connect with password: {e!s}") from e
@@ -500,33 +460,27 @@ class SSHConnection:
 
         try:
             stdin, stdout, stderr = self.ssh_client.exec_command(command, timeout=timeout)
-            # Get exit status
             exit_status = stdout.channel.recv_exit_status()
             output = stdout.read().decode()
             error_output = stderr.read().decode()
 
-            # Combine output if stderr has content and we're ignoring stderr
-            # or if the command executed successfully despite stderr output
             if error_output and (ignore_stderr or exit_status == 0):
                 if output:
                     return f"{output}\n[stderr]: {error_output}"
                 return error_output
 
-            # Command failed with stderr output
             if exit_status != 0 and error_output:
                 raise SSHConnectionError(
                     f"Command execution failed on {params.connection_id} (exit code {exit_status}): {error_output}"
                 )
 
-            # Command failed with no stderr output
             if exit_status != 0:
                 raise SSHConnectionError(
                     f"Command execution failed on {params.connection_id} with exit code {exit_status}"
                 )
 
-            # No output but successful execution
             if not output and exit_status == 0:
-                return ""  # Command executed successfully with no output
+                return ""
 
             return output
 

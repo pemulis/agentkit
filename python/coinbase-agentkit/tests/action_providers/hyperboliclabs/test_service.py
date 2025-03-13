@@ -38,10 +38,8 @@ def test_make_request():
         mock_response.json.return_value = {"status": "success"}
         mock_response.ok = True
 
-        # Call the method
         response = base.make_request("/test")
 
-        # Check that the right calls were made
         mock_request.assert_called_once()
         assert response is mock_response
         assert response.json() == {"status": "success"}
@@ -63,13 +61,11 @@ def test_service_make_request(mock_request, mock_api_key):
     mock_response = mock_request.return_value
     mock_response.json.return_value = {"status": "success"}
 
-    # Test basic GET request
     response = service.make_request("/test")
     assert response is mock_response
     assert response.json() == {"status": "success"}
     mock_request.assert_called_once()
 
-    # Test POST request with parameters
     data = {"key": "value"}
     params = {"query": "param"}
     custom_headers = {"Custom": "Header"}
@@ -95,8 +91,6 @@ def test_service_make_request_invalid_method(mock_request, mock_api_key):
     """Test Base service with invalid HTTP method."""
     service = Base(mock_api_key)
 
-    # The implementation no longer validates HTTP methods directly,
-    # but we can test that we pass the method correctly to requests
     mock_request.side_effect = ValueError("Invalid HTTP method: INVALID")
 
     with pytest.raises(ValueError, match="Invalid HTTP method"):

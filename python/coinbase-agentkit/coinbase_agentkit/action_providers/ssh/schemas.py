@@ -49,7 +49,6 @@ class ConnectionStatusSchema(BaseModel):
 class ListConnectionsSchema(BaseModel):
     """Schema for list_connections action."""
 
-    # No parameters needed
     pass
 
 

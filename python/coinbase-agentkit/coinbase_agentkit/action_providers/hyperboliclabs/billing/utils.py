@@ -32,6 +32,7 @@ def calculate_duration_seconds(start_time: str, end_time: str) -> float:
     )
     end = datetime.fromisoformat(end_time.replace("Z", "+00:00") if "Z" in end_time else end_time)
     duration = end - start
+
     return duration.total_seconds()
 
 
@@ -50,6 +51,7 @@ def format_purchase_history(purchases: BillingPurchaseHistoryResponse, limit: in
         return "No previous purchases found"
 
     output = [f"Purchase History (showing {limit} most recent):"]
+
     for purchase in purchases.purchase_history[:limit]:
         amount = float(purchase.amount) / 100
         timestamp = datetime.fromisoformat(purchase.timestamp.replace("Z", "+00:00"))
@@ -75,6 +77,7 @@ def format_spend_history(instance_history: InstanceHistoryResponse, limit: int =
 
     total_cost = 0
     gpu_stats = defaultdict(lambda: {"count": 0, "total_cost": 0, "total_seconds": 0})
+
     instances_summary = []
 
     for instance in instance_history.instance_history:
