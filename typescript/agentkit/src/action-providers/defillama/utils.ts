@@ -1,6 +1,40 @@
 import { ProtocolResponse, PrunedProtocolResponse } from "./types";
 
 /**
+ * Processes a time-series array by sorting by date (newest first) and limiting to maxEntries
+ * 
+ * @param array - The time-series array to process
+ * @param maxEntries - Maximum number of entries to keep
+ * @returns The processed array (sorted and limited)
+ */
+const processTimeSeriesArray = (array: any[], maxEntries: number): any[] => {
+  if (array.length <= maxEntries) {
+    return array;
+  }
+
+  // Sort by date if array items have date property
+  if (array.length > 0 && typeof array[0] === "object" && array[0] !== null && "date" in array[0]) {
+    array.sort((a, b) => {
+      if (
+        a &&
+        b &&
+        typeof a === "object" &&
+        typeof b === "object" &&
+        "date" in a &&
+        "date" in b &&
+        typeof a.date === "number" &&
+        typeof b.date === "number"
+      ) {
+        return b.date - a.date;
+      }
+      return 0;
+    });
+  }
+
+  return array.slice(0, maxEntries);
+};
+
+/**
  * Prunes the protocol response by limiting time-series data arrays
  * to show only the most recent entries.
  *
@@ -30,26 +64,8 @@ export const pruneGetProtocolResponse = (
         path => currentPath === path || currentPath.endsWith(`.${path}`),
       );
 
-      if (isTimeSeriesArray && obj.length > maxEntries) {
-        if (obj.length > 0 && typeof obj[0] === "object" && obj[0] !== null && "date" in obj[0]) {
-          obj.sort((a, b) => {
-            if (
-              a &&
-              b &&
-              typeof a === "object" &&
-              typeof b === "object" &&
-              "date" in a &&
-              "date" in b &&
-              typeof a.date === "number" &&
-              typeof b.date === "number"
-            ) {
-              return b.date - a.date;
-            }
-            return 0;
-          });
-        }
-
-        return obj.slice(0, maxEntries);
+      if (isTimeSeriesArray) {
+        return processTimeSeriesArray(obj, maxEntries);
       }
 
       for (let i = 0; i < obj.length; i++) {
@@ -78,32 +94,7 @@ export const pruneGetProtocolResponse = (
 
       for (const timeSeriesKey of timeSeriesArrayPaths) {
         if (chainData[timeSeriesKey] && Array.isArray(chainData[timeSeriesKey])) {
-          if (chainData[timeSeriesKey].length > maxEntries) {
-            const timeSeriesArray = chainData[timeSeriesKey];
-
-            if (
-              timeSeriesArray.length > 0 &&
-              typeof timeSeriesArray[0] === "object" &&
-              timeSeriesArray[0] !== null &&
-              "date" in timeSeriesArray[0]
-            ) {
-              timeSeriesArray.sort((a, b) => {
-                if (
-                  a &&
-                  b &&
-                  "date" in a &&
-                  "date" in b &&
-                  typeof a.date === "number" &&
-                  typeof b.date === "number"
-                ) {
-                  return b.date - a.date;
-                }
-                return 0;
-              });
-            }
-
-            chainData[timeSeriesKey] = timeSeriesArray.slice(0, maxEntries);
-          }
+          chainData[timeSeriesKey] = processTimeSeriesArray(chainData[timeSeriesKey], maxEntries);
         }
       }
     }

@@ -27,7 +27,7 @@ export class DefiLlamaActionProvider extends ActionProvider {
    * @returns A JSON string containing matching protocols or error message
    */
   @CreateAction({
-    name: "search_protocols",
+    name: "find_protocol",
     description: `This tool will search for DeFi protocols on DefiLlama by name.
 It takes the following inputs:
 - A search query string to match against protocol names
