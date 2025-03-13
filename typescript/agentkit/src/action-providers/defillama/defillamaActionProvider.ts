@@ -3,7 +3,8 @@ import { ActionProvider } from "../actionProvider";
 import { CreateAction } from "../actionDecorator";
 import { GetTokenPricesSchema, GetProtocolSchema, SearchProtocolsSchema } from "./schemas";
 import { DEFILLAMA_BASE_URL, DEFILLAMA_PRICES_URL } from "./constants";
-import { Protocol } from "./types";
+import { Protocol, ProtocolResponse } from "./types";
+import { pruneGetProtocolResponse } from "./utils";
 
 /**
  * DefiLlamaActionProvider is an action provider for DefiLlama API interactions.
@@ -66,9 +67,10 @@ Important notes:
    * Gets detailed information about a specific protocol.
    * Note: Returns null if the protocol is not found.
    * The response includes TVL, description, category, and other metadata.
+   * Time-series data is pruned to keep response size manageable.
    *
    * @param args - The protocol request parameters
-   * @returns A JSON string containing protocol information or error message
+   * @returns A JSON string containing time-series pruned protocol information
    */
   @CreateAction({
     name: "get_protocol",
@@ -80,7 +82,8 @@ Important notes:
 - Returns null if the protocol is not found
 - Returns comprehensive data including TVL, description, category, and other metadata
 - Includes historical TVL data and chain-specific breakdowns where available
-- Returns error message if the protocol ID is invalid or the request fails`,
+- Returns error message if the protocol ID is invalid or the request fails
+- Prunes time-series data to 5 most recent entries to make the response more manageable`,
     schema: GetProtocolSchema,
   })
   async getProtocol(args: z.infer<typeof GetProtocolSchema>): Promise<string> {
@@ -92,10 +95,12 @@ Important notes:
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
-      return JSON.stringify(data, null, 2);
+      const data = (await response.json()) as ProtocolResponse;
+      const prunedData = pruneGetProtocolResponse(data);
+
+      return JSON.stringify(prunedData, null, 2);
     } catch (error: unknown) {
-      return `Error fetching protocol information: ${error}`;
+      return `Error fetching protocol information: ${error instanceof Error ? error.message : String(error)}`;
     }
   }
 
@@ -140,7 +145,7 @@ Important notes:
       const data = await response.json();
       return JSON.stringify(data, null, 2);
     } catch (error: unknown) {
-      return `Error fetching token prices: ${error}`;
+      return `Error fetching token prices: ${error instanceof Error ? error.message : String(error)}`;
     }
   }
 
