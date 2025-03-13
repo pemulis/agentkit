@@ -2,7 +2,7 @@ import { ProtocolResponse, PrunedProtocolResponse } from "./types";
 
 /**
  * Processes a time-series array by sorting by date (newest first) and limiting to maxEntries
- * 
+ *
  * @param array - The time-series array to process
  * @param maxEntries - Maximum number of entries to keep
  * @returns The processed array (sorted and limited)
