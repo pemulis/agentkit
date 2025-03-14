@@ -6,7 +6,6 @@ It includes functionality for managing account settings like wallet linking.
 
 from typing import Any
 
-from ....network import Network
 from ...action_decorator import create_action
 from ..action_provider import ActionProvider
 from .schemas import LinkWalletAddressSchema
@@ -94,18 +93,6 @@ Important notes:
 
         except Exception as e:
             return f"Error: Wallet linking: {e!s}"
-
-    def supports_network(self, _: Network) -> bool:
-        """Check if network is supported by Hyperbolic settings actions.
-
-        Args:
-            _ (Network): The network to check support for.
-
-        Returns:
-            bool: Always True as Hyperbolic settings actions don't depend on blockchain networks.
-
-        """
-        return True
 
 
 def hyperbolic_settings_action_provider(

@@ -7,8 +7,6 @@ It includes functionality for text, image and audio generation.
 import uuid
 from typing import Any
 
-from coinbase_agentkit.network import Network
-
 from ...action_decorator import create_action
 from ..action_provider import ActionProvider
 from .schemas import (
@@ -253,18 +251,6 @@ Important notes:
 
         except Exception as e:
             return f"Error: Audio generation: {e!s}"
-
-    def supports_network(self, network: Network) -> bool:
-        """Check if the action provider supports the given network.
-
-        Args:
-            network: The network to check support for.
-
-        Returns:
-            bool: True if the network is supported, False otherwise.
-
-        """
-        return True
 
 
 def ai_action_provider(

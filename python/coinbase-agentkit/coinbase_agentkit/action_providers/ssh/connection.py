@@ -15,6 +15,36 @@ import paramiko
 from pydantic import BaseModel, Field, model_validator
 
 
+class SSHConnectionParams(BaseModel):
+    """Validates SSH connection parameters."""
+
+    connection_id: str = Field(description="Unique identifier for this connection")
+    host: str = Field(description="Remote server hostname/IP")
+    username: str = Field(description="SSH username")
+    password: str | None = Field(None, description="SSH password for authentication")
+    private_key: str | None = Field(None, description="SSH private key content as a string")
+    private_key_path: str | None = Field(
+        None, description="Path to private key file for authentication"
+    )
+    port: int = Field(22, description="SSH port number")
+
+    @classmethod
+    @model_validator(mode="after")
+    def check_auth_method_provided(cls):
+        """Ensure at least one authentication method is provided."""
+        if not any([cls.password, cls.private_key, cls.private_key_path]):
+            raise ValueError(
+                "At least one authentication method must be provided (password, private_key, or private_key_path)"
+            )
+
+        if not cls.host:
+            raise ValueError("Host must be provided")
+        if not cls.username:
+            raise ValueError("Username must be provided")
+
+        return cls
+
+
 class SSHConnectionError(Exception):
     """Exception raised for SSH connection errors."""
 
@@ -71,36 +101,6 @@ class CapturingRejectPolicy(paramiko.MissingHostKeyPolicy):
         )
 
         raise UnknownHostKeyError(message)
-
-
-class SSHConnectionParams(BaseModel):
-    """Validates SSH connection parameters."""
-
-    connection_id: str = Field(description="Unique identifier for this connection")
-    host: str = Field(description="Remote server hostname/IP")
-    username: str = Field(description="SSH username")
-    password: str | None = Field(None, description="SSH password for authentication")
-    private_key: str | None = Field(None, description="SSH private key content as a string")
-    private_key_path: str | None = Field(
-        None, description="Path to private key file for authentication"
-    )
-    port: int = Field(22, description="SSH port number")
-
-    @classmethod
-    @model_validator(mode="after")
-    def check_auth_method_provided(cls):
-        """Ensure at least one authentication method is provided."""
-        if not any([cls.password, cls.private_key, cls.private_key_path]):
-            raise ValueError(
-                "At least one authentication method must be provided (password, private_key, or private_key_path)"
-            )
-
-        if not cls.host:
-            raise ValueError("Host must be provided")
-        if not cls.username:
-            raise ValueError("Username must be provided")
-
-        return cls
 
 
 class SSHConnection:
@@ -241,7 +241,6 @@ class SSHConnection:
 
         """
         key_file = io.StringIO(key_string)
-
         key_classes = [
             paramiko.RSAKey,
             paramiko.DSSKey,
@@ -335,15 +334,19 @@ class SSHConnection:
         timeout: int = 10,
         password: str | None = None,
     ) -> None:
-        """Connect to a remote server using a private key path.
+        """Connect to a remote server using a private key from file.
 
         Args:
             host: Remote server hostname/IP
             username: SSH username
-            private_key_path: Path to private key file
+            private_key_path: Path to SSH private key file
             port: SSH port number (default: 22)
             timeout: Connection timeout in seconds (default: 10)
             password: Optional password for encrypted keys
+
+        Raises:
+            SSHKeyError: If there's an issue with the SSH key
+            SSHConnectionError: If the connection fails
 
         """
         private_key_path = os.path.expanduser(private_key_path)

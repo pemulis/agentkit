@@ -6,7 +6,6 @@ It includes functionality for managing GPU instances and SSH access.
 
 from typing import Any
 
-from ....network import Network
 from ...action_decorator import create_action
 from ..action_provider import ActionProvider
 from .schemas import (
@@ -388,18 +387,6 @@ Important notes:
 
         except Exception as e:
             return f"Error: Compute termination: {e!s}"
-
-    def supports_network(self, _: Network) -> bool:
-        """Check if network is supported by Hyperbolic marketplace actions.
-
-        Args:
-            _ (Network): The network to check support for.
-
-        Returns:
-            bool: Always True as Hyperbolic marketplace actions don't depend on blockchain networks.
-
-        """
-        return True
 
 
 def hyperbolic_marketplace_action_provider(

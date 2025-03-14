@@ -6,8 +6,6 @@ It includes functionality for checking balance and spend history.
 
 from typing import Any
 
-from coinbase_agentkit.network import Network
-
 from ...action_decorator import create_action
 from ..action_provider import ActionProvider
 from ..marketplace.service import MarketplaceService
@@ -198,18 +196,6 @@ Important notes:
             return format_purchase_history(history_response)
         except Exception as e:
             return f"Error: Purchase history retrieval: {e!s}"
-
-    def supports_network(self, network: Network) -> bool:
-        """Check if network is supported by Hyperbolic billing actions.
-
-        Args:
-            network (Network): The network to check support for.
-
-        Returns:
-            bool: Always True as Hyperbolic billing actions don't depend on blockchain networks.
-
-        """
-        return True
 
 
 def hyperbolic_billing_action_provider(

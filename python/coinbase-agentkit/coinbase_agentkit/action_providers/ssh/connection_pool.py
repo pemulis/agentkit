@@ -49,16 +49,20 @@ class SSHConnectionPool:
             SSHConnection: The connection object
 
         Raises:
-            SSHConnectionError: If the connection ID is not found
+            SSHConnectionError: If the connection ID is not found or connection limit reached
 
         """
-        if connection_id not in self.connections:
-            params = self._get_connection_params(connection_id)
-            if params:
-                # TODO: check for available slots
-                return self.create_connection(params)
+        if connection_id in self.connections:
+            return self.connections[connection_id]
+
+        params = self._get_connection_params(connection_id)
+        if not params:
             raise SSHConnectionError(f"Connection ID '{connection_id}' not found")
-        return self.connections[connection_id]
+
+        if len(self.connections) >= self.max_connections:
+            raise SSHConnectionError(f"Connection limit reached ({self.max_connections})")
+
+        return self.create_connection(params)
 
     def close_idle_connections(self) -> int:
         """Close any idle connections in the pool.
