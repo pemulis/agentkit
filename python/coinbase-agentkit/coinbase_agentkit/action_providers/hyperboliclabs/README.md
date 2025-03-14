@@ -144,12 +144,6 @@ To add new Hyperbolic Labs actions:
 3. Implement the action in the corresponding action provider
 4. Implement tests in the corresponding test directory
 
-## Notes
-
-- The SSH key must be an RSA key
-- The API key can be obtained from the Hyperbolic Labs dashboard
-- For wallet linking, ensure the address is a valid Ethereum address format
-
 ## Prompts
 
 ### *please show my hyperbolic balance*
