@@ -2,6 +2,25 @@
 
 This directory contains the **Hyperbolic Labs Action Provider** implementation, which provides actions to interact with Hyperbolic Labs services.
 
+## Getting Started
+
+1. Create a new Hyperbolic Labs account at https://hyperbolic.xyz/
+2. Retrieve your API key at https://hyperbolic.xyz/settings
+3. Set the `HYPERBOLIC_API_KEY` environment variable to the API key
+4. Upload your SSH public key at https://hyperbolic.xyz/settings
+
+Note:
+- Supported SSH key types: DSA/DSS, ECDSA, ED25519, RSA
+- Your SSH public key must be defined in your Hyperbolic Labs account before you can rent GPU instances
+
+### Environment Variables
+```
+HYPERBOLIC_API_KEY
+HYPERBOLIC_SSH_PRIVATE_KEY_PATH
+```
+
+If `HYPERBOLIC_SSH_PRIVATE_KEY_PATH` is undefined, the SSH action provider will use the default SSH key at `~/.ssh/id_rsa`.
+
 ## Directory Structure
 
 ```
