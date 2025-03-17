@@ -1,4 +1,4 @@
-import { AgentkitRouteConfiguration, MCPRouteConfiguration } from "./types";
+import { AgentkitRouteConfiguration, PrepareAgentkitRouteConfiguration, MCPRouteConfiguration } from "./types";
 
 export const EVM_NETWORKS = [
   "base-mainnet",
@@ -159,7 +159,7 @@ export const Frameworks = ["Langchain", "Vercel AI SDK", "Model Context Protocol
 
 export type Framework = (typeof Frameworks)[number];
 
-export const Templates = ["next", "mcp"] as const;
+export const Templates = ["next", "mcp", "prepareAgentkit"] as const;
 
 export type Template = (typeof Templates)[number];
 
@@ -223,6 +223,40 @@ export const MCPRouteConfigurations: Record<
     Privy: {
       getAgentkitRoute: "svm/privy/getAgentKit.ts",
       configRoute: "svm/privy/claude_desktop_config.json",
+    },
+  },
+};
+
+
+export const PrepareAgentkitRouteConfigurations: Record<
+  "EVM" | "CUSTOM_EVM" | "SVM",
+  Partial<Record<WalletProviderChoice, PrepareAgentkitRouteConfiguration>>
+> = {
+  EVM: {
+    CDP: {
+      route: "evm/cdp/prepareAgentkit.ts",
+    },
+    Viem: {
+      route: "evm/viem/prepareAgentkit.ts",
+    },
+    Privy: {
+      route: "evm/privy/prepareAgentkit.ts",
+    },
+    SmartWallet: {
+      route: "evm/smart/prepareAgentkit.ts",
+    },
+  },
+  CUSTOM_EVM: {
+    Viem: {
+      route: "custom-evm/viem/prepareAgentkit.ts",
+    },
+  },
+  SVM: {
+    SolanaKeypair: {
+      route: "svm/solana-keypair/prepareAgentkit.ts",
+    },
+    Privy: {
+      route: "svm/privy/prepareAgentkit.ts",
     },
   },
 };

@@ -240,7 +240,7 @@ export async function initProject() {
   const spinner = ora(`Creating ${projectName}...`).start();
 
   // Copy template over to new project
-  const root = await copyTemplate(projectName, packageName, template);
+  const root = await copyTemplate(projectName, template, packageName);
 
   // Handle selection-specific logic over copied-template
   switch (template) {

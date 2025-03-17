@@ -57,29 +57,38 @@ async function copyDir(src: string, dest: string): Promise<void> {
 }
 
 /**
- * Copies a project template to a new directory and updates the package name.
+ * Copies a project template to a new directory and optionally updates the package name.
  *
  * - Copies the template from the source directory.
- * - Updates the `package.json` file with the provided package name.
+ * - If packageName is provided, updates the `package.json` file with the provided package name.
  *
  * @param {string} projectName - The name of the new project directory.
- * @param {string} packageName - The npm package name to use (auto-formatted if empty).
  * @param {Template} template - The template to use.
+ * @param {string} [packageName] - Optional npm package name to use.
  * @returns {Promise<string>} The path of the newly created project directory.
  */
 export async function copyTemplate(
   projectName: string,
-  packageName: string,
   template: Template,
+  packageName?: string,
 ): Promise<string> {
   const root = path.join(process.cwd(), projectName);
   await copyDir(getSourceDir(template), root);
 
-  const pkgPath = path.join(root, "package.json");
-  const pkg = JSON.parse(await fs.promises.readFile(pkgPath, "utf-8"));
-  pkg.name = packageName;
-
-  await fs.promises.writeFile(pkgPath, JSON.stringify(pkg, null, 2));
+  // Only update package.json if packageName is provided
+  if (packageName) {
+    const pkgPath = path.join(root, "package.json");
+    try {
+      const pkg = JSON.parse(await fs.promises.readFile(pkgPath, "utf-8"));
+      pkg.name = packageName;
+      await fs.promises.writeFile(pkgPath, JSON.stringify(pkg, null, 2));
+    } catch (error) {
+      // Ignore errors if package.json doesn't exist
+      if ((error as NodeJS.ErrnoException).code !== 'ENOENT') {
+        throw error;
+      }
+    }
+  }
 
   return root;
 }
