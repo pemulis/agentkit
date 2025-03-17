@@ -11,6 +11,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Utility functions for string transformations
+function toCamelCase(str: string): string {
+    // First character should be lowercase
+    return str.charAt(0).toLowerCase() + str.slice(1);
+}
+
 function toSnakeCase(str: string): string {
     return str
         .replace(/([a-z])([A-Z])/g, '$1_$2')
@@ -54,7 +59,7 @@ export async function createActionProvider() {
 
     // Process the name variations
     const className = answers.name.charAt(0).toUpperCase() + answers.name.slice(1);
-    const fileName = `${className}ActionProvider`;
+    const fileName = `${toCamelCase(answers.name)}ActionProvider`;
     const snakeName = toSnakeCase(answers.name);
     
     // Determine wallet provider and networks based on network family
@@ -77,9 +82,9 @@ export async function createActionProvider() {
     }
 
     // Generate code using nunjucks
-    const generatedCode = nunjucks.render('actionProvider/template.njk', {
+    const generatedCode = nunjucks.render('actionProvider/actionProvider.njk', {
         name: snakeName,
-        className,
+        className: fileName,
         description: answers.description,
         walletProvider,
         networks: '[]',
