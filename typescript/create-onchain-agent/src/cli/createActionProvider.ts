@@ -97,19 +97,15 @@ export async function createActionProvider() {
         schemaName: `${baseName}ActionSchema`
     });
 
-    // Create directory if it doesn't exist
-    const dirPath = `./${fileName}`;  // Use camelCase fileName for directory
-    await fs.mkdir(dirPath, { recursive: true });
-
-    // Write files
-    await fs.writeFile(`${dirPath}/${fileName}.ts`, generatedCode);  // Use camelCase fileName for the file
+    // Write files directly to current directory
+    await fs.writeFile(`./${fileName}.ts`, generatedCode);
 
     // Generate schema file using nunjucks with updated schema name
     const schemaCode = nunjucks.render('actionProvider/schema.njk', {
         className: `${baseName}Action`,
     });
 
-    await fs.writeFile(`${dirPath}/schemas.ts`, schemaCode);
+    await fs.writeFile(`./schemas.ts`, schemaCode);
 
     console.log(`Successfully created ${className}!`);
 }

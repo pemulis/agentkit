@@ -64,10 +64,8 @@ export async function createWalletProvider() {
         baseClass
     });
 
-    const dirPath = `./${fileName}`;
-    await fs.mkdir(dirPath, { recursive: true });
-
-    await fs.writeFile(`${dirPath}/${fileName}.ts`, generatedCode);
+    // Write file directly to current directory
+    await fs.writeFile(`./${fileName}.ts`, generatedCode);
 
     console.log(`Successfully created ${fileName}!`);
 }
