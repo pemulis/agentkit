@@ -23,6 +23,15 @@ function toSnakeCase(str: string): string {
         .toLowerCase();
 }
 
+function toClassName(str: string): string {
+    // Capitalize first letter of each word, remove any "Provider" suffix
+    return str
+        .split(/(?=[A-Z])|[\s_-]/)
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join('')
+        .replace(/Provider$/, '');
+}
+
 export async function createActionProvider() {
     // Configure nunjucks with the correct path
     nunjucks.configure(path.join(__dirname, '../../../templates'), {
@@ -40,12 +49,6 @@ export async function createActionProvider() {
             validate: (value: string) => value.length > 0 ? true : 'Name is required'
         },
         {
-            type: 'text',
-            name: 'description',
-            message: 'Provide a brief description:',
-            initial: (prev: string) => `${prev} operations`
-        },
-        {
             type: 'select',
             name: 'networkFamily',
             message: 'Which network family will this support?',
@@ -58,9 +61,11 @@ export async function createActionProvider() {
     ]);
 
     // Process the name variations
-    const className = answers.name.charAt(0).toUpperCase() + answers.name.slice(1);
-    const fileName = `${toCamelCase(answers.name)}ActionProvider`;
+    const baseName = toClassName(answers.name);
+    const className = `${baseName}ActionProvider`;
+    const fileName = `${toCamelCase(baseName)}ActionProvider`;
     const snakeName = toSnakeCase(answers.name);
+    const exportName = `${toCamelCase(baseName)}ActionProvider`;
     
     // Determine wallet provider and networks based on network family
     let walletProvider = 'EvmWalletProvider';
@@ -83,30 +88,28 @@ export async function createActionProvider() {
 
     // Generate code using nunjucks
     const generatedCode = nunjucks.render('actionProvider/actionProvider.njk', {
-        name: snakeName,
-        className: fileName,
-        description: answers.description,
+        name: exportName,
+        className,
         walletProvider,
         networks: '[]',
         networkSupport,
         actionName: `${snakeName}_action`,
-        schemaName: `${className}ActionSchema`
+        schemaName: `${baseName}ActionSchema`
     });
 
     // Create directory if it doesn't exist
-    const dirPath = `./${fileName}`;
+    const dirPath = `./${fileName}`;  // Use camelCase fileName for directory
     await fs.mkdir(dirPath, { recursive: true });
 
     // Write files
-    await fs.writeFile(`${dirPath}/${fileName}.ts`, generatedCode);
+    await fs.writeFile(`${dirPath}/${fileName}.ts`, generatedCode);  // Use camelCase fileName for the file
 
     // Generate schema file using nunjucks with updated schema name
     const schemaCode = nunjucks.render('actionProvider/schema.njk', {
-        className: `${className}Action`,
-        description: answers.description
+        className: `${baseName}Action`,
     });
 
     await fs.writeFile(`${dirPath}/schemas.ts`, schemaCode);
 
-    console.log(`Successfully created ${fileName}!`);
+    console.log(`Successfully created ${className}!`);
 }

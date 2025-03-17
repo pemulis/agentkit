@@ -1,44 +1,32 @@
-import { ActionProvider, {{ walletProvider }}, CreateAction, Network } from "@coinbase/agentkit";
+import { CustomActionProvider, {{ walletProvider }}, Network } from "@coinbase/agentkit";
 import { {{ schemaName }} } from "./schemas";
 import { z } from "zod";
 
 /**
- * Action provider for {{ description }}.
+ * Action provider for {{ className }} operations.
  */
-export class {{ className }}Provider extends ActionProvider<{{ walletProvider }}> {
+export class {{ className }} extends CustomActionProvider<{{ walletProvider }}> {
   /**
-   * Constructs a new {{ className }}Provider.
+   * Constructs a new {{ className }}.
    */
   constructor() {
-    super("{{ name }}", {{ networks | safe }});
+    super([{
+      name: "{{ actionName }}",
+      description: `This tool will perform a {{ className }} operation.`,
+      schema: {{ schemaName }},
+      invoke: async (wallet: {{ walletProvider }}, args: z.infer<typeof {{ schemaName }}>) => {
+        try {
+          // Do work here
+          return `Successfully performed {{ actionName }} and returned the response`;
+        } catch (error) {
+          return `Error performing {{ actionName }}: Error: ${error}`;
+        }
+      }
+    }]);
   }
 
   /**
-   * Performs {{ description }}.
-   *
-   * @param wallet - The wallet to use for the work.
-   * @param args - The arguments for the work.
-   * @returns A string indicating the success or failure of the work.
-   */
-  @CreateAction({
-    name: "{{ actionName }}",
-    description: `This tool will perform {{ description }}.`,
-    schema: {{ schemaName }},
-  })
-  async {{ name }}Action(
-    wallet: {{ walletProvider }},
-    args: z.infer<typeof {{ schemaName }}>,
-  ): Promise<string> {
-    try {
-      // Do work here
-      return `Successfully performed {{ description }} and returned the response`;
-    } catch (error) {
-      return `Error performing {{ description }}: Error: ${error}`;
-    }
-  }
-
-  /**
-   * Checks if the {{ name }} action provider supports the given network.
+   * Checks if the {{ name }} supports the given network.
    *
    * @param network - The network to check.
    * @returns True if the {{ name }} action provider supports the network, false otherwise.
@@ -46,4 +34,4 @@ export class {{ className }}Provider extends ActionProvider<{{ walletProvider }}
   supportsNetwork = (network: Network) => {{ networkSupport | safe }};
 }
 
-export const {{ name }}ActionProvider = () => new {{ className }}Provider(); 
+export const {{ name }} = () => new {{ className }}(); 
