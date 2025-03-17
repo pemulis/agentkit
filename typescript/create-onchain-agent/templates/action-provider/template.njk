@@ -1,0 +1,49 @@
+import { ActionProvider, {{ walletProvider }}, CreateAction, Network } from "@coinbase/agentkit";
+import { {{ schemaName }} } from "./schemas";
+import { z } from "zod";
+
+/**
+ * Action provider for {{ description }}.
+ */
+export class {{ className }}Provider extends ActionProvider<{{ walletProvider }}> {
+  /**
+   * Constructs a new {{ className }}Provider.
+   */
+  constructor() {
+    super("{{ name }}", {{ networks | safe }});
+  }
+
+  /**
+   * Performs {{ description }}.
+   *
+   * @param wallet - The wallet to use for the work.
+   * @param args - The arguments for the work.
+   * @returns A string indicating the success or failure of the work.
+   */
+  @CreateAction({
+    name: "{{ actionName }}",
+    description: `This tool will perform {{ description }}.`,
+    schema: {{ schemaName }},
+  })
+  async {{ name }}Action(
+    wallet: {{ walletProvider }},
+    args: z.infer<typeof {{ schemaName }}>,
+  ): Promise<string> {
+    try {
+      // Do work here
+      return `Successfully performed {{ description }} and returned the response`;
+    } catch (error) {
+      return `Error performing {{ description }}: Error: ${error}`;
+    }
+  }
+
+  /**
+   * Checks if the {{ name }} action provider supports the given network.
+   *
+   * @param network - The network to check.
+   * @returns True if the {{ name }} action provider supports the network, false otherwise.
+   */
+  supportsNetwork = (network: Network) => {{ networkSupport | safe }};
+}
+
+export const {{ name }}ActionProvider = () => new {{ className }}Provider(); 
