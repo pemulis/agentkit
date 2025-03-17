@@ -11,17 +11,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Utility functions for string transformations
-function toKebabCase(str: string): string {
-    return str
-        .replace(/([a-z])([A-Z])/g, '$1-$2') // Add hyphen between lower & upper
-        .replace(/([A-Z])([A-Z][a-z])/g, '$1-$2') // Add hyphen between consecutive uppers if followed by lower
-        .toLowerCase();
-}
-
 function toSnakeCase(str: string): string {
     return str
-        .replace(/([a-z])([A-Z])/g, '$1_$2') // Add underscore between lower & upper
-        .replace(/([A-Z])([A-Z][a-z])/g, '$1_$2') // Add underscore between consecutive uppers if followed by lower
+        .replace(/([a-z])([A-Z])/g, '$1_$2')
+        .replace(/([A-Z])([A-Z][a-z])/g, '$1_$2')
         .toLowerCase();
 }
 
@@ -61,7 +54,7 @@ export async function createActionProvider() {
 
     // Process the name variations
     const className = answers.name.charAt(0).toUpperCase() + answers.name.slice(1);
-    const kebabName = `${toKebabCase(answers.name)}-action-provider`;
+    const fileName = `${className}ActionProvider`;
     const snakeName = toSnakeCase(answers.name);
     
     // Determine wallet provider and networks based on network family
@@ -84,7 +77,7 @@ export async function createActionProvider() {
     }
 
     // Generate code using nunjucks
-    const generatedCode = nunjucks.render('action-provider/template.njk', {
+    const generatedCode = nunjucks.render('actionProvider/template.njk', {
         name: snakeName,
         className,
         description: answers.description,
@@ -96,19 +89,19 @@ export async function createActionProvider() {
     });
 
     // Create directory if it doesn't exist
-    const dirPath = `./${kebabName}`;
+    const dirPath = `./${fileName}`;
     await fs.mkdir(dirPath, { recursive: true });
 
     // Write files
-    await fs.writeFile(`${dirPath}/${kebabName}.ts`, generatedCode);
+    await fs.writeFile(`${dirPath}/${fileName}.ts`, generatedCode);
 
     // Generate schema file using nunjucks with updated schema name
-    const schemaCode = nunjucks.render('action-provider/schema.njk', {
+    const schemaCode = nunjucks.render('actionProvider/schema.njk', {
         className: `${className}Action`,
         description: answers.description
     });
 
     await fs.writeFile(`${dirPath}/schemas.ts`, schemaCode);
 
-    console.log(`Successfully created ${kebabName}!`);
+    console.log(`Successfully created ${fileName}!`);
 }

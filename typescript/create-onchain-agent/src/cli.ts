@@ -1,12 +1,11 @@
 #!/usr/bin/env node
-import { createActionProvider } from "./cli/create-action-provider.js";
-import { createAgent } from "./cli/create-agent.js";
-import { createAgentkit } from "./cli/create-agentkit.js";
-import { createWalletProvider } from "./cli/create-wallet-provider.js";
+import { createActionProvider } from "./cli/createActionProvider.js";
+import { createAgent } from "./cli/createAgent.js";
+import { createAgentkit } from "./cli/createAgentkit.js";
+import { createWalletProvider } from "./cli/createWalletProvider.js";
 import { initProject } from "./cli/init-project.js";
 
 async function handleArgs() {
-  console.log(process.argv);
   const type = process.argv[2];
   if (!type) {
     await initProject();
