@@ -1,11 +1,11 @@
-import prompts from "prompts";
-import pc from "picocolors";
-import { AgentkitRouteConfigurations, EVM_NETWORKS, NetworkToWalletProviders, PrepareAgentkitRouteConfigurations, SVM_NETWORKS } from "../constants.js";
-import { Network, WalletProviderChoice } from "../types.js";
-import { getNetworkType, getWalletProviders } from "../utils.js";
 import fs from "fs/promises";
 import path from "path";
+import pc from "picocolors";
+import prompts from "prompts";
+import { EVM_NETWORKS, PrepareAgentkitRouteConfigurations, SVM_NETWORKS } from "../constants.js";
 import { copyTemplate } from "../fileSystem.js";
+import { Network, WalletProviderChoice } from "../types.js";
+import { getNetworkType, getWalletProviders } from "../utils.js";
 
 /**
  * Prompts user for network and wallet provider selection, then sets up the prepare-agentkit file
@@ -148,17 +148,15 @@ export async function createAgentkit() {
   }
 
   try {
-    // Copy template and get root directory - no package name needed
     const root = await copyTemplate("prepareAgentkit", "prepareAgentkit");
 
     // Copy the selected route to the destination
     const selectedRoutePath = path.join(root, "agentkit", routeConfig.route);
-    const newRoutePath = path.join(root, "prepareAgentkit.ts");
+    const newRoutePath = path.join(process.cwd(), "prepareAgentkit.ts");
 
     await fs.copyFile(selectedRoutePath, newRoutePath);
     
-    // Clean up the agentkit directory
-    const agentkitDir = path.join(root, "agentkit");
+    const agentkitDir = path.join(root);
     await fs.rm(agentkitDir, { recursive: true, force: true });
 
     console.log(pc.green("\nSuccessfully created prepare-agentkit.ts"));

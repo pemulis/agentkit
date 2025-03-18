@@ -159,7 +159,7 @@ export const Frameworks = ["Langchain", "Vercel AI SDK", "Model Context Protocol
 
 export type Framework = (typeof Frameworks)[number];
 
-export const Templates = ["next", "mcp", "prepareAgentkit"] as const;
+export const Templates = ["next", "mcp", "prepareAgentkit", "createAgent"] as const;
 
 export type Template = (typeof Templates)[number];
 
