@@ -164,9 +164,9 @@ export async function createAgentkit() {
     const agentkitDir = path.join(root);
     await fs.rm(agentkitDir, { recursive: true, force: true });
 
-    console.log(pc.green("Successfully created prepare-agentkit.ts"));
+    console.log(pc.green("Successfully created prepareAgentkit.ts"));
   } catch (error) {
-    console.error("Error setting up prepare-agentkit:", error);
+    console.error("Error setting up prepareAgentkit:", error);
     process.exit(1);
   }
 }
