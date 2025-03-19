@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 import { optimizedCopy } from "./utils.js";
 import { Template } from "./types.js";
 
-const sourceDir = path.resolve(fileURLToPath(import.meta.url), "../../../templates");
+const sourceDir = path.resolve(fileURLToPath(import.meta.url), "../../../../templates");
 
 const renameFiles: Record<string, string | undefined> = {
   _gitignore: ".gitignore",
