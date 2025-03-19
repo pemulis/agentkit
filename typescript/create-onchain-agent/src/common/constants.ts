@@ -1,4 +1,8 @@
-import { AgentkitRouteConfiguration, PrepareAgentkitRouteConfiguration, MCPRouteConfiguration } from "./types.js";
+import {
+  AgentkitRouteConfiguration,
+  PrepareAgentkitRouteConfiguration,
+  MCPRouteConfiguration,
+} from "./types.js";
 
 export const EVM_NETWORKS = [
   "base-mainnet",
@@ -226,7 +230,6 @@ export const MCPRouteConfigurations: Record<
     },
   },
 };
-
 
 export const PrepareAgentkitRouteConfigurations: Record<
   "EVM" | "CUSTOM_EVM" | "SVM",

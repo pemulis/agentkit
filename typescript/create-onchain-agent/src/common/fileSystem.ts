@@ -84,7 +84,7 @@ export async function copyTemplate(
       await fs.promises.writeFile(pkgPath, JSON.stringify(pkg, null, 2));
     } catch (error) {
       // Ignore errors if package.json doesn't exist
-      if ((error as NodeJS.ErrnoException).code !== 'ENOENT') {
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
         throw error;
       }
     }

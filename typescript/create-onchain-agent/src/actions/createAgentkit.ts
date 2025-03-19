@@ -2,7 +2,11 @@ import fs from "fs/promises";
 import path from "path";
 import pc from "picocolors";
 import prompts from "prompts";
-import { EVM_NETWORKS, PrepareAgentkitRouteConfigurations, SVM_NETWORKS } from "../common/constants.js";
+import {
+  EVM_NETWORKS,
+  PrepareAgentkitRouteConfigurations,
+  SVM_NETWORKS,
+} from "../common/constants.js";
 import { copyTemplate } from "../common/fileSystem.js";
 import { Network, WalletProviderChoice } from "../common/types.js";
 import { getNetworkType, getWalletProviders } from "../common/utils.js";
@@ -128,8 +132,8 @@ export async function createAgentkit() {
         },
       },
     );
-  } catch (cancelled: unknown) {
-    console.error("An error occurred during prepare-agentkit creation");
+  } catch (error) {
+    console.error("An error occurred during prepare-agentkit creation", error);
     process.exit(1);
   }
 
@@ -142,7 +146,8 @@ export async function createAgentkit() {
   }
 
   // Get the route configuration for the selected wallet provider
-  const routeConfig = PrepareAgentkitRouteConfigurations[networkFamily][walletProvider as WalletProviderChoice];
+  const routeConfig =
+    PrepareAgentkitRouteConfigurations[networkFamily][walletProvider as WalletProviderChoice];
   if (!routeConfig) {
     throw new Error("Selected invalid network & wallet provider combination");
   }
@@ -155,7 +160,7 @@ export async function createAgentkit() {
     const newRoutePath = path.join(process.cwd(), "prepareAgentkit.ts");
 
     await fs.copyFile(selectedRoutePath, newRoutePath);
-    
+
     const agentkitDir = path.join(root);
     await fs.rm(agentkitDir, { recursive: true, force: true });
 

@@ -16,7 +16,7 @@ export type MCPRouteConfiguration = {
 
 export type PrepareAgentkitRouteConfiguration = {
   route: `${string}/prepareAgentkit.ts`;
-}
+};
 
 export type NetworkSelection = {
   networkFamily: "EVM" | "SVM";

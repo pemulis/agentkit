@@ -3,7 +3,13 @@ import ora from "ora";
 import path from "path";
 import pc from "picocolors";
 import prompts from "prompts";
-import { EVM_NETWORKS, Frameworks, FrameworkToTemplates, NetworkToWalletProviders, SVM_NETWORKS } from "../common/constants.js";
+import {
+  EVM_NETWORKS,
+  Frameworks,
+  FrameworkToTemplates,
+  NetworkToWalletProviders,
+  SVM_NETWORKS,
+} from "../common/constants.js";
 import { copyTemplate } from "../common/fileSystem.js";
 import { Framework, Network, WalletProviderChoice } from "../common/types.js";
 import {
@@ -24,7 +30,6 @@ import {
  * - Displays a summary of the created project along with next steps.
  */
 export async function initProject() {
-  
   console.log(
     `${pc.blue(`
  █████   ██████  ███████ ███    ██ ████████    ██   ██ ██ ████████ 

@@ -5,35 +5,37 @@ import { createAgentkit } from "./actions/createAgentkit.js";
 import { createWalletProvider } from "./actions/createWalletProvider.js";
 import { initProject } from "./actions/initProject.js";
 
+/**
+ * Handles command line arguments and executes the appropriate action
+ */
 async function handleArgs() {
   const type = process.argv[2];
   if (!type) {
     await initProject();
-  }
-  else {
-    switch(type) {
-      case 'init': {
+  } else {
+    switch (type) {
+      case "init": {
         await initProject();
         break;
       }
-      case 'action-provider': {
+      case "action-provider": {
         await createActionProvider();
         break;
       }
-      case 'wallet-provider': {
+      case "wallet-provider": {
         await createWalletProvider();
         break;
       }
-      case 'agentkit': {
+      case "agentkit": {
         await createAgentkit();
         break;
       }
-      case 'agent': {
+      case "agent": {
         await createAgent();
         break;
       }
       default: {
-        console.log('Unknown command:', type);
+        console.log("Unknown command:", type);
         break;
       }
     }
