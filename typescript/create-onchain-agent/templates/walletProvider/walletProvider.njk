@@ -7,7 +7,7 @@ import { Connection, PublicKey, RpcResponseAndContext, SignatureStatus, Signatur
 {% endif %}
 
 /**
- * {{ className }} implements a wallet provider for {{ description }}.
+ * {{ className }} wallet provider.
  */
 export class {{ className }} extends {{ baseClass }} {
 {% if protocolFamily === "EVM" %}

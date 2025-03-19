@@ -27,12 +27,6 @@ export async function createWalletProvider() {
       validate: (value: string) => (value.length > 0 ? true : "Name is required"),
     },
     {
-      type: "text",
-      name: "description",
-      message: "Provide a brief description:",
-      initial: (prev: string) => `${prev} wallet operations`,
-    },
-    {
       type: "select",
       name: "protocolFamily",
       message: "Which protocol family will this support?",
@@ -52,7 +46,6 @@ export async function createWalletProvider() {
   const generatedCode = nunjucks.render("walletProvider/walletProvider.njk", {
     name: snakeName,
     className,
-    description: answers.description,
     protocolFamily: answers.protocolFamily,
     baseClass,
   });
@@ -60,5 +53,5 @@ export async function createWalletProvider() {
   // Write file directly to current directory
   await fs.writeFile(`./${fileName}.ts`, generatedCode);
 
-  console.log(pc.green(`Successfully created ${fileName}!`));
+  console.log(pc.green(`Successfully created ${fileName}.ts`));
 }

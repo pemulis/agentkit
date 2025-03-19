@@ -88,5 +88,5 @@ export async function createActionProvider() {
 
   await fs.writeFile(`./schemas.ts`, schemaCode);
 
-  console.log(pc.green(`Successfully created ${className}!`));
+  console.log(pc.green(`Successfully created ${className}.ts and schemas.ts`));
 }
