@@ -2,10 +2,10 @@ import fs from "fs/promises";
 import path from "path";
 import pc from "picocolors";
 import prompts from "prompts";
-import { EVM_NETWORKS, PrepareAgentkitRouteConfigurations, SVM_NETWORKS } from "../constants.js";
-import { copyTemplate } from "../fileSystem.js";
-import { Network, WalletProviderChoice } from "../types.js";
-import { getNetworkType, getWalletProviders } from "../utils.js";
+import { EVM_NETWORKS, PrepareAgentkitRouteConfigurations, SVM_NETWORKS } from "../common/constants.js";
+import { copyTemplate } from "../common/fileSystem.js";
+import { Network, WalletProviderChoice } from "../common/types.js";
+import { getNetworkType, getWalletProviders } from "../common/utils.js";
 
 /**
  * Prompts user for network and wallet provider selection, then sets up the prepare-agentkit file
@@ -159,7 +159,7 @@ export async function createAgentkit() {
     const agentkitDir = path.join(root);
     await fs.rm(agentkitDir, { recursive: true, force: true });
 
-    console.log(pc.green("\nSuccessfully created prepare-agentkit.ts"));
+    console.log(pc.green("Successfully created prepare-agentkit.ts"));
   } catch (error) {
     console.error("Error setting up prepare-agentkit:", error);
     process.exit(1);

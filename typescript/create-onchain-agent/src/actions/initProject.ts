@@ -3,17 +3,16 @@ import ora from "ora";
 import path from "path";
 import pc from "picocolors";
 import prompts from "prompts";
-import { EVM_NETWORKS, NetworkToWalletProviders, SVM_NETWORKS } from "../constants.js";
-import { Network, WalletProviderChoice, Framework } from "../types.js";
-import { copyTemplate } from "../fileSystem.js";
+import { EVM_NETWORKS, Frameworks, FrameworkToTemplates, NetworkToWalletProviders, SVM_NETWORKS } from "../common/constants.js";
+import { copyTemplate } from "../common/fileSystem.js";
+import { Framework, Network, WalletProviderChoice } from "../common/types.js";
 import {
+  getWalletProviders,
+  handleMcpSelection,
   handleNextSelection,
   isValidPackageName,
   toValidPackageName,
-  getWalletProviders,
-  handleMcpSelection,
-} from "../utils.js";
-import { Frameworks, FrameworkToTemplates } from "../constants.js";
+} from "../common/utils.js";
 
 /**
  * Initializes the project creation process.

@@ -1,8 +1,9 @@
 import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import nunjucks from 'nunjucks';
+import path from 'path';
+import pc from "picocolors";
 import prompts from 'prompts';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -67,5 +68,5 @@ export async function createWalletProvider() {
     // Write file directly to current directory
     await fs.writeFile(`./${fileName}.ts`, generatedCode);
 
-    console.log(`Successfully created ${fileName}!`);
+    console.log(pc.green(`Successfully created ${fileName}!`));
 }

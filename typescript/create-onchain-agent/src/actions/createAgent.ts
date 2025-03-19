@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import pc from "picocolors";
 import prompts from "prompts";
-import { copyTemplate } from "../fileSystem.js";
+import { copyTemplate } from "../common/fileSystem.js";
 
 type AgentFramework = "langchain" | "vercelAISDK";
 
@@ -25,7 +25,7 @@ export async function createAgent() {
                     message: pc.reset("Choose a framework:"),
                     choices: [
                         { title: "LangChain", value: "langchain" },
-                        { title: "Vercel AI SDK", value: "vercel-ai-sdk" }
+                        { title: "Vercel AI SDK", value: "vercelAISDK" }
                     ] as { title: string; value: AgentFramework }[],
                 }
             ],
@@ -55,7 +55,7 @@ export async function createAgent() {
         // Clean up the temporary directory
         await fs.rm(root, { recursive: true, force: true });
 
-        console.log(pc.green("\nSuccessfully created createAgent.ts"));
+        console.log(pc.green("Successfully created createAgent.ts"));
     } catch (error) {
         console.error("Error setting up createAgent:", error);
         process.exit(1);

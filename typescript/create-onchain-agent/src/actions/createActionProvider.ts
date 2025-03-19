@@ -1,10 +1,9 @@
 import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import nunjucks from 'nunjucks';
+import path from 'path';
+import pc from "picocolors";
 import prompts from 'prompts';
-import { getNetworkType } from '../utils';
-import { Network, EVMNetwork, SVMNetwork } from '../types';
+import { fileURLToPath } from 'url';
 
 // Get current file's directory in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -107,5 +106,5 @@ export async function createActionProvider() {
 
     await fs.writeFile(`./schemas.ts`, schemaCode);
 
-    console.log(`Successfully created ${className}!`);
+    console.log(pc.green(`Successfully created ${className}!`));
 }

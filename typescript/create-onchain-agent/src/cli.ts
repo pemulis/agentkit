@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-import { createActionProvider } from "./cli/createActionProvider.js";
-import { createAgent } from "./cli/createAgent.js";
-import { createAgentkit } from "./cli/createAgentkit.js";
-import { createWalletProvider } from "./cli/createWalletProvider.js";
-import { initProject } from "./cli/initProject.js";
+import { createActionProvider } from "./actions/createActionProvider.js";
+import { createAgent } from "./actions/createAgent.js";
+import { createAgentkit } from "./actions/createAgentkit.js";
+import { createWalletProvider } from "./actions/createWalletProvider.js";
+import { initProject } from "./actions/initProject.js";
 
 async function handleArgs() {
   const type = process.argv[2];
