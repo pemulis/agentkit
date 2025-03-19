@@ -4,7 +4,7 @@ import path from "path";
 import pc from "picocolors";
 import prompts from "prompts";
 import { fileURLToPath } from "url";
-import { toCamelCase, toClassName, toSnakeCase } from "../common/utils";
+import { toCamelCase, toClassName, toSnakeCase } from "../common/utils.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

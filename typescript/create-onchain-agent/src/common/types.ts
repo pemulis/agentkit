@@ -1,4 +1,4 @@
-import { Network } from "./constants";
+import { Network } from "./constants.js";
 
 export type AgentkitRouteConfiguration = {
   env: {

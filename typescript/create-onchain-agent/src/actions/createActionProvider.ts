@@ -4,8 +4,7 @@ import path from "path";
 import pc from "picocolors";
 import prompts from "prompts";
 import { fileURLToPath } from "url";
-import { toCamelCase, toSnakeCase } from "../common/utils";
-import { toClassName } from "../common/utils";
+import { toCamelCase, toClassName, toSnakeCase } from "../common/utils.js";
 
 // Get current file's directory in ES modules
 const __filename = fileURLToPath(import.meta.url);

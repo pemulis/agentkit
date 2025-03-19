@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
-import { EVMNetwork, Framework, Network, SVMNetwork, WalletProviderChoice } from "./types";
+import { EVMNetwork, Framework, Network, SVMNetwork, WalletProviderChoice } from "./types.js";
 import {
   EVM_NETWORKS,
   NetworkToWalletProviders,
