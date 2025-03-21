@@ -11,12 +11,12 @@ import { initProject } from "./actions/initProject.js";
 async function handleArgs() {
   const command = process.argv[2];
   if (command) {
-    switch(command) {
-      case 'new': {
+    switch (command) {
+      case "new": {
         await initProject();
         break;
       }
-      case 'generate': {
+      case "generate": {
         const type = process.argv[3];
         switch (type) {
           case "action-provider": {
@@ -40,14 +40,14 @@ async function handleArgs() {
             break;
           }
         }
+        break;
       }
       default: {
         console.log("Unknown command:", command);
         break;
       }
     }
-  }
-  else {
+  } else {
     console.log("No command provided");
   }
 }
