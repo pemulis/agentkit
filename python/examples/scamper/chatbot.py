@@ -13,6 +13,7 @@ from coinbase_agentkit import (
     cdp_wallet_action_provider,
     erc20_action_provider,
     pyth_action_provider,
+    twitter_action_provider,
     wallet_action_provider,
     weth_action_provider,
 )

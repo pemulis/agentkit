@@ -11,6 +11,8 @@ python = "^3.10"
 python-dotenv = "^1.0.1"
 coinbase-agentkit = { path = "../../../python/coinbase-agentkit", develop = true }
 coinbase-agentkit-openai-agents-sdk = { path = "../../../python/framework-extensions/openai-agents-sdk", develop = true }
+allora-sdk = "^0.2.0"
+paramiko = "^3.5.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.7.1"
