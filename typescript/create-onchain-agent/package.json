@@ -25,7 +25,8 @@
     "templates/**"
   ],
   "bin": {
-    "create-onchain-agent": "./dist/esm/cli.js"
+    "create-onchain-agent": "./dist/esm/create.js",
+    "agentkit": "./dist/esm/generate.js"
   },
   "sideEffects": false,
   "type": "module",
