@@ -27,20 +27,23 @@ This command lets you choose between two project templates:
 
 ### Component Generation
 
-To add AgentKit components to an existing project:
+After installing the `create-onchain-agent` CLI, you will also have the `agenkit` CLI installed. This allows you to generate components for your project.
 
 ```sh
+# Identical to `npm create onchain-agent`
+agentkit new
+
 # Generate a custom wallet provider
-npm create onchain-agent wallet-provider
+agentkit generate wallet-provider
 
 # Generate a custom action provider
-npm create onchain-agent action-provider
+agentkit generate action-provider
 
 # Generate framework-agnostic AgentKit setup.
-npm create onchain-agent agentkit
+agentkit generate agentkit
 
 # Generate framework-specific agent creation
-npm create onchain-agent agent
+agentkit generate agent
 ```
 
 ## Features
