@@ -21,6 +21,7 @@ from coinbase_agentkit_openai_agents_sdk import get_openai_agents_sdk_tools
 from dotenv import load_dotenv
 from agents.agent import Agent
 from agents.run import Runner
+from agents import WebSearchTool
 
 # Configure a file to persist the agent's CDP API Wallet Data.
 wallet_data_file = "wallet_data.txt"
@@ -63,6 +64,8 @@ def initialize_agent():
 
     # use get_openai_agents_sdk_tools
     tools = get_openai_agents_sdk_tools(agentkit)
+    # Append the OpenAI WebSearch tool
+    tools.append(WebSearchTool())
 
     # Create Agent using the OpenAI Agents SDK
     agent = Agent(
